@@ -53,8 +53,15 @@ target_link_libraries(ORbitGFX
 
 # POST BUILD ACTIONS 
 #######################################################################################################
-# coppying the .dlls next to the executable 
-# add_custom_command(TARGET "${CMAKE_PROJECT_NAME}" POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#     $<TARGET_FILE:webgpu_dawn> $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-# )
+function(copy_target_files target dependency)
+    # Function to copy the output file of a dependency target next to the target executable
+    # Arguments:
+    #   target: The primary target to which the command will be attached
+    #   dependency: The target whose output file will be copied
+
+    add_custom_command(
+        TARGET "${target}" POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:${dependency}> $<TARGET_FILE_DIR:${target}>
+    )
+endfunction()
