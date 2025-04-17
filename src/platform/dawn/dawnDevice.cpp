@@ -57,8 +57,8 @@ namespace gfx
                 case wgpu::DeviceLostReason::Destroyed:
                     reasonName = "Destroyed";
                     break;
-                case wgpu::DeviceLostReason::InstanceDropped:
-                    reasonName = "InstanceDropped";
+                case wgpu::DeviceLostReason::CallbackCancelled:
+                    reasonName = "CallbackCancelled";
                     break;
                 case wgpu::DeviceLostReason::FailedCreation:
                     reasonName = "FailedCreation";
