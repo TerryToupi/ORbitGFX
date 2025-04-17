@@ -22,7 +22,7 @@ add_subdirectory(${EXTERNAL}/dawn)
 # shaderc
 set(SHADERC_SKIP_TESTS ON) 
 set(SHADERC_SKIP_EXAMPLES ON) 
-set(SHADERC_ENABLE_SHARED_CRT OFF)
+set(SHADERC_ENABLE_SHARED_CRT ON)
 add_subdirectory(${EXTERNAL}/shaderc)
 
 add_library(ORbitGFX STATIC)
