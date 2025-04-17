@@ -53,7 +53,7 @@ target_link_libraries(ORbitGFX
 
 # POST BUILD ACTIONS 
 #######################################################################################################
-function(copy_target_files target)
+function(copy_renderer_dlls target)
     # Function to copy the output file of a dependency target next to the target executable
     # Arguments:
     #   target: The primary target to which the command will be attached
