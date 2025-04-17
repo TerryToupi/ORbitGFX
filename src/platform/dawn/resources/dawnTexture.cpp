@@ -1,7 +1,7 @@
-#include <platform/dawn/dawnEnums.hpp>
-#include <platform/dawn/dawnDevice.hpp>
-#include <platform/dawn/resources/dawnTexture.hpp>
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/dawnEnums.hpp>
+#include <dawn/dawnDevice.hpp>
+#include <dawn/resources/dawnTexture.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {

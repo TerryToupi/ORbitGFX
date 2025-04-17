@@ -1,9 +1,10 @@
 #ifndef __DAWN_COMMAND_BUFFER_HPP__
 #define __DAWN_COMMAND_BUFFER_HPP__
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <platform/dawn/render/dawnRenderPassRenderer.hpp>
-#include <renderer/render/commandBuffer.hpp>
+#include <dawn/dawnCommon.hpp>
+#include <dawn/render/dawnRenderPassRenderer.hpp>
+
+#include <render/commandBuffer.hpp>
 
 namespace gfx
 {

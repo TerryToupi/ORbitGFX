@@ -1,7 +1,7 @@
 #ifndef __SAMPLER_HPP__ 
 #define __SAMPLER_HPP__ 
 
-#include <renderer/enums.hpp>
+#include <enums.hpp>
 
 namespace gfx
 {

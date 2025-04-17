@@ -4,10 +4,11 @@
 #include<deque>
 #include<functional>
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <platform/dawn/render/dawnCommandBuffer.hpp>
-#include <platform/dawn/render/dawnRenderPassRenderer.hpp>
-#include <renderer/render/renderer.hpp>
+#include <dawn/dawnCommon.hpp>
+#include <dawn/render/dawnCommandBuffer.hpp>
+#include <dawn/render/dawnRenderPassRenderer.hpp>
+
+#include <render/renderer.hpp>
 
 namespace gfx
 { 

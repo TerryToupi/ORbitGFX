@@ -1,4 +1,4 @@
-#include <platform/dawn/dawnEnums.hpp>
+#include <dawn/dawnEnums.hpp>
 
 namespace gfx
 {

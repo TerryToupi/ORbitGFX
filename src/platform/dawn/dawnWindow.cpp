@@ -1,6 +1,6 @@
-#include <platform/dawn/dawnWindow.hpp>
-#include <platform/dawn/dawnDevice.hpp>
-#include <platform/dawn/dawnEnums.hpp>
+#include <dawn/dawnWindow.hpp>
+#include <dawn/dawnDevice.hpp>
+#include <dawn/dawnEnums.hpp>
 
 namespace gfx
 {

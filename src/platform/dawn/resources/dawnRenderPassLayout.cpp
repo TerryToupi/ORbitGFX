@@ -1,4 +1,4 @@
-#include <platform/dawn/resources/dawnRenderPassLayout.hpp>
+#include <dawn/resources/dawnRenderPassLayout.hpp>
 
 namespace gfx
 {

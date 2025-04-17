@@ -1,7 +1,7 @@
 #ifndef __BUFFER_HPP__
 #define __BUFFER_HPP__ 
 
-#include <renderer/enums.hpp>
+#include <enums.hpp>
 
 namespace gfx
 {

@@ -1,10 +1,11 @@
 #ifndef __COMMANDBUFFER_HPP__
 #define __COMMANDBUFFER_HPP__
 
-#include <utilities/handle.hpp>
-#include <renderer/resources/frameBuffer.hpp>
-#include <renderer/resources/renderPass.hpp>
-#include <renderer/render/renderPassRenderer.hpp>
+#include <handle.hpp>
+
+#include <resources/frameBuffer.hpp>
+#include <resources/renderPass.hpp>
+#include <render/renderPassRenderer.hpp>
 
 namespace gfx
 {

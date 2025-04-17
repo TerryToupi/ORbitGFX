@@ -1,8 +1,8 @@
 #ifndef __RENDER_PASS_LAYOUT_HPP__
 #define __RENDER_PASS_LAYOUT_HPP__
 
-#include <utilities/span.hpp>
-#include <renderer/enums.hpp>
+#include <span.hpp>
+#include <enums.hpp>
 
 namespace gfx
 {

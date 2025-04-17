@@ -1,4 +1,4 @@
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {

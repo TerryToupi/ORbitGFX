@@ -1,9 +1,10 @@
 #ifndef __DAWN_RENDER_PASS_LAYOUT_HPP__
 #define __DAWN_RENDER_PASS_LAYOUT_HPP__
 
-#include <platform/dawn/dawnEnums.hpp>
-#include <platform/dawn/dawnCommon.hpp>
-#include <renderer/resources/renderPassLayout.hpp>
+#include <dawn/dawnEnums.hpp>
+#include <dawn/dawnCommon.hpp>
+
+#include <resources/renderPassLayout.hpp>
 
 namespace gfx
 {

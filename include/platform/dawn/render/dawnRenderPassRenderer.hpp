@@ -1,8 +1,9 @@
 #ifndef __DAWN_RENDER_PASS_RENDERER_HPP__
 #define __DAWN_RENDER_PASS_RENDERER_HPP__
 
-#include <renderer/render/renderPassRenderer.hpp>
-#include <platform/dawn/dawnCommon.hpp>
+#include <render/renderPassRenderer.hpp>
+
+#include <dawn/dawnCommon.hpp>
 
 namespace gfx
 {

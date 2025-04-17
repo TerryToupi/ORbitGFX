@@ -1,18 +1,19 @@
 #ifndef __DAWN_RESOURCE_MANAGER_HPP__ 
 #define __DAWN_RESOURCE_MANAGER_HPP__ 
 
-#include <utilities/pool.hpp>
-#include <renderer/resources/resourceManger.hpp> 
+#include <pool.hpp>
 
-#include <platform/dawn/resources/dawnBindGroup.hpp>
-#include <platform/dawn/resources/dawnBindGroupLayout.hpp>
-#include <platform/dawn/resources/dawnBuffer.hpp>
-#include <platform/dawn/resources/dawnRenderPass.hpp>
-#include <platform/dawn/resources/dawnRenderPassLayout.hpp>
-#include <platform/dawn/resources/dawnSampler.hpp>
-#include <platform/dawn/resources/dawnShader.hpp>
-#include <platform/dawn/resources/dawnTexture.hpp>
-#include <platform/dawn/resources/dawnFrameBuffer.hpp>
+#include <resources/resourceManger.hpp> 
+
+#include <dawn/resources/dawnBindGroup.hpp>
+#include <dawn/resources/dawnBindGroupLayout.hpp>
+#include <dawn/resources/dawnBuffer.hpp>
+#include <dawn/resources/dawnRenderPass.hpp>
+#include <dawn/resources/dawnRenderPassLayout.hpp>
+#include <dawn/resources/dawnSampler.hpp>
+#include <dawn/resources/dawnShader.hpp>
+#include <dawn/resources/dawnTexture.hpp>
+#include <dawn/resources/dawnFrameBuffer.hpp>
 
 namespace gfx
 { 

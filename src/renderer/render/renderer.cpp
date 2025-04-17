@@ -1,9 +1,9 @@
-#include <renderer/render/renderer.hpp> 
+#include <render/renderer.hpp> 
 
-#include <platform/dawn/dawnDevice.hpp>
-#include <platform/dawn/dawnWindow.hpp> 
-#include <platform/dawn/resources/dawnResourceManager.hpp>
-#include <platform/dawn/render/dawnRenderer.hpp>
+#include <dawn/dawnDevice.hpp>
+#include <dawn/dawnWindow.hpp> 
+#include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/render/dawnRenderer.hpp>
 
 namespace gfx
 {

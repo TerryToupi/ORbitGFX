@@ -1,10 +1,10 @@
 #ifndef __RENDER_PASS_HPP__
 #define __RENDER_PASS_HPP__
 
-#include <utilities/span.hpp>
-#include <utilities/handle.hpp>
-#include <renderer/enums.hpp>
-#include <renderer/resources/renderPassLayout.hpp>
+#include <span.hpp>
+#include <handle.hpp>
+#include <enums.hpp>
+#include <resources/renderPassLayout.hpp>
 
 namespace gfx
 {

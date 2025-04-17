@@ -1,4 +1,4 @@
-#include <platform/dawn/resources/dawnResourceManager.hpp> 
+#include <dawn/resources/dawnResourceManager.hpp> 
 
 namespace gfx
 {

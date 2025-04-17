@@ -1,9 +1,10 @@
 #ifndef __DAWN_BIND_GROUP_HPP__
 #define __DAWN_BIND_GROUP_HPP__ 
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <platform/dawn/dawnEnums.hpp>
-#include <renderer/resources/bindGroup.hpp>
+#include <dawn/dawnCommon.hpp>
+#include <dawn/dawnEnums.hpp>
+
+#include <resources/bindGroup.hpp>
 
 namespace gfx
 {

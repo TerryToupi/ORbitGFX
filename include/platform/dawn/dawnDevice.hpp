@@ -5,8 +5,9 @@
 #include <array>
 #include <vector>
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <renderer/device.hpp>
+#include <dawn/dawnCommon.hpp>
+
+#include <device.hpp>
 
 namespace gfx
 {

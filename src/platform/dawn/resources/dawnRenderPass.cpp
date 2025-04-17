@@ -1,5 +1,5 @@
-#include <platform/dawn/resources/dawnRenderPass.hpp>
-#include <platform/dawn/resources/dawnResourceManager.hpp>
+#include <dawn/resources/dawnRenderPass.hpp>
+#include <dawn/resources/dawnResourceManager.hpp>
 
 namespace gfx
 {

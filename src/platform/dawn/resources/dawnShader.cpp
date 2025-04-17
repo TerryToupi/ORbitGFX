@@ -1,6 +1,6 @@
-#include <platform/dawn/resources/dawnShader.hpp>
-#include <platform/dawn/resources/dawnResourceManager.hpp>
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/resources/dawnShader.hpp>
+#include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/dawnDevice.hpp>
 
 #include <shaderc/shaderc.hpp>
 #include <tint/tint.h>

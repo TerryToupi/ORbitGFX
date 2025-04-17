@@ -3,9 +3,10 @@
 
 #include <vector>
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <platform/dawn/dawnEnums.hpp>
-#include <renderer/resources/texture.hpp>
+#include <dawn/dawnCommon.hpp>
+#include <dawn/dawnEnums.hpp>
+
+#include <resources/texture.hpp>
 
 namespace gfx
 {

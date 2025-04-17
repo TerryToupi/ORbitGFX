@@ -1,10 +1,10 @@
 #ifndef __BIND_GROUP_LAYOUT_HPP__
 #define __BIND_GROUP_LAYOUT_HPP__ 
 
-#include <utilities/span.hpp>
-#include <utilities/handle.hpp>
-#include <renderer/enums.hpp>
-#include <renderer/resources/bindGroupLayout.hpp>
+#include <span.hpp>
+#include <handle.hpp>
+#include <enums.hpp>
+#include <resources/bindGroupLayout.hpp>
 
 namespace gfx
 {

@@ -4,7 +4,7 @@
 #include <webgpu/webgpu_glfw.h>
 #include <GLFW/glfw3.h>
 
-#include <renderer/window.hpp>
+#include <window.hpp>
 
 namespace gfx
 { 

@@ -1,5 +1,5 @@
-#include <platform/dawn/resources/dawnBindGroupLayout.hpp>
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/resources/dawnBindGroupLayout.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {

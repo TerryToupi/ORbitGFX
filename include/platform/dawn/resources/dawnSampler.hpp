@@ -1,8 +1,9 @@
 #ifndef __DAWN_SAMPLER_HPP__
 #define __DAWN_SAMPLER_HPP__
 
-#include <platform/dawn/dawnCommon.hpp>
-#include <renderer/resources/sampler.hpp>
+#include <dawn/dawnCommon.hpp>
+
+#include <resources/sampler.hpp>
 
 namespace gfx
 {

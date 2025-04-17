@@ -1,18 +1,18 @@
 #ifndef __RESOURCE_MANAGER_HPP__ 
 #define __RESOURCE_MANAGER_HPP__ 
 
-#include <renderer/resources/bindGroup.hpp>
-#include <renderer/resources/bindGroupLayout.hpp>
-#include <renderer/resources/buffer.hpp>
-#include <renderer/resources/renderPass.hpp>
-#include <renderer/resources/sampler.hpp>
-#include <renderer/resources/shader.hpp>
-#include <renderer/resources/texture.hpp>
-#include <renderer/resources/frameBuffer.hpp>
-#include <renderer/resources/renderPassLayout.hpp>
+#include <resources/bindGroup.hpp>
+#include <resources/bindGroupLayout.hpp>
+#include <resources/buffer.hpp>
+#include <resources/renderPass.hpp>
+#include <resources/sampler.hpp>
+#include <resources/shader.hpp>
+#include <resources/texture.hpp>
+#include <resources/frameBuffer.hpp>
+#include <resources/renderPassLayout.hpp>
 
-#include <utilities/handle.hpp>
-#include <utilities/workQueue.hpp>
+#include <handle.hpp>
+#include <workQueue.hpp>
 
 namespace gfx
 {

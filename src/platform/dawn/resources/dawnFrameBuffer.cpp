@@ -1,6 +1,6 @@
-#include <platform/dawn/resources/dawnFrameBuffer.hpp>
-#include <platform/dawn/resources/dawnResourceManager.hpp>
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/resources/dawnFrameBuffer.hpp>
+#include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {

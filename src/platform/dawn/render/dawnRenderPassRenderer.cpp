@@ -1,7 +1,7 @@
-#include <platform/dawn/render/dawnRenderPassRenderer.hpp>
-#include <platform/dawn/resources/dawnResourceManager.hpp>
-#include <platform/dawn/dawnDevice.hpp>
-#include <platform/dawn/dawnWindow.hpp>
+#include <dawn/render/dawnRenderPassRenderer.hpp>
+#include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/dawnDevice.hpp>
+#include <dawn/dawnWindow.hpp>
 
 namespace gfx
 {

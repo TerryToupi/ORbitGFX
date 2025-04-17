@@ -1,10 +1,11 @@
 #ifndef __DRAW_STREAM_HPP__
 #define __DRAW_STREAM_HPP__
 
-#include <utilities/handle.hpp>
-#include <renderer/resources/shader.hpp>
-#include <renderer/resources/bindGroup.hpp>
-#include <renderer/resources/buffer.hpp>
+#include <handle.hpp>
+
+#include <resources/shader.hpp>
+#include <resources/bindGroup.hpp>
+#include <resources/buffer.hpp>
 
 #include <vector>
 

@@ -1,14 +1,14 @@
 #ifndef __BIND_GROUP_HPP__
 #define __BIND_GROUP_HPP__
 
-#include <utilities/span.hpp>
-#include <utilities/handle.hpp>
-#include <renderer/enums.hpp>
+#include <span.hpp>
+#include <handle.hpp>
 
-#include <renderer/resources/bindGroupLayout.hpp>
-#include <renderer/resources/texture.hpp>
-#include <renderer/resources/sampler.hpp>
-#include <renderer/resources/buffer.hpp>
+#include <enums.hpp>
+#include <resources/bindGroupLayout.hpp>
+#include <resources/texture.hpp>
+#include <resources/sampler.hpp>
+#include <resources/buffer.hpp>
 
 namespace gfx
 {

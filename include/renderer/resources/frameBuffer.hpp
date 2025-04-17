@@ -1,12 +1,12 @@
 #ifndef __FRAMEBUFFER_HPP__
 #define __FRAMEBUFFER_HPP__
 
-#include <utilities/span.hpp>
-#include <utilities/handle.hpp>
-#include <renderer/enums.hpp>
+#include <span.hpp>
+#include <handle.hpp>
+#include <enums.hpp>
 
-#include <renderer/resources/texture.hpp>
-#include <renderer/resources/renderPass.hpp>
+#include <resources/texture.hpp>
+#include <resources/renderPass.hpp>
 
 namespace gfx
 {

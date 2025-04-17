@@ -3,7 +3,7 @@
 
 #include <string>
 #include <functional>
-#include <renderer/enums.hpp>
+#include <enums.hpp>
 
 namespace gfx
 { 

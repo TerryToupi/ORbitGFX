@@ -1,5 +1,5 @@
-#include <platform/dawn/render/dawnRenderer.hpp>
-#include <platform/dawn/dawnDevice.hpp>
+#include <dawn/render/dawnRenderer.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {

@@ -1,8 +1,8 @@
 #ifndef __RENDERER_HPP__
 #define __RENDERER_HPP__
 
-#include <renderer/render/renderPassRenderer.hpp>
-#include <renderer/render/commandBuffer.hpp>
+#include <render/renderPassRenderer.hpp>
+#include <render/commandBuffer.hpp>
 
 namespace gfx
 {

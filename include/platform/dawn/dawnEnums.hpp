@@ -1,8 +1,9 @@
 #ifndef __DAWN_ENUMS_HPP__
 #define __DAWN_ENUMS_HPP__ 
 
-#include <platform/dawn/dawnCommon.hpp> 
-#include <renderer/enums.hpp>
+#include <dawn/dawnCommon.hpp> 
+
+#include <enums.hpp>
 
 namespace gfx
 {

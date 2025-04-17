@@ -1,9 +1,10 @@
 #ifndef __DAWN_SHADER_HPP__
 #define __DAWN_SHADER_HPP__
 
-#include <platform/dawn/dawnEnums.hpp>
-#include <platform/dawn/dawnCommon.hpp>
-#include <renderer/resources/shader.hpp>
+#include <dawn/dawnEnums.hpp>
+#include <dawn/dawnCommon.hpp>
+
+#include <resources/shader.hpp>
 
 namespace gfx
 {

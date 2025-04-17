@@ -1,4 +1,4 @@
-#include <renderer/render/drawStream.hpp>
+#include <render/drawStream.hpp>
 
 namespace gfx
 {
