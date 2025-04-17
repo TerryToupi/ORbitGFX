@@ -134,7 +134,7 @@ namespace gfx
         std::cout << "Name: " << std::string_view(adapterInfo.device) << "\n";
         std::cout << "Driver description: " << std::string_view(adapterInfo.description) << "\n";
         
-        DeviceDescriptor desc =
+        s_DeviceDesc =
         {
             .vendorID = adapterInfo.vendorID,
             .vendor = std::string(adapterInfo.vendor),
@@ -143,8 +143,44 @@ namespace gfx
             .name = std::string(adapterInfo.device),
             .driver = std::string(adapterInfo.description)
         }; 
-        
-        SetDeviceDescriptor(desc);
+
+        wgpu::Limits adapterLimits;
+        m_Adapter.GetLimits(&adapterLimits);
+
+        s_AdapterDesc =
+        {
+			.maxTextureDimension1D = adapterLimits.maxTextureDimension1D,
+			.maxTextureDimension2D = adapterLimits.maxTextureDimension2D,
+			.maxTextureDimension3D = adapterLimits.maxTextureDimension3D,
+			.maxTextureArrayLayers = adapterLimits.maxTextureArrayLayers,
+			.maxBindGroups = adapterLimits.maxBindGroups,
+			.maxBindGroupsPlusVertexBuffers = adapterLimits.maxBindGroupsPlusVertexBuffers,
+			.maxBindingsPerBindGroup = adapterLimits.maxBindingsPerBindGroup,
+			.maxDynamicUniformBuffersPerPipelineLayout = adapterLimits.maxDynamicUniformBuffersPerPipelineLayout,
+			.maxDynamicStorageBuffersPerPipelineLayout = adapterLimits.maxDynamicUniformBuffersPerPipelineLayout,
+			.maxSampledTexturesPerShaderStage = adapterLimits.maxSampledTexturesPerShaderStage,
+			.maxSamplersPerShaderStage = adapterLimits.maxSamplersPerShaderStage,
+			.maxStorageBuffersPerShaderStage = adapterLimits.maxStorageBuffersPerShaderStage,
+			.maxStorageTexturesPerShaderStage = adapterLimits.maxStorageTexturesPerShaderStage,
+			.maxUniformBuffersPerShaderStage = adapterLimits.maxUniformBuffersPerShaderStage,
+			.maxUniformBufferBindingSize = adapterLimits.maxUniformBufferBindingSize,
+			.maxStorageBufferBindingSize = adapterLimits.maxStorageBufferBindingSize,
+			.minUniformBufferOffsetAlignment = adapterLimits.minUniformBufferOffsetAlignment,
+			.minStorageBufferOffsetAlignment = adapterLimits.minStorageBufferOffsetAlignment,
+			.maxVertexBuffers = adapterLimits.maxVertexBuffers,
+			.maxBufferSize = adapterLimits.maxBufferSize,
+			.maxVertexAttributes = adapterLimits.maxVertexAttributes,
+			.maxVertexBufferArrayStride = adapterLimits.maxVertexBufferArrayStride,
+			.maxInterStageShaderVariables = adapterLimits.maxInterStageShaderVariables,
+			.maxColorAttachments = adapterLimits.maxColorAttachments,
+			.maxColorAttachmentBytesPerSample = adapterLimits.maxColorAttachmentBytesPerSample,
+			.maxComputeWorkgroupStorageSize = adapterLimits.maxComputeWorkgroupStorageSize,
+			.maxComputeInvocationsPerWorkgroup = adapterLimits.maxComputeInvocationsPerWorkgroup,
+			.maxComputeWorkgroupSizeX = adapterLimits.maxComputeWorkgroupSizeX,
+			.maxComputeWorkgroupSizeY = adapterLimits.maxComputeWorkgroupSizeY,
+			.maxComputeWorkgroupSizeZ = adapterLimits.maxComputeWorkgroupSizeZ,
+			.maxComputeWorkgroupsPerDimension = adapterLimits.maxComputeWorkgroupsPerDimension,
+        };
 
         return;
     }
@@ -156,16 +192,6 @@ namespace gfx
         m_Device = nullptr;
         m_Adapter = nullptr;
         m_Instance = nullptr;
-    }
-
-    void DawnDevice::SetDeviceDescriptor(const DeviceDescriptor &desc)
-    {
-        m_Descriptor = desc;
-    }
-
-    const DeviceDescriptor& DawnDevice::GetDeviceDescriptor()
-    {
-        return m_Descriptor;
     }
 
     const wgpu::Instance& DawnDevice::GetDawnInstance()

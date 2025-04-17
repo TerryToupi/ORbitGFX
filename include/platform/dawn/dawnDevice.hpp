@@ -16,9 +16,6 @@ namespace gfx
     public:
         virtual void Init() override;
         virtual void ShutDown() override; 
-
-        virtual void SetDeviceDescriptor(const DeviceDescriptor& desc) override;
-        virtual const DeviceDescriptor& GetDeviceDescriptor() override;
         
         const wgpu::Instance& GetDawnInstance();
         const wgpu::Adapter& GetDawnAdapter();
