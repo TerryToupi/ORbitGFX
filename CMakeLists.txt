@@ -53,7 +53,7 @@ target_link_libraries(ORbitGFX
 
 # POST BUILD ACTIONS 
 #######################################################################################################
-function(copy_target_files target dependency)
+function(copy_target_files target)
     # Function to copy the output file of a dependency target next to the target executable
     # Arguments:
     #   target: The primary target to which the command will be attached
@@ -62,6 +62,6 @@ function(copy_target_files target dependency)
     add_custom_command(
         TARGET "${target}" POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        $<TARGET_FILE:${dependency}> $<TARGET_FILE_DIR:${target}>
+        $<TARGET_FILE:webgpu_dawn> $<TARGET_FILE_DIR:${target}>
     )
 endfunction()
