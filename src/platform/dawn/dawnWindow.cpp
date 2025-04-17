@@ -1,0 +1,69 @@
+#include <platform/dawn/dawnWindow.hpp>
+#include <platform/dawn/dawnDevice.hpp>
+#include <platform/dawn/dawnEnums.hpp>
+
+namespace gfx
+{
+    void DawnWindow::Init(const WindowDescriptor& desc)
+    { 
+        m_WindowConfig = desc;
+
+        DawnDevice* device = (DawnDevice*)Device::instance;
+        
+        if (!glfwInit())
+            exit(EXIT_FAILURE);
+
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+        m_Window = glfwCreateWindow(m_WindowConfig.width, m_WindowConfig.height, m_WindowConfig.name.c_str(), nullptr, nullptr);
+        if (!m_Window)
+            exit(EXIT_FAILURE);
+        
+        m_Surface = wgpu::glfw::CreateSurfaceForWindow(device->GetDawnInstance(), m_Window);
+
+        m_Surface.GetCapabilities(device->GetDawnAdapter(), &m_SurfaceCapabilities);
+        wgpu::SurfaceConfiguration config = {};
+
+        config.device = device->GetDawnDevice();
+        config.format = m_SurfaceCapabilities.formats[0];
+        config.width = m_WindowConfig.width;
+        config.height = m_WindowConfig.height; 
+        config.presentMode = wgpu::PresentMode::Immediate;
+
+        m_SurfaceFormat = EncodeTextureFormatType(m_SurfaceCapabilities.formats[0]);
+
+        m_Surface.Configure(&config);
+    } 
+
+    void DawnWindow::ShutDown()
+    { 
+        glfwDestroyWindow(m_Window); 
+        glfwTerminate();
+    } 
+
+    void DawnWindow::Run(const GameLoop& func)
+    { 
+        //// main loop
+        while (!glfwWindowShouldClose(m_Window))
+        { 
+            func();
+            m_Surface.Present();
+            glfwPollEvents();
+        }
+    }
+
+    gfx::TextureFormat DawnWindow::GetSurfaceFormat()
+    {
+        return m_SurfaceFormat;
+    }
+
+    const wgpu::Surface& DawnWindow::GetDawnSurface()
+    { 
+        return m_Surface;
+    } 
+
+    const wgpu::SurfaceCapabilities& DawnWindow::GetDawnSurfaceCapabilities()
+    { 
+        return m_SurfaceCapabilities;
+    }
+}

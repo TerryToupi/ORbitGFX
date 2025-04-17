@@ -1,0 +1,6 @@
+[submodule "external/dawn"]
+	path = external/dawn
+	url = https://github.com/google/dawn.git
+[submodule "external/shaderc"]
+	path = external/shaderc
+	url = https://github.com/google/shaderc.git
