@@ -1,7 +1,95 @@
 #include <dawn/dawnDevice.hpp>
 
+#include <sstream>
+#include <string>
+
 namespace gfx
 {
+    static std::string FormatNumber(uint64_t num) {
+        auto s = std::to_string(num);
+        std::stringstream ret;
+
+        auto remainder = s.length() % 3;
+        ret << s.substr(0, remainder);
+        for (size_t i = remainder; i < s.length(); i += 3) {
+            if (i > 0) {
+                ret << ",";
+            }
+            ret << s.substr(i, 3);
+        }
+        return ret.str();
+    }
+
+    static std::string LimitsToString(const wgpu::Limits& limits, const std::string& indent) {
+        std::stringstream out;
+
+        out << indent << "maxTextureDimension1D: " << FormatNumber(limits.maxTextureDimension1D)
+            << "\n";
+        out << indent << "maxTextureDimension2D: " << FormatNumber(limits.maxTextureDimension2D)
+            << "\n";
+        out << indent << "maxTextureDimension3D: " << FormatNumber(limits.maxTextureDimension3D)
+            << "\n";
+        out << indent << "maxTextureArrayLayers: " << FormatNumber(limits.maxTextureArrayLayers)
+            << "\n";
+        out << indent << "maxBindGroups: " << FormatNumber(limits.maxBindGroups) << "\n";
+        out << indent
+            << "maxBindGroupsPlusVertexBuffers: " << FormatNumber(limits.maxBindGroupsPlusVertexBuffers)
+            << "\n";
+        out << indent << "maxBindingsPerBindGroup: " << FormatNumber(limits.maxBindingsPerBindGroup)
+            << "\n";
+        out << indent << "maxDynamicUniformBuffersPerPipelineLayout: "
+            << FormatNumber(limits.maxDynamicUniformBuffersPerPipelineLayout) << "\n";
+        out << indent << "maxDynamicStorageBuffersPerPipelineLayout: "
+            << FormatNumber(limits.maxDynamicStorageBuffersPerPipelineLayout) << "\n";
+        out << indent << "maxSampledTexturesPerShaderStage: "
+            << FormatNumber(limits.maxSampledTexturesPerShaderStage) << "\n";
+        out << indent << "maxSamplersPerShaderStage: " << FormatNumber(limits.maxSamplersPerShaderStage)
+            << "\n";
+        out << indent << "maxStorageBuffersPerShaderStage: "
+            << FormatNumber(limits.maxStorageBuffersPerShaderStage) << "\n";
+        out << indent << "maxStorageTexturesPerShaderStage: "
+            << FormatNumber(limits.maxStorageTexturesPerShaderStage) << "\n";
+        out << indent << "maxUniformBuffersPerShaderStage: "
+            << FormatNumber(limits.maxUniformBuffersPerShaderStage) << "\n";
+        out << indent
+            << "maxUniformBufferBindingSize: " << FormatNumber(limits.maxUniformBufferBindingSize)
+            << "\n";
+        out << indent
+            << "maxStorageBufferBindingSize: " << FormatNumber(limits.maxStorageBufferBindingSize)
+            << "\n";
+        out << indent << "minUniformBufferOffsetAlignment: "
+            << FormatNumber(limits.minUniformBufferOffsetAlignment) << "\n";
+        out << indent << "minStorageBufferOffsetAlignment: "
+            << FormatNumber(limits.minStorageBufferOffsetAlignment) << "\n";
+        out << indent << "maxVertexBuffers: " << FormatNumber(limits.maxVertexBuffers) << "\n";
+        out << indent << "maxBufferSize: " << FormatNumber(limits.maxBufferSize) << "\n";
+        out << indent << "maxVertexAttributes: " << FormatNumber(limits.maxVertexAttributes) << "\n";
+        out << indent
+            << "maxVertexBufferArrayStride: " << FormatNumber(limits.maxVertexBufferArrayStride)
+            << "\n";
+        out << indent
+            << "maxInterStageShaderVariables: " << FormatNumber(limits.maxInterStageShaderVariables)
+            << "\n";
+        out << indent << "maxColorAttachments: " << FormatNumber(limits.maxColorAttachments) << "\n";
+        out << indent << "maxColorAttachmentBytesPerSample: "
+            << FormatNumber(limits.maxColorAttachmentBytesPerSample) << "\n";
+        out << indent
+            << "maxComputeWorkgroupStorageSize: " << FormatNumber(limits.maxComputeWorkgroupStorageSize)
+            << "\n";
+        out << indent << "maxComputeInvocationsPerWorkgroup: "
+            << FormatNumber(limits.maxComputeInvocationsPerWorkgroup) << "\n";
+        out << indent << "maxComputeWorkgroupSizeX: " << FormatNumber(limits.maxComputeWorkgroupSizeX)
+            << "\n";
+        out << indent << "maxComputeWorkgroupSizeY: " << FormatNumber(limits.maxComputeWorkgroupSizeY)
+            << "\n";
+        out << indent << "maxComputeWorkgroupSizeZ: " << FormatNumber(limits.maxComputeWorkgroupSizeZ)
+            << "\n";
+        out << indent << "maxComputeWorkgroupsPerDimension: "
+            << FormatNumber(limits.maxComputeWorkgroupsPerDimension) << "\n";
+
+        return out.str();
+    }
+
     void DawnDevice::Init()
     {
         wgpu::InstanceDescriptor idesc = {};
@@ -147,6 +235,11 @@ namespace gfx
         wgpu::Limits adapterLimits;
         m_Adapter.GetLimits(&adapterLimits);
 
+        std::cout << "\n";
+        std::cout << "  Adapter Limits\n";
+        std::cout << "  ==============\n";
+        std::cout << LimitsToString(adapterLimits, "    ") << "\n";
+        
         s_AdapterDesc =
         {
 			.maxTextureDimension1D = adapterLimits.maxTextureDimension1D,
