@@ -1,5 +1,7 @@
 #include <dawn/dawnDevice.hpp>
 
+#include <log.hpp>
+
 #include <sstream>
 #include <string>
 
@@ -155,15 +157,17 @@ namespace gfx
                     reasonName = "Unknown";
                     break;
                 }
+                
+                std::stringstream out;
+                out << "Device lost due to: " << "[" << reasonName << "] " << std::string_view(message) << std::endl;
 
-                std::cerr << "Device lost due to: " << "[" << reasonName << "] " << std::string_view(message) << std::endl;
+                GFX_ERROR(out.str());
             }
         );
         deviceDesc.SetUncapturedErrorCallback(
             [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message)
             {
                 const char* errorType = "";
-
                 switch (type)
                 {
                 case wgpu::ErrorType::Validation:
@@ -183,7 +187,10 @@ namespace gfx
                     break;
                 }
 
-                std::cerr << "Device error: " << "[" << errorType << "] " << std::string_view(message) << std::endl;
+                std::stringstream out;
+                out << "Device error: " << "[" << errorType << "] " << std::string_view(message) << std::endl;
+
+                GFX_ERROR(out.str());
             }
         );
 
