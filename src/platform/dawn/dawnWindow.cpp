@@ -2,6 +2,8 @@
 #include <dawn/dawnDevice.hpp>
 #include <dawn/dawnEnums.hpp>
 
+#include <assert.hpp>
+
 namespace gfx
 {
     void DawnWindow::Init(const WindowDescriptor& desc)
@@ -16,8 +18,7 @@ namespace gfx
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
         m_Window = glfwCreateWindow(m_WindowConfig.width, m_WindowConfig.height, m_WindowConfig.name.c_str(), nullptr, nullptr);
-        if (!m_Window)
-            exit(EXIT_FAILURE);
+        GFX_ASSERT(m_Window != nullptr, "Unable to fetch GLFW window!");
         
         m_Surface = wgpu::glfw::CreateSurfaceForWindow(device->GetDawnInstance(), m_Window);
 
