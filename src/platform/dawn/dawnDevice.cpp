@@ -223,6 +223,7 @@ namespace gfx
 
         m_Adapter.GetInfo(&adapterInfo);
         std::stringstream infoStream;
+        infoStream << "\n";
         infoStream << "VendorID: " << std::hex << adapterInfo.vendorID << std::dec << "\n";
         infoStream << "Vendor: " << std::string_view(adapterInfo.vendor) << "\n";
         infoStream << "Architecture: " << std::string_view(adapterInfo.architecture) << "\n";
