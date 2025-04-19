@@ -190,6 +190,11 @@ namespace gfx
 				// Fragment state
 				{
 					m_FragmentState.module = s_PS;
+					for (int i = 0; i < rpl->s_ColorTargetCount; ++i)
+					{
+						rpl->s_ColorTargets[i].blend = &rpl->s_ColorBlends[i];
+					}
+
 					m_FragmentState.targetCount = rpl->s_ColorTargetCount;
 					m_FragmentState.targets = rpl->s_ColorTargets;
 

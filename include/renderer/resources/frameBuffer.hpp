@@ -14,24 +14,11 @@ namespace gfx
     
     struct FrameBufferDescriptor
     {
-        struct ColorTargets
-        {
-            utils::Handle<Texture> target;
-            uint8_t viewIndex = 0;
-        };
-        
-        struct DepthTarget
-        {
-            utils::Handle<Texture> depth;
-            uint8_t viewIndex = 0;
-        };
-
-        uint32_t width = 0;
         uint32_t height = 0;
         utils::Handle<RenderPass> renderPass;
        
-        DepthTarget depthTarget;
-        utils::Span<ColorTargets> colorTargets;
+        utils::Handle<Texture> depthTarget;
+        utils::Span<utils::Handle<Texture>> colorTargets;
     };
 }
 

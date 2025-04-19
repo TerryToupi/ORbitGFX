@@ -16,10 +16,9 @@ namespace gfx
         void Destroy();
         
     public:
-        std::shared_ptr<wgpu::BlendState> s_Blend; 
-        
         uint32_t s_ColorTargetCount = 0;
         wgpu::ColorTargetState s_ColorTargets[kMaxColorAttachments];
+        wgpu::BlendState s_ColorBlends[kMaxColorAttachments];
         
         bool s_DepthEnabled = false;
         wgpu::DepthStencilState s_DepthTarget;

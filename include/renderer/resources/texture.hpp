@@ -38,15 +38,8 @@ namespace gfx
 		uint32_t mipLevelCount = 1;
 		uint32_t samplerCount = 1;
 
-		utils::Span<TextureViewDescriptor> views = 
-		{ {} };
-
-		TextureUplaodDescriptor uploadDesc =
-		{
-			.upload = false,
-			.uploadSize = 0,
-			.uploadData = nullptr,
-		};
+		TextureViewDescriptor view = {};
+		TextureUplaodDescriptor uploadDesc = {};
 	};
 }
 

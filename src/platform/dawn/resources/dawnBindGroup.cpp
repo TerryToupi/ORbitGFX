@@ -49,7 +49,7 @@ namespace gfx
             if (t)
             {
                 bgEntries[index].binding = texture.slot;
-                bgEntries[index].textureView = t->s_TextureViews[texture.viewIndex];
+                bgEntries[index].textureView = t->s_TextureView;
                 ++index;
             }
         }

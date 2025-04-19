@@ -6,12 +6,8 @@
 namespace gfx
 {
 	DawnTexture::DawnTexture()
-		: s_Texture(nullptr)
+		: s_Texture(nullptr), s_TextureView(nullptr)
 	{
-		for (int i = 0; i < kMaxTextureViews; ++i)
-		{
-			s_TextureViews[i] = nullptr;
-		}
 	}
 
 	DawnTexture::DawnTexture(const TextureDescriptor& desc)
@@ -31,25 +27,18 @@ namespace gfx
 
 		s_Texture = device.CreateTexture(&textureDesc);
 		
-		int index = 0;
-		for (const auto& view : desc.views)
+		wgpu::TextureViewDescriptor textureViewDesc =
 		{
-			wgpu::TextureViewDescriptor textureViewDesc =
-			{
-				.format = gfx::DecodeTextureFormatType(view.format),
-				.dimension = gfx::DecodeTextureDimentionType(view.dimention),
-				.baseMipLevel = view.baseMipLevel,
-				.mipLevelCount = view.mipLevelCount,
-				.baseArrayLayer = view.baseArrayLayer,
-				.arrayLayerCount = view.arrayLayerCount,
-				.aspect = gfx::DecodeTextureAspectType(view.aspect),
-				.usage = gfx::DecodeTextureUsageType(view.usage)
-			};
-
-			s_TextureViews[index] = s_Texture.CreateView(&textureViewDesc);
-            ++index;
-		}
-		s_TextureViewCount = index;
+			.format = gfx::DecodeTextureFormatType(desc.view.format),
+			.dimension = gfx::DecodeTextureDimentionType(desc.view.dimention),
+			.baseMipLevel = desc.view.baseMipLevel,
+			.mipLevelCount = desc.view.mipLevelCount,
+			.baseArrayLayer = desc.view.baseArrayLayer,
+			.arrayLayerCount = desc.view.arrayLayerCount,
+			.aspect = gfx::DecodeTextureAspectType(desc.view.aspect),
+			.usage = gfx::DecodeTextureUsageType(desc.view.usage)
+		};
+		s_TextureView = s_Texture.CreateView(&textureViewDesc);
 
 		if (desc.uploadDesc.upload)
 		{
@@ -87,5 +76,8 @@ namespace gfx
 	void DawnTexture::Destroy()
 	{
 		s_Texture.Destroy();
+
+		s_Texture = nullptr;
+		s_TextureView = nullptr;
 	}
 }

@@ -14,7 +14,7 @@ namespace gfx
         {
             bool depthTarget = false;
             TextureFormat depthTargetFormat = TextureFormat::D32_FLOAT;
-            gfx::Compare depthTest;
+            gfx::Compare depthTest = gfx::Compare::UNDEFINED;
         };
 
         struct BlendDescriptor
@@ -31,11 +31,11 @@ namespace gfx
         {
             bool enabled = true;
             TextureFormat format = TextureFormat::RGBA8_UNORM;
+            BlendDescriptor blend = {};
         };
         
         utils::Span<ColorTargetDescriptor> colorTargets;
         DepthDescriptor depth;
-        BlendDescriptor blend;
     };
 }
 

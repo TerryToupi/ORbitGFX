@@ -28,10 +28,10 @@ namespace gfx
         }
         
         s_DepthAttachment = nullptr;
-        const DawnTexture* depth = rm->Get(desc.depthTarget.depth);
+        const DawnTexture* depth = rm->Get(desc.depthTarget);
         if (depth && renderPass->s_DepthEnabled)
         {
-            s_DepthAttachment = depth->s_TextureViews[desc.depthTarget.viewIndex];
+            s_DepthAttachment = depth->s_Texture.CreateView();
         }
 
         if (desc.colorTargets.size() > kMaxColorAttachments)
@@ -42,10 +42,10 @@ namespace gfx
         for (const auto& target : desc.colorTargets)
         {
             s_ColorAttachments[index] = nullptr;
-            const DawnTexture* texture = rm->Get(target.target);
+            const DawnTexture* texture = rm->Get(target);
             if (texture)
             {
-                s_ColorAttachments[index] = texture->s_TextureViews[target.viewIndex];
+                s_ColorAttachments[index] = texture->s_Texture.CreateView();
                 ++index;
             }
         }

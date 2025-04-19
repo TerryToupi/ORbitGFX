@@ -30,7 +30,6 @@ namespace gfx
         {
             uint32_t slot = 0;
             utils::Handle<Texture> textureView;
-            uint32_t viewIndex = 0;
         };
         
         struct SamplerEntry

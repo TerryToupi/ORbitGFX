@@ -18,9 +18,8 @@ namespace gfx
 		void Destroy();
 
 	public:
-		uint8_t s_TextureViewCount = 0;
 		wgpu::Texture s_Texture;
-		wgpu::TextureView s_TextureViews[kMaxTextureViews];
+		wgpu::TextureView s_TextureView;
 	};
 }
 
