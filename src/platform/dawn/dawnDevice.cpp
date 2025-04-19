@@ -222,12 +222,14 @@ namespace gfx
         adapterInfo.nextInChain = &power_procs;
 
         m_Adapter.GetInfo(&adapterInfo);
-        std::cout << "VendorID: " << std::hex << adapterInfo.vendorID << std::dec << "\n";
-        std::cout << "Vendor: " << std::string_view(adapterInfo.vendor) << "\n";
-        std::cout << "Architecture: " << std::string_view(adapterInfo.architecture) << "\n";
-        std::cout << "DeviceID: " << std::hex << adapterInfo.deviceID << std::dec << "\n";
-        std::cout << "Name: " << std::string_view(adapterInfo.device) << "\n";
-        std::cout << "Driver description: " << std::string_view(adapterInfo.description) << "\n";
+        std::stringstream infoStream;
+        infoStream << "VendorID: " << std::hex << adapterInfo.vendorID << std::dec << "\n";
+        infoStream << "Vendor: " << std::string_view(adapterInfo.vendor) << "\n";
+        infoStream << "Architecture: " << std::string_view(adapterInfo.architecture) << "\n";
+        infoStream << "DeviceID: " << std::hex << adapterInfo.deviceID << std::dec << "\n";
+        infoStream << "Name: " << std::string_view(adapterInfo.device) << "\n";
+        infoStream << "Driver description: " << std::string_view(adapterInfo.description) << "\n";
+        GFX_TRACE(infoStream.str());
         
         s_DeviceDesc =
         {
@@ -241,11 +243,12 @@ namespace gfx
 
         wgpu::Limits adapterLimits;
         m_Adapter.GetLimits(&adapterLimits);
-
-        std::cout << "\n";
-        std::cout << "  Adapter Limits\n";
-        std::cout << "  ==============\n";
-        std::cout << LimitsToString(adapterLimits, "    ") << "\n";
+        std::stringstream limitsStream;
+        limitsStream << "\n";
+        limitsStream << "  Adapter Limits\n";
+        limitsStream << "  ==============\n";
+        limitsStream << LimitsToString(adapterLimits, "    ") << "\n";
+        GFX_TRACE(limitsStream.str());
         
         s_AdapterDesc =
         {
