@@ -38,8 +38,7 @@ namespace gfx
 		};
 
 		struct GraphicsState 
-		{ 
-			gfx::Compare depthCompare = gfx::Compare::UNDEFINED;
+		{
 			std::vector<VertexBufferBinding> vertexBufferBindings;
 			utils::Handle<RenderPassLayout> renderPassLayout;
 		};
