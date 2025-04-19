@@ -1,6 +1,7 @@
 #include <dawn/dawnDevice.hpp>
 
 #include <log.hpp>
+#include <assert.hpp>
 
 #include <sstream>
 #include <string>
@@ -98,11 +99,7 @@ namespace gfx
         idesc.capabilities.timedWaitAnyEnable = true;
         m_Instance = wgpu::CreateInstance(&idesc);
 
-        if (m_Instance == nullptr)
-        {
-            std::cerr << "not able to fetch gpu instance";
-            exit(EXIT_FAILURE);
-        }
+        GFX_ASSERT(m_Instance != nullptr, "Not able to fetch gpu instance!");
 
         wgpu::RequestAdapterOptions adapterOptions =
         {
@@ -117,8 +114,9 @@ namespace gfx
                 {
                     if (status != wgpu::RequestAdapterStatus::Success)
                     {
-                        std::cerr << "not able to fetch gpu adapter: " << std::string_view(message);
-                        exit(EXIT_FAILURE);
+                        std::stringstream out;
+                        out << "Not able to fetch gpu adatper: " << std::string_view(message);
+                        GFX_ASSERT(false, out.str());
                     }
 
                     m_Adapter = std::move(adapter);
@@ -126,12 +124,7 @@ namespace gfx
             ),
             UINT64_MAX
         );
-
-        if (m_Adapter == nullptr)
-        {
-            std::cerr << "RequestAdapter failed!\n";
-            exit(EXIT_FAILURE);
-        }
+        GFX_ASSERT(m_Adapter != nullptr, "Adapter Request failed!");
 
         wgpu::DeviceDescriptor deviceDesc = {};
         deviceDesc.SetDeviceLostCallback(
@@ -201,8 +194,9 @@ namespace gfx
                 {
                     if (status != wgpu::RequestDeviceStatus::Success)
                     {
-                        std::cerr << "not able to fetch device from adapter: " << std::string_view(message);
-                        exit(EXIT_FAILURE);
+                        std::stringstream out;
+                        out << "not able to fetch device from adapter: " << std::string_view(message);
+                        GFX_ASSERT(false, out.str());
                     }
 
                     m_Device = std::move(device);
@@ -210,12 +204,7 @@ namespace gfx
             ),
             UINT64_MAX
         );
-
-        if (m_Device == nullptr)
-        {
-            std::cerr << "RequestDevice failed!\n";
-            exit(EXIT_FAILURE);
-        }
+        GFX_ASSERT(m_Device != nullptr, "Device Request failed!");
 
         wgpu::DawnAdapterPropertiesPowerPreference power_procs = {};
         wgpu::AdapterInfo adapterInfo = {};
