@@ -5,6 +5,8 @@
 #include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/render/dawnRenderer.hpp>
 
+#include <log.hpp>
+
 namespace gfx
 {
     void Renderer::INIT()

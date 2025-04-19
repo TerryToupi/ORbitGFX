@@ -4,8 +4,6 @@
 #include <render/renderPassRenderer.hpp>
 #include <render/commandBuffer.hpp>
 
-#include <log.hpp>
-
 namespace gfx
 {
 	class Renderer
