@@ -25,6 +25,11 @@ set(SHADERC_SKIP_EXAMPLES ON)
 set(SHADERC_ENABLE_SHARED_CRT ON)
 add_subdirectory(${EXTERNAL}/shaderc)
 
+# spdlog
+set(SPDLOG_BUILD_TESTS OFF)
+set(SPDLOG_BUILD_SHARED OFF)
+add_subdirectory(${EXTERNAL}/spdlog)
+
 add_library(ORbitGFX STATIC)
 add_library(gfx::ORbit ALIAS ORbitGFX)
 
@@ -36,10 +41,11 @@ target_sources(ORbitGFX
 
 target_include_directories(ORbitGFX
     PUBLIC
-    "${INCLUDE}/renderer"
-    "${INCLUDE}/utilities"
+    ${INCLUDE}/renderer
+    ${INCLUDE}/utilities
     PRIVATE
-    "${INCLUDE}/platform"
+    ${INCLUDE}/platform
+    ${INCLUDE}/common
 )
 
 target_link_libraries(ORbitGFX
@@ -49,6 +55,7 @@ target_link_libraries(ORbitGFX
     glfw 
     shaderc
     libtint
+    spdlog::spdlog
 )
 
 # POST BUILD ACTIONS 

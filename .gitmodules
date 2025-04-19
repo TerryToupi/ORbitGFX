@@ -4,3 +4,6 @@
 [submodule "external/shaderc"]
 	path = external/shaderc
 	url = https://github.com/google/shaderc.git
+[submodule "external/spdlog"]
+	path = external/spdlog
+	url = https://github.com/gabime/spdlog.git
