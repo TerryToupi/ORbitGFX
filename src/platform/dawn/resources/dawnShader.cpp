@@ -40,7 +40,7 @@ namespace gfx
 
 			std::stringstream out;
 			out << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
-			GFX_ASSERT(module.GetCompilationStatus() != shaderc_compilation_status_success, out.str());
+			GFX_ASSERT(module.GetCompilationStatus() == shaderc_compilation_status_success, out.str());
 
 			std::vector<uint32_t> VSspirv = { module.cbegin(), module.cend() };
 
@@ -66,7 +66,7 @@ namespace gfx
 
 			std::stringstream out;
 			out << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
-			GFX_ASSERT(module.GetCompilationStatus() != shaderc_compilation_status_success, out.str());
+			GFX_ASSERT(module.GetCompilationStatus() == shaderc_compilation_status_success, out.str());
 
 			std::vector<uint32_t> PSspirv = { module.cbegin(), module.cend() };
 
