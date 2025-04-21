@@ -26,11 +26,13 @@ namespace gfx
             .height = 720
             });
 
-        GFX_TRACE("Renderer status initialized");
+        GFX_TRACE("Renderer status: initialized");
     }
 
     void Renderer::SHUTDOWN()
     {
+        GFX_TRACE("Renderer stattus: shutting down");
+
         gfx::ResourceManager::instance->ShutDown();
         gfx::Window::instance->ShutDown();
         gfx::Device::instance->ShutDown();

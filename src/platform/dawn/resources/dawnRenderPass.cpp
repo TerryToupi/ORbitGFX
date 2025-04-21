@@ -1,5 +1,6 @@
 #include <dawn/resources/dawnRenderPass.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
+#include <assert.hpp>
 
 namespace gfx
 {
@@ -18,11 +19,7 @@ namespace gfx
         DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
         
         DawnRenderPassLayout* rpl = rm->Get(desc.layout);
-        if (!rpl)
-        {
-            //TODO: assert false;
-            return;
-        }
+		GFX_ASSERT(rpl, "Provided Render pipeline layout in Dawn Renderpass creation was NULL!");
         
 		int index = 0;
 		for (const auto& target : desc.colorTargets)

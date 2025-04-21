@@ -13,7 +13,7 @@ namespace gfx
         DawnDevice* device = (DawnDevice*)Device::instance;
         
         if (!glfwInit())
-            exit(EXIT_FAILURE);
+            GFX_ASSERT(false, "GFLW failed to initialize!");
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 

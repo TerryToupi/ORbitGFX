@@ -1,6 +1,7 @@
 #include <dawn/resources/dawnFrameBuffer.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <assert.hpp>
 
 namespace gfx
 {
@@ -21,11 +22,8 @@ namespace gfx
         wgpu::Device device = deviceInsance->GetDawnDevice();
       
         const DawnRenderPass* renderPass = rm->Get(desc.renderPass);
-        if (!renderPass) 
-        {
-            //TODO: assert
-            return;
-        }
+        GFX_ASSERT(renderPass, "Provided Render Pass in Dawn Frame Buffer creation was NULL!");
+
         
         s_DepthAttachment = nullptr;
         const DawnTexture* depth = rm->Get(desc.depthTarget);
@@ -34,9 +32,7 @@ namespace gfx
             s_DepthAttachment = depth->s_Texture.CreateView();
         }
 
-        if (desc.colorTargets.size() > kMaxColorAttachments)
-            // TODO: assert false;
-            return;
+        GFX_ASSERT(desc.colorTargets.size() < kMaxColorAttachments, "Provided color target size in the Dawn Frame Buffer was greated than the max available color attachments!");
         
         uint32_t index = 0;
         for (const auto& target : desc.colorTargets)

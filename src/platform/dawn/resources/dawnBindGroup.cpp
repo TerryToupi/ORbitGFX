@@ -1,6 +1,7 @@
 #include <dawn/resources/dawnBindGroup.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <assert.hpp>
 
 namespace gfx
 {
@@ -17,16 +18,13 @@ namespace gfx
         DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
         
         DawnBindGroupLayout* bgl = rm->Get(desc.layout);
-        if (!bgl)
-            //TODO: assert false;
-            return;
+        GFX_ASSERT(bgl, "Provided bind group layout in the Dawn bind group creation was NULL!");
        
         wgpu::BindGroupEntry bgEntries[kMaxLayoutBindings];
         wgpu::BindGroupDescriptor bgDescriptor = {};
         
-        if ((desc.buffers.size() + desc.textures.size() + desc.samplers.size()) > kMaxLayoutBindings)
-            //TODO: assert false;
-            return;
+        GFX_ASSERT((desc.buffers.size() + desc.textures.size() + desc.samplers.size()) < kMaxLayoutBindings,
+            "Bindings size was greater than the max layout Bindins");
         
         bgDescriptor.layout = bgl->s_BindGroupLayout;
         

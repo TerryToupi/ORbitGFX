@@ -1,5 +1,6 @@
 #include <dawn/resources/dawnBindGroupLayout.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <assert.hpp>
 
 namespace gfx
 {
@@ -16,11 +17,8 @@ namespace gfx
         wgpu::BindGroupLayoutEntry entries[kMaxLayoutBindings];
 		wgpu::BindGroupLayoutDescriptor layoutDesc = {};
         
-        if ((desc.bufferBindings.size() + desc.textureBindings.size() + desc.samplerBindings.size()) > kMaxLayoutBindings)
-        {
-            //TODO: assert false
-            return;
-        }
+		GFX_ASSERT((desc.bufferBindings.size() + desc.textureBindings.size() + desc.samplerBindings.size()) < kMaxLayoutBindings, 
+			"Provided Layout bindinds size is greater than the max layout size in the Dawn bindgroup layout creation");
 
 		int index = 0;
 		for (const auto& bufferBinding : desc.bufferBindings)

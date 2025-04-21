@@ -1,11 +1,13 @@
 #include <dawn/resources/dawnShader.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <assert.hpp>
 
 #include <shaderc/shaderc.hpp>
 #include <tint/tint.h>
 
 #include <filesystem>
+#include <sstream>
 
 namespace gfx
 {
@@ -36,11 +38,9 @@ namespace gfx
 				spirvOptions
 			);
 
-			if (module.GetCompilationStatus() != shaderc_compilation_status_success) 
-			{
-				std::cerr << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
-				exit(EXIT_FAILURE);
-			}
+			std::stringstream out;
+			out << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
+			GFX_ASSERT(module.GetCompilationStatus() != shaderc_compilation_status_success, out.str());
 
 			std::vector<uint32_t> VSspirv = { module.cbegin(), module.cend() };
 
@@ -64,11 +64,9 @@ namespace gfx
 				spirvOptions
 			);
 
-			if (module.GetCompilationStatus() != shaderc_compilation_status_success) 
-			{
-				std::cerr << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
-				exit(EXIT_FAILURE);
-			}
+			std::stringstream out;
+			out << "Shader compilation error: " << module.GetErrorMessage() << std::endl;
+			GFX_ASSERT(module.GetCompilationStatus() != shaderc_compilation_status_success, out.str());
 
 			std::vector<uint32_t> PSspirv = { module.cbegin(), module.cend() };
 
