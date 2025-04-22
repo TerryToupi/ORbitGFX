@@ -17,4 +17,12 @@ namespace gfx
 	{
 		return static_cast<CommandBuffer*>(&m_mainBuffer);
 	}
+
+	void DawnRenderer::Init()
+	{
+	}
+
+	void DawnRenderer::ShutDown()
+	{
+	}
 }

@@ -17,6 +17,10 @@ namespace gfx
 	public:
 		virtual RenderPassRenderer* RequestPassRenderer() override;
 		virtual CommandBuffer* BeginCommandRecording() override;
+
+	private:
+		virtual void Init() override;
+		virtual void ShutDown() override;
         
     private:
 		// render pass rendering

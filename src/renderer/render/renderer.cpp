@@ -25,6 +25,7 @@ namespace gfx
             .width = 1024,
             .height = 720
             });
+        gfx::Renderer::instance->Init();
 
         GFX_TRACE("Renderer status: initialized");
     }
@@ -36,6 +37,7 @@ namespace gfx
         gfx::ResourceManager::instance->ShutDown();
         gfx::Window::instance->ShutDown();
         gfx::Device::instance->ShutDown();
+        gfx::Renderer::instance->ShutDown();
         
         diag::Logger::ShutDown();
     }
