@@ -28,8 +28,10 @@ namespace gfx
 
 	void DawnRenderer::Upload()
 	{
-        DawnDevice* dInstance = (DawnDevice*)Device::instance;
-        wgpu::Device device = dInstance->GetDawnDevice();
+		Wait();
+
+        DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
+        wgpu::Device device = deviceImpl->GetDawnDevice();
 
 		if (m_mainBuffer.s_State == CommandBufferState::PENDING_UPLOAD)
 			device.GetQueue().Submit(1, &m_mainBuffer.m_CommandBuffer);
