@@ -34,7 +34,10 @@ namespace gfx
         wgpu::Device device = deviceImpl->GetDawnDevice();
 
 		if (m_mainBuffer.s_State == CommandBufferState::PENDING_UPLOAD)
+		{
 			device.GetQueue().Submit(1, &m_mainBuffer.m_CommandBuffer);
+			m_mainBuffer.s_State = CommandBufferState::EMPTY;
+		}
 	}
 
 	CommandBuffer* DawnRenderer::BeginCommandRecording()
