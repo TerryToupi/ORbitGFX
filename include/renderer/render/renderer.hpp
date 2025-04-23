@@ -17,6 +17,8 @@ namespace gfx
 		virtual RenderPassRenderer* RequestPassRenderer() = 0;
 		virtual CommandBuffer* BeginCommandRecording() = 0;
 
+		virtual void Upload() = 0;
+
 	private:
 		virtual void Init() = 0;
 		virtual void ShutDown() = 0;

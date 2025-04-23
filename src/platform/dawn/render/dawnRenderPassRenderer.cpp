@@ -1,5 +1,6 @@
 #include <dawn/render/dawnRenderPassRenderer.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/render/dawnRenderer.hpp>
 #include <dawn/dawnDevice.hpp>
 #include <dawn/dawnWindow.hpp>
 
@@ -137,9 +138,16 @@ namespace gfx
 
     void DawnRenderPassRenderer::DrawPass(DrawStream& cmds)
     { 
-		if (s_SurfacePass)
-			DrawSurface(cmds);
-		else
-			DrawFrameBuffer(cmds);
+		DawnRenderer* renderer = (DawnRenderer*)Renderer::instance;
+		
+		renderer->Execute([this, &cmds] {
+			if (s_SurfacePass)
+				DrawSurface(cmds);
+			else
+				DrawFrameBuffer(cmds);
+
+			DawnCommandBuffer* buffer = (DawnCommandBuffer*)s_BufferHandle; 
+			buffer->m_CommandBuffer = m_Encoder.Finish();
+		});
     }
 }

@@ -6,6 +6,7 @@
 #include <resources/frameBuffer.hpp>
 #include <resources/renderPass.hpp>
 #include <render/renderPassRenderer.hpp>
+#include <enums.hpp>
 
 namespace gfx
 {
@@ -34,6 +35,9 @@ namespace gfx
         {
             return;
         }
+
+    public:
+        CommandBufferState s_State = CommandBufferState::EMPTY;
     };
 }
 

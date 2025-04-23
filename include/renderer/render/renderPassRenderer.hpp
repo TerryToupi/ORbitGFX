@@ -9,6 +9,8 @@
 
 namespace gfx
 {
+    class CommandBuffer;
+
     class RenderPassRenderer
     {
     public:
@@ -22,6 +24,8 @@ namespace gfx
         bool s_SurfacePass = false;
         utils::Handle<FrameBuffer> s_FrameBuffer;
         utils::Handle<RenderPass> s_RenderPass;
+
+        CommandBuffer* s_BufferHandle;
     };
 }
 

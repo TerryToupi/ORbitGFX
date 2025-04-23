@@ -224,7 +224,14 @@ namespace gfx
 		CLEAR = UINT_BIT_SHIFT(0),
 		LOAD = UINT_BIT_SHIFT(1),
 		DONT_CARE = UINT_BIT_SHIFT(2),
-	}; 
+	};
+
+	enum class CommandBufferState : unsigned int
+	{
+		EMPTY = UINT_BIT_SHIFT(0),
+		CAPTURED = UINT_BIT_SHIFT(1),
+		PENDING_UPLOAD = UINT_BIT_SHIFT(2)
+	};
 
 	inline gfx::ShaderStage operator|(gfx::ShaderStage lhs, gfx::ShaderStage rhs)
 	{

@@ -20,6 +20,7 @@ namespace gfx
         wgpu::CommandBuffer m_CommandBuffer;
 
         friend class DawnRenderer;
+        friend class DawnRenderPassRenderer;
     };
 }
 

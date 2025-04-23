@@ -1,6 +1,7 @@
 #include <dawn/render/dawnCommandBuffer.hpp>
 #include <dawn/render/dawnRenderer.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <assert.hpp>
 
 namespace gfx
 {
@@ -11,6 +12,10 @@ namespace gfx
 
         passRenderer->s_FrameBuffer = frameBuffer;
         passRenderer->s_RenderPass = renderPass;
+        passRenderer->s_BufferHandle = (CommandBuffer*)this;
+
+        GFX_ASSERT(s_State == CommandBufferState::EMPTY);
+        s_State = CommandBufferState::CAPTURED;
 
         return passRenderer;
     }
@@ -22,22 +27,26 @@ namespace gfx
 
         passRenderer->s_SurfacePass = true;
         passRenderer->s_RenderPass = renderPass;
+        passRenderer->s_BufferHandle = (CommandBuffer*)this;
+
+        GFX_ASSERT(s_State == CommandBufferState::EMPTY);
+        s_State = CommandBufferState::CAPTURED;
 
         return passRenderer;
     }
 
     void DawnCommandBuffer::EndCommandRecording(const RenderPassRenderer* passRenderer)
     {
-        DawnRenderPassRenderer* derived = (DawnRenderPassRenderer*)passRenderer;
-
-        m_CommandBuffer = derived->m_Encoder.Finish();
     }
 
     void DawnCommandBuffer::Submit()
     {
-        DawnDevice* dInstance = (DawnDevice*)Device::instance;
-        wgpu::Device device = dInstance->GetDawnDevice();
+        //DawnDevice* dInstance = (DawnDevice*)Device::instance;
+        //wgpu::Device device = dInstance->GetDawnDevice();
 
-        device.GetQueue().Submit(1, &m_CommandBuffer);
+        //device.GetQueue().Submit(1, &m_CommandBuffer);
+        
+        GFX_ASSERT(s_State == CommandBufferState::CAPTURED);
+        s_State = CommandBufferState::PENDING_UPLOAD;
     }
 }
