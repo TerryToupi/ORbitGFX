@@ -139,12 +139,13 @@ namespace gfx
     void DawnRenderPassRenderer::DrawPass(DrawStream& cmds)
     { 
 		DawnRenderer* renderer = (DawnRenderer*)Renderer::instance;
-		
-		renderer->Execute([this, &cmds] {
+
+		s_ActiveStream = std::move(cmds);
+		renderer->Execute([=] {
 			if (s_SurfacePass)
-				DrawSurface(cmds);
+				DrawSurface(s_ActiveStream);
 			else
-				DrawFrameBuffer(cmds);
+				DrawFrameBuffer(s_ActiveStream);
 
 			DawnCommandBuffer* buffer = (DawnCommandBuffer*)s_BufferHandle; 
 			buffer->m_CommandBuffer = m_Encoder.Finish();

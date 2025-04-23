@@ -24,7 +24,7 @@ namespace gfx
         bool s_SurfacePass = false;
         utils::Handle<FrameBuffer> s_FrameBuffer;
         utils::Handle<RenderPass> s_RenderPass;
-
+        DrawStream s_ActiveStream;
         CommandBuffer* s_BufferHandle;
     };
 }
