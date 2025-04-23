@@ -141,6 +141,7 @@ namespace gfx
 		DawnRenderer* renderer = (DawnRenderer*)Renderer::instance;
 
 		s_ActiveStream = std::move(cmds);
+
 		renderer->Execute([=] {
 			if (s_SurfacePass)
 				DrawSurface(s_ActiveStream);

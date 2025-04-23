@@ -18,6 +18,7 @@ namespace gfx
 	public:
 		using RenderJob = std::function<void()>;
 
+		virtual CommandBuffer* BeginCommandRecording() override;
 		virtual RenderPassRenderer* RequestPassRenderer() override;
 
 		virtual void Upload() override;
@@ -26,19 +27,15 @@ namespace gfx
 		virtual void Init() override;
 		virtual void ShutDown() override;
 
-		virtual CommandBuffer* BeginCommandRecording() override;
-
 		void Execute(const RenderJob& job);
 		bool IsBusy();
 		void Wait();
 		inline void Poll();
         
     private:
-		// render pass rendering
-		DawnRenderPassRenderer m_RenderPassRenderer;
-
-		// command buffers
-		DawnCommandBuffer m_mainBuffer;
+		uint32_t m_CurrentPass = 0;
+		DawnCommandBuffer m_CommandBuffers[4];
+		DawnRenderPassRenderer m_RenderPassRenderers[4];
 
 	private:
 		uint32_t m_NumThreads = 0;

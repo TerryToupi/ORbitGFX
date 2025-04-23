@@ -21,28 +21,35 @@ namespace gfx
 		DawnDevice* deviceInstance = (DawnDevice*)Device::instance;
 		wgpu::Device device = deviceInstance->GetDawnDevice();
 
-		m_RenderPassRenderer.m_Encoder = device.CreateCommandEncoder();
+		m_RenderPassRenderers[m_CurrentPass].m_Encoder = device.CreateCommandEncoder();
+		++m_CurrentPass;
 
-		return static_cast<RenderPassRenderer*>(&m_RenderPassRenderer);
+		return static_cast<RenderPassRenderer*>(&m_RenderPassRenderers[m_CurrentPass]);
 	}
 
 	void DawnRenderer::Upload()
 	{
 		Wait();
+		
+		m_CurrentPass = 0;
 
         DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
         wgpu::Device device = deviceImpl->GetDawnDevice();
 
-		if (m_mainBuffer.s_State == CommandBufferState::PENDING_UPLOAD)
+		wgpu::CommandBuffer buffers[] =
 		{
-			device.GetQueue().Submit(1, &m_mainBuffer.m_CommandBuffer);
-			m_mainBuffer.s_State = CommandBufferState::EMPTY;
-		}
+			m_CommandBuffers[0].m_CommandBuffer,
+			m_CommandBuffers[1].m_CommandBuffer,
+			m_CommandBuffers[2].m_CommandBuffer,
+			m_CommandBuffers[3].m_CommandBuffer,
+		};
+
+		device.GetQueue().Submit(4, buffers);
 	}
 
 	CommandBuffer* DawnRenderer::BeginCommandRecording()
 	{
-		return static_cast<CommandBuffer*>(&m_mainBuffer);
+		return static_cast<CommandBuffer*>(&m_CommandBuffers[m_CurrentPass]);
 	}
 
 	void DawnRenderer::Execute(const RenderJob& job)
