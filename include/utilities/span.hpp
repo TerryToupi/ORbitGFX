@@ -28,8 +28,8 @@ namespace utils
 
 		const T* begin() const { return m_Data; }
 		const T* end() const { return m_Data + m_Size; }
-		//T* begin() { return m_Data; }
-		//T* end() { return m_Data + m_Size; }
+		T* begin() { return m_Data; }
+		T* end() { return m_Data + m_Size; }
 
 		size_t size() const { return m_Size; }
 
