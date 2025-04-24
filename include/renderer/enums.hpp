@@ -233,6 +233,12 @@ namespace gfx
 		PENDING_UPLOAD = UINT_BIT_SHIFT(2)
 	};
 
+	enum class CommandBufferType : unsigned int
+	{
+		OFFSCREEN = UINT_BIT_SHIFT(0),
+		UI = UINT_BIT_SHIFT(1)
+	};
+
 	inline gfx::ShaderStage operator|(gfx::ShaderStage lhs, gfx::ShaderStage rhs)
 	{
 		return static_cast<gfx::ShaderStage>(

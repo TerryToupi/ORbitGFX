@@ -1,8 +1,8 @@
 #ifndef __RENDERER_HPP__
 #define __RENDERER_HPP__
 
-#include <render/renderPassRenderer.hpp>
-#include <render/commandBuffer.hpp>
+#include <enums.hpp>
+#include <render/passRenderer.hpp>
 
 namespace gfx
 {
@@ -14,10 +14,7 @@ namespace gfx
 		static void INIT();
 		static void SHUTDOWN();
 
-		virtual RenderPassRenderer* RequestPassRenderer() = 0;
-		virtual CommandBuffer* BeginCommandRecording() = 0;
-
-		virtual void Upload() = 0;
+		virtual CommandBuffer* BeginCommandRecording(gfx::CommandBufferType type) = 0;
 
 	private:
 		virtual void Init() = 0;

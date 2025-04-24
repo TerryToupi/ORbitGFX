@@ -1,75 +1,11 @@
-#include <dawn/render/dawnRenderPassRenderer.hpp>
+#include <dawn/render/dawnPassRenderer.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
-#include <dawn/render/dawnRenderer.hpp>
 #include <dawn/dawnDevice.hpp>
 #include <dawn/dawnWindow.hpp>
 
 namespace gfx
 {
-    void DawnRenderPassRenderer::DrawSurface(DrawStream& cmds)
-    {
-        DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
-        DawnDevice* dInstance = (DawnDevice*)Device::instance;
-		DawnWindow* windowInstance = (DawnWindow*)Window::instance;
-
-        wgpu::Device device = dInstance->GetDawnDevice();
-
-        wgpu::RenderPassDescriptor dawnDesc = {};
-
-		wgpu::SurfaceTexture surface;
-		windowInstance->GetDawnSurface().GetCurrentTexture(&surface); 
-		
-		DawnRenderPass* rp = rm->Get(s_RenderPass);
-		if (rp)
-		{
-			// There is only one surface
-			rp->s_ColorAttachments[0].view = surface.texture.CreateView();
-
-			dawnDesc.colorAttachmentCount = rp->s_ColorAttachmentCount;
-			dawnDesc.colorAttachments = rp->s_ColorAttachments;
-		} 
-	
-		wgpu::RenderPassEncoder pass = m_Encoder.BeginRenderPass(&dawnDesc);
-		{
-			for (const auto& cmd : cmds)
-			{
-				DawnShader* shader = rm->Get(cmd.shader);
-				if (shader)
-					pass.SetPipeline(shader->s_Pipeline);
-
-				uint32_t ibg = 0;
-				for (const auto& hBindGroup : cmd.bindGroups)
-				{
-					DawnBindGroup* bindGroup = rm->Get(hBindGroup);
-					if (bindGroup)
-					{
-						pass.SetBindGroup(ibg, bindGroup->s_BindGroup);
-						++ibg;
-					}
-				}
-
-				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
-				if (indexBuffer)
-					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
-
-				uint32_t ib = 0;
-				for (const auto& hBuffer : cmd.vertexBuffers)
-				{
-					DawnBuffer* buffer = rm->Get(hBuffer);
-					if (buffer)
-					{
-						pass.SetVertexBuffer(ib, buffer->s_Buffer);
-						++ib;
-					}
-				}
-
-				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
-			}
-		}
-		pass.End();
-    }
-
-	void DawnRenderPassRenderer::DrawFrameBuffer(DrawStream& cmds)
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer, utils::Span<Draw> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
@@ -78,11 +14,11 @@ namespace gfx
 
 		wgpu::RenderPassDescriptor dawnDesc = {};
 
-		DawnRenderPass* rp = rm->Get(s_RenderPass);
-		DawnFrameBuffer* fb = rm->Get(s_FrameBuffer);
+		DawnRenderPass* rp = rm->Get(renderPass);
+		DawnFrameBuffer* fb = rm->Get(frameBuffer);
 		if (rp != nullptr && fb != nullptr)
 		{
-			for (int i = 0; i < rp->s_ColorAttachmentCount; i++)
+			for (int i = 0; i < rp->s_ColorAttachmentCount; ++i)
 			{
 				rp->s_ColorAttachments[i].view = fb->s_ColorAttachments[i];
 			}
@@ -96,9 +32,9 @@ namespace gfx
 				dawnDesc.depthStencilAttachment = &rp->s_DepthAttachment;
 		}
 
-		wgpu::RenderPassEncoder pass = m_Encoder.BeginRenderPass(&dawnDesc);
+		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
 		{
-			for (const auto& cmd : cmds)
+			for (const auto& cmd : drawCalls)
 			{
 				DawnShader* shader = rm->Get(cmd.shader);
 				if (shader)
@@ -136,20 +72,78 @@ namespace gfx
 		pass.End();
 	}
 
-    void DawnRenderPassRenderer::DrawPass(DrawStream& cmds)
-    { 
-		DawnRenderer* renderer = (DawnRenderer*)Renderer::instance;
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Span<Draw> drawCalls)
+	{
+		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
+		DawnDevice* dInstance = (DawnDevice*)Device::instance;
+		DawnWindow* windowInstance = (DawnWindow*)Window::instance;
 
-		s_ActiveStream = std::move(cmds);
+		wgpu::Device device = dInstance->GetDawnDevice();
 
-		renderer->Execute([=] {
-			if (s_SurfacePass)
-				DrawSurface(s_ActiveStream);
-			else
-				DrawFrameBuffer(s_ActiveStream);
+		wgpu::RenderPassDescriptor dawnDesc = {};
 
-			DawnCommandBuffer* buffer = (DawnCommandBuffer*)s_BufferHandle; 
-			buffer->m_CommandBuffer = m_Encoder.Finish();
-		});
-    }
+		wgpu::SurfaceTexture surface;
+		windowInstance->GetDawnSurface().GetCurrentTexture(&surface);
+
+		DawnRenderPass* rp = rm->Get(renderPass);
+		if (rp)
+		{
+			// There is only one surface
+			rp->s_ColorAttachments[0].view = surface.texture.CreateView();
+
+			dawnDesc.colorAttachmentCount = rp->s_ColorAttachmentCount;
+			dawnDesc.colorAttachments = rp->s_ColorAttachments;
+		}
+
+		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
+		{
+			for (const auto& cmd : drawCalls)
+			{
+				DawnShader* shader = rm->Get(cmd.shader);
+				if (shader)
+					pass.SetPipeline(shader->s_Pipeline);
+
+				uint32_t ibg = 0;
+				for (const auto& hBindGroup : cmd.bindGroups)
+				{
+					DawnBindGroup* bindGroup = rm->Get(hBindGroup);
+					if (bindGroup)
+					{
+						pass.SetBindGroup(ibg, bindGroup->s_BindGroup);
+						++ibg;
+					}
+				}
+
+				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
+				if (indexBuffer)
+					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
+
+				uint32_t ib = 0;
+				for (const auto& hBuffer : cmd.vertexBuffers)
+				{
+					DawnBuffer* buffer = rm->Get(hBuffer);
+					if (buffer)
+					{
+						pass.SetVertexBuffer(ib, buffer->s_Buffer);
+						++ib;
+					}
+				}
+
+				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
+			}
+		}
+		pass.End();
+	}
+
+	void DawnCommandBuffer::BeginComputePass(utils::Span<utils::Handle<Texture>> textureWrite, utils::Span<utils::Handle<Buffer>> bufferWrite, utils::Span<Dispatch> dispatches)
+	{
+	}
+
+	void DawnCommandBuffer::Submit()
+	{
+		DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
+		wgpu::Device device = deviceImpl->GetDawnDevice();
+
+		device.GetQueue().Submit(1, &m_CommandEncoder.Finish());
+	}
 }

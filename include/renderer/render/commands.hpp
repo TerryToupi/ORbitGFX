@@ -1,13 +1,9 @@
-#ifndef __DRAW_STREAM_HPP__
-#define __DRAW_STREAM_HPP__
-
-#include <handle.hpp>
+#ifndef __COMMANDS_HPP__
+#define __COMMANDS_HPP__
 
 #include <resources/shader.hpp>
 #include <resources/bindGroup.hpp>
 #include <resources/buffer.hpp>
-
-#include <vector>
 
 using namespace utils;
 
@@ -24,21 +20,17 @@ namespace gfx
 		uint32_t vertexOffset = 0;
 		uint32_t instanceOffset = 0;
 		uint32_t instanceCount = 1;
-		uint32_t dynamicBufferOffset[2] = {0};
+		uint32_t dynamicBufferOffset[2] = { 0 };
 		uint32_t triangleCount = 0;
 	};
 
-	class DrawStream
+	struct Dispatch
 	{
-	public:
-		void Insert(const Draw& cmd);
-
-		auto begin() { return m_DrawCmds.begin(); }
-		auto end() { return m_DrawCmds.end(); }
-
-	private:
-		std::vector<Draw> m_DrawCmds;
+		Handle<Shader> shader;
+		Handle<BindGroup> bindGroups[3];
+		uint32_t dynamicBufferOffset[2] = { 0 };
+		uint32_t dynamicBuffer;
 	};
 }
 
-#endif // !__DRAW_STREAM_HPP__
+#endif // !__COMMANDS_HPP__

@@ -20,6 +20,10 @@ namespace utils
 		uint32_t hashKey() const { return (((uint32_t)m_Index) << 16) + (uint32_t)m_Generation; }
 		uint16_t index()  const { return m_Index; }
 
+		uint32_t pack() const { return (static_cast<uint32_t>(m_Index) << 16) | m_Generation; }
+		void unpack(uint32_t packedValue)
+			{ m_Index = static_cast<uint16_t>(packedValue >> 16); m_Generation = static_cast<uint16_t>(packedValue & 0xFFFF); }
+
 	private:
 		Handle(uint32_t index, uint32_t generation) : m_Index(index), m_Generation(generation) {}
 
