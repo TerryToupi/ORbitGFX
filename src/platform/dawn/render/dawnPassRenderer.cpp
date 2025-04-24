@@ -143,7 +143,8 @@ namespace gfx
 	{
 		DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
 		wgpu::Device device = deviceImpl->GetDawnDevice();
-
-		device.GetQueue().Submit(1, &m_CommandEncoder.Finish());
+		
+		wgpu::CommandBuffer commandBuffer = m_CommandEncoder.Finish();
+		device.GetQueue().Submit(1, &commandBuffer);
 	}
 }
