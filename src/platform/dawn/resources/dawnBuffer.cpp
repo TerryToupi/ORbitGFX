@@ -15,12 +15,17 @@ namespace gfx
 
 		wgpu::BufferDescriptor bdesc = {};
 		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage | gfx::BufferUsage::COPY_DST);
+		bdesc.mappedAtCreation = desc.data == nullptr ? false : true;
 		bdesc.size = desc.size;
 
 		s_Buffer = device.CreateBuffer(&bdesc); 
 
 		if (desc.data != nullptr)
-			device.GetQueue().WriteBuffer(s_Buffer, 0, desc.data, desc.size);
+		{
+			void* data = s_Buffer.GetMappedRange(0, desc.size);
+			memcpy(data, desc.data, desc.size);
+			s_Buffer.Unmap();
+		}
 	}
 
 	void DawnBuffer::Destroy()
