@@ -33,7 +33,7 @@ namespace gfx
             entries[index].binding = textureBinding.slot;
             entries[index].visibility = gfx::DecodeShaderType(textureBinding.visibility);
             entries[index].texture.viewDimension = gfx::DecodeTextureDimentionType(textureBinding.viewDimention);
-            entries[index].texture.sampleType = wgpu::TextureSampleType::Float;
+			entries[index].texture.sampleType = gfx::DecodeTextureSampleType(textureBinding.type);
 			++index;
 		}
 		for (const auto& samplerBinding : desc.samplerBindings)

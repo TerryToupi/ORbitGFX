@@ -340,6 +340,35 @@ namespace gfx
 		return gfx::TextureFormat::UNDEFINED;
 	}
 
+	wgpu::TextureSampleType DecodeTextureSampleType(const gfx::TextureSampleType& type)
+	{
+		struct FlagMap {
+			wgpu::TextureSampleType wgpuFlag;
+			gfx::TextureSampleType gfxFlag;
+		};
+
+		const FlagMap flagMaping[] =
+		{
+			{ wgpu::TextureSampleType::UnfilterableFloat, gfx::TextureSampleType::FLOAT_NO_FILTER },
+			{ wgpu::TextureSampleType::Depth, gfx::TextureSampleType::DEPTH },
+			{ wgpu::TextureSampleType::Float, gfx::TextureSampleType::FLOAT },
+			{ wgpu::TextureSampleType::Uint, gfx::TextureSampleType::UINT },
+			{ wgpu::TextureSampleType::Sint, gfx::TextureSampleType::SINT },
+		};
+
+		unsigned int typeValue = static_cast<unsigned int>(type);
+
+		for (const auto& flag : flagMaping)
+		{
+			if (typeValue & static_cast<unsigned int>(flag.gfxFlag))
+			{
+				return flag.wgpuFlag;
+			}
+		}
+
+		return wgpu::TextureSampleType::Undefined;
+	}
+
 	wgpu::BufferUsage DecodeBufferUsageType(const gfx::BufferUsage& type)
 	{
 		struct FlagMap {

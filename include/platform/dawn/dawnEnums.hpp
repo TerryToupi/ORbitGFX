@@ -7,45 +7,47 @@
 
 namespace gfx
 {
-	wgpu::ShaderStage DecodeShaderType(const gfx::ShaderStage& type); 
+	inline wgpu::ShaderStage DecodeShaderType(const gfx::ShaderStage& type); 
 	
-	wgpu::BufferBindingType DecodeBufferBindingType(const gfx::BufferBindingType& type);
+	inline wgpu::BufferBindingType DecodeBufferBindingType(const gfx::BufferBindingType& type);
 
-	wgpu::CompareFunction DecodeCompareType(const gfx::Compare& type); 
+	inline wgpu::CompareFunction DecodeCompareType(const gfx::Compare& type); 
 
-	wgpu::VertexFormat DecodeVertexFormatType(const gfx::VertexFormat& type);
+	inline wgpu::VertexFormat DecodeVertexFormatType(const gfx::VertexFormat& type);
 
-	wgpu::FilterMode DecodeFilterModeType(const gfx::Filter& type); 
+	inline wgpu::FilterMode DecodeFilterModeType(const gfx::Filter& type); 
 
-	wgpu::AddressMode DecodeWarpType(const gfx::Wrap& type); 
+	inline wgpu::AddressMode DecodeWarpType(const gfx::Wrap& type); 
 
-	wgpu::PrimitiveTopology DecodeTopologyType(const gfx::Topology& type); 
+	inline wgpu::PrimitiveTopology DecodeTopologyType(const gfx::Topology& type); 
 
-	wgpu::CullMode DecodeCullModeType(const gfx::CullMode& type); 
+	inline wgpu::CullMode DecodeCullModeType(const gfx::CullMode& type); 
 
-	wgpu::TextureFormat DecodeTextureFormatType(const gfx::TextureFormat& type);
+	inline wgpu::TextureFormat DecodeTextureFormatType(const gfx::TextureFormat& type);
 
-	gfx::TextureFormat EncodeTextureFormatType(const wgpu::TextureFormat& type);
+	inline gfx::TextureFormat EncodeTextureFormatType(const wgpu::TextureFormat& type);
 
-	wgpu::BufferUsage DecodeBufferUsageType(const gfx::BufferUsage& type);
+	inline wgpu::TextureSampleType DecodeTextureSampleType(const gfx::TextureSampleType& type);
+
+	inline wgpu::BufferUsage DecodeBufferUsageType(const gfx::BufferUsage& type);
 	
-	wgpu::TextureDimension DecodeTextureType(const gfx::TextureType& type); 
+	inline wgpu::TextureDimension DecodeTextureType(const gfx::TextureType& type); 
 
-	wgpu::TextureViewDimension DecodeTextureDimentionType(const gfx::TextureDimention& type);
+	inline wgpu::TextureViewDimension DecodeTextureDimentionType(const gfx::TextureDimention& type);
 
-	wgpu::TextureAspect DecodeTextureAspectType(const gfx::TextureAspect& type);
+	inline wgpu::TextureAspect DecodeTextureAspectType(const gfx::TextureAspect& type);
 
-	wgpu::TextureUsage DecodeTextureUsageType(const gfx::TextureUsage& type); 
+	inline wgpu::TextureUsage DecodeTextureUsageType(const gfx::TextureUsage& type); 
 
-	wgpu::BlendFactor DecodeBlendFactorType(const gfx::BlendFactor& type);
+	inline wgpu::BlendFactor DecodeBlendFactorType(const gfx::BlendFactor& type);
 
-	wgpu::BlendOperation DecodeBlendOperationType(const gfx::BlendOperation& type);
+	inline wgpu::BlendOperation DecodeBlendOperationType(const gfx::BlendOperation& type);
 
-	wgpu::StoreOp DecodeStoreOperationType(const gfx::StoreOperation& type);
+	inline wgpu::StoreOp DecodeStoreOperationType(const gfx::StoreOperation& type);
 
-	wgpu::LoadOp DecodeLoadOperationType(const gfx::LoadOperation& type);
+	inline wgpu::LoadOp DecodeLoadOperationType(const gfx::LoadOperation& type);
 
-	unsigned int DecodeTextureFormatToAlignmentType(const gfx::TextureFormat& type);
+	inline unsigned int DecodeTextureFormatToAlignmentType(const gfx::TextureFormat& type);
 }
 
 #endif // !__DAWN_ENUMS_HPP__

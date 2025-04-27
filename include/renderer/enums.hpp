@@ -131,6 +131,16 @@ namespace gfx
 		UNDEFINED = UINT_BIT_SHIFT(16)
 	};
 
+	enum class TextureSampleType : unsigned int
+	{
+		UNDEFINED = UINT_BIT_SHIFT(0),
+		FLOAT = UINT_BIT_SHIFT(1),
+		FLOAT_NO_FILTER = UINT_BIT_SHIFT(2),
+		DEPTH = UINT_BIT_SHIFT(3),
+		SINT = UINT_BIT_SHIFT(4),
+		UINT = UINT_BIT_SHIFT(5)
+	};
+
 	enum class MemoryUsage : unsigned int
 	{
 		CPU_ONLY = UINT_BIT_SHIFT(0),

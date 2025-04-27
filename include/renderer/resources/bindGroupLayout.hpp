@@ -15,6 +15,7 @@ namespace gfx
         struct TextureBinding
         {
             uint32_t slot = 0;
+            TextureSampleType type = TextureSampleType::FLOAT;
             TextureDimention viewDimention = TextureDimention::D2;
             ShaderStage visibility = ShaderStage::VERTEX;
         };
