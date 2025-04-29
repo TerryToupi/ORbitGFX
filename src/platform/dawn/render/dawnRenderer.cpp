@@ -16,9 +16,9 @@ namespace gfx
 			return static_cast<CommandBuffer*>(&m_OffScreenCB);
 			break;
 
-		case gfx::CommandBufferType::UI:
-			m_UICB.m_CommandEncoder = device.CreateCommandEncoder();
-			return static_cast<CommandBuffer*>(&m_UICB);
+		case gfx::CommandBufferType::MAIN:
+			m_MainCB.m_CommandEncoder = device.CreateCommandEncoder();
+			return static_cast<CommandBuffer*>(&m_MainCB);
 			break;
 		}
 
