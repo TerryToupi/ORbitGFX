@@ -1,6 +1,8 @@
 #ifndef __TEXTURE_HPP__
 #define __TEXTURE_HPP__ 
 
+#include <climits>
+
 #include <span.hpp>
 #include <enums.hpp>
 
