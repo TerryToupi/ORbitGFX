@@ -18,17 +18,14 @@ namespace utils
         Span(const std::initializer_list<T> list)
             : m_Data(list.begin()), m_Size(list.size()) {}
 
-        T* data() { return m_Data; }
         const T* data() const { return m_Data; }
         size_t size() const { return m_Size; }
 
-        T* begin() { return m_Data; }
-        T* end() { return m_Data + m_Size; }
         const T* begin() const { return m_Data; }
         const T* end() const { return m_Data + m_Size; }
 
     private:
-        T* m_Data = nullptr;
+        const T* m_Data = nullptr;
         size_t m_Size = 0;
     };
 }
