@@ -34,12 +34,12 @@ namespace gfx
 		struct VertexBufferBinding 
 		{
 			uint32_t byteStride;
-			std::vector<VertexAttribute> attributes;
+			utils::Span<VertexAttribute> attributes;
 		};
 
 		struct GraphicsState 
 		{
-			std::vector<VertexBufferBinding> vertexBufferBindings;
+			utils::Span<VertexBufferBinding> vertexBufferBindings;
 			utils::Handle<RenderPassLayout> renderPassLayout;
 		};
 
