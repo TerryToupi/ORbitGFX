@@ -43,7 +43,7 @@ namespace gfx
         }
         for (const auto& texture : desc.textures)
         {
-            DawnTexture* t = rm->Get(texture.textureView);
+            DawnTexture* t = rm->Get(texture.texture);
             if (t)
             {
                 bgEntries[index].binding = texture.slot;
