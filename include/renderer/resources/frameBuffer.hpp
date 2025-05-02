@@ -14,7 +14,6 @@ namespace gfx
     
     struct FrameBufferDescriptor
     {
-        uint32_t height = 0;
         utils::Handle<RenderPass> renderPass;
        
         utils::Handle<Texture> depthTarget;

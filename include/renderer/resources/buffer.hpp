@@ -2,6 +2,7 @@
 #define __BUFFER_HPP__ 
 
 #include <enums.hpp>
+#include <span.hpp>
 
 namespace gfx
 {
@@ -11,8 +12,8 @@ namespace gfx
 	{ 
 		gfx::BufferUsage usage = gfx::BufferUsage::UNIFORM;
 		gfx::BufferUsageHint hint = gfx::BufferUsageHint::STATIC;
-		uint32_t size = 0;
-		const void* data = nullptr;
+		uint32_t byteSize = 0;
+		utils::Span<const uint8_t> initialData;
 	};
 }
 

@@ -40,7 +40,7 @@ namespace gfx
 		};
 		s_TextureView = s_Texture.CreateView(&textureViewDesc);
 
-		if (desc.uploadDesc.upload)
+		if (desc.upload.data())
 		{
             DawnDevice* deviceInstance = (DawnDevice*)Device::instance;
             wgpu::Device device = deviceInstance->GetDawnDevice();
@@ -65,8 +65,8 @@ namespace gfx
 
 			device.GetQueue().WriteTexture(
 				&imageCpyTexture, 
-				desc.uploadDesc.uploadData, 
-				desc.uploadDesc.uploadSize, 
+				desc.upload.data(),
+				desc.upload.size(),
 				&imageCpyBuffer, 
 				&extent
 			);

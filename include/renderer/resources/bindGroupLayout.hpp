@@ -12,6 +12,14 @@ namespace gfx
 
 	struct BindGroupLayoutDescriptor
 	{
+        struct BufferBinding
+        {
+            uint32_t slot = 0;
+            BufferBindingType type = BufferBindingType::UNIFORM;
+            ShaderStage visibility = ShaderStage::VERTEX;
+        };
+        utils::Span<BufferBinding> bufferBindings;
+
         struct TextureBinding
         {
             uint32_t slot = 0;
@@ -20,14 +28,6 @@ namespace gfx
             ShaderStage visibility = ShaderStage::VERTEX;
         };
         utils::Span<TextureBinding> textureBindings;
-
-        struct BufferBinding
-        {
-            uint32_t slot = 0;
-            BufferBindingType type = BufferBindingType::UNIFORM;
-            ShaderStage visibility = ShaderStage::VERTEX;
-        };
-        utils::Span<BufferBinding> bufferBindings;
 
         struct SamplerBinding
         {

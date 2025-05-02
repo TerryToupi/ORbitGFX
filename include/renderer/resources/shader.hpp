@@ -46,8 +46,8 @@ namespace gfx
 		ShaderPipelineType type = ShaderPipelineType::GRAPHICS;
 		ShaderStage VS; // Vertex Shader
 		ShaderStage PS; // Pixel Shader
-		GraphicsState graphicsState;
 		utils::Span<utils::Handle<BindGroupLayout>> bindLayouts;
+		GraphicsState graphicsState;
 	};
 }
 

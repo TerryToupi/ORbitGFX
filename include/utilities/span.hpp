@@ -8,6 +8,9 @@ namespace utils
     template <typename T>
     class Span {
     public:
+        Span() 
+            : m_Data(nullptr), m_Size(0) {}
+
         Span(const T* data, size_t size) 
             : m_Data(data), m_Size(size) {}
 
@@ -15,7 +18,7 @@ namespace utils
         Span(const T(&arr)[N]) 
             : m_Data(arr), m_Size(N) {}
 
-        Span(const std::initializer_list<T> list)
+        Span(const std::initializer_list<T>& list)
             : m_Data(list.begin()), m_Size(list.size()) {}
 
         const T* data() const { return m_Data; }

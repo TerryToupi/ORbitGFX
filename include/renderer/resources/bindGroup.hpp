@@ -25,21 +25,20 @@ namespace gfx
             uint32_t byteOffset = 0;
             uint32_t range = 0;
         };
+        utils::Span<BufferEntry> buffers;
         
         struct TextureEntry
         {
             uint32_t slot = 0;
-            utils::Handle<Texture> textureView;
+            utils::Handle<Texture> texture;
         };
+        utils::Span<TextureEntry> textures;
         
         struct SamplerEntry
         {
             uint32_t slot = 0;
             utils::Handle<Sampler> sampler;
         };
-        
-        utils::Span<BufferEntry> buffers;
-        utils::Span<TextureEntry> textures;
         utils::Span<SamplerEntry> samplers;
     };
 }

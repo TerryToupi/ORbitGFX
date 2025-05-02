@@ -15,15 +15,15 @@ namespace gfx
 
 		wgpu::BufferDescriptor bdesc = {};
 		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage | gfx::BufferUsage::COPY_DST);
-		bdesc.mappedAtCreation = desc.data == nullptr ? false : true;
-		bdesc.size = desc.size;
+		bdesc.mappedAtCreation = desc.initialData.data() == nullptr ? false : true;
+		bdesc.size = desc.byteSize;
 
 		s_Buffer = device.CreateBuffer(&bdesc); 
 
-		if (desc.data != nullptr)
+		if (desc.initialData.begin() != nullptr)
 		{
-			void* data = s_Buffer.GetMappedRange(0, desc.size);
-			memcpy(data, desc.data, desc.size);
+			void* data = s_Buffer.GetMappedRange(0, desc.byteSize);
+			memcpy(data, desc.initialData.data(), desc.byteSize);
 			s_Buffer.Unmap();
 		}
 	}

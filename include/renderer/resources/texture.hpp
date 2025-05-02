@@ -22,13 +22,6 @@ namespace gfx
 		uint32_t arrayLayerCount = UINT_MAX;
 	}; 
 
-	struct TextureUplaodDescriptor
-	{ 
-		bool upload = false;
-		uint64_t uploadSize = 0;
-		const void* uploadData = nullptr;
-	};
-
 	struct TextureDescriptor
 	{
 		gfx::TextureFormat format = gfx::TextureFormat::RGBA8_UNORM;
@@ -41,7 +34,8 @@ namespace gfx
 		uint32_t samplerCount = 1;
 
 		TextureViewDescriptor view = {};
-		TextureUplaodDescriptor uploadDesc = {};
+		
+		utils::Span<const uint8_t> upload;
 	};
 }
 
