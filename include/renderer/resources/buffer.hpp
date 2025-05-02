@@ -13,7 +13,7 @@ namespace gfx
 		gfx::BufferUsage usage = gfx::BufferUsage::UNIFORM;
 		gfx::BufferUsageHint hint = gfx::BufferUsageHint::STATIC;
 		uint32_t byteSize = 0;
-		utils::Span<const uint8_t> initialData;
+		utils::Span<uint8_t> initialData;
 	};
 }
 

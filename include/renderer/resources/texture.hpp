@@ -35,7 +35,7 @@ namespace gfx
 
 		TextureViewDescriptor view = {};
 		
-		utils::Span<const uint8_t> upload;
+		utils::Span<uint8_t> upload;
 	};
 }
 
