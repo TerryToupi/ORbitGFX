@@ -18,7 +18,6 @@ set(TINT_BUILD_WGSL_READER ON)
 set(TINT_BUILD_SPV_WRITER ON) 
 set(TINT_BUILD_WGSL_WRITER ON)
 set(DAWN_FETCH_DEPENDENCIES ON)
-set(DAWN_BUILD_MONOLITHIC_LIBRARY OFF)
 add_subdirectory(${EXTERNAL}/dawn) 
 
 # shaderc
@@ -62,15 +61,15 @@ target_link_libraries(ORbitGFX
 
 # POST BUILD ACTIONS 
 #######################################################################################################
-# function(copy_renderer_dlls target)
-#     # Function to copy the output file of a dependency target next to the target executable
-#     # Arguments:
-#     #   target: The primary target to which the command will be attached
-#     #   dependency: The target whose output file will be copied
-# 
-#     add_custom_command(
-#         TARGET "${target}" POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#         $<TARGET_FILE:webgpu_dawn> $<TARGET_FILE_DIR:${target}>
-#     )
-# endfunction()
+function(copy_renderer_dlls target)
+    # Function to copy the output file of a dependency target next to the target executable
+    # Arguments:
+    #   target: The primary target to which the command will be attached
+    #   dependency: The target whose output file will be copied
+
+    add_custom_command(
+        TARGET "${target}" POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:webgpu_dawn> $<TARGET_FILE_DIR:${target}>
+    )
+endfunction()
