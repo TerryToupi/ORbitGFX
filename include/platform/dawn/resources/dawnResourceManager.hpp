@@ -22,7 +22,6 @@ namespace gfx
 	public: 
 		virtual void Init() override {};
 		virtual void ShutDown() override {};
-		virtual void Flush() override;
 
 		virtual utils::Handle<Shader>			Create(const gfx::ShaderDescriptor& desc) override;
 		virtual utils::Handle<BindGroup>		Create(const gfx::BindGroupDescriptor& desc) override;

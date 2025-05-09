@@ -12,7 +12,6 @@
 #include <resources/renderPassLayout.hpp>
 
 #include <handle.hpp>
-#include <workQueue.hpp>
 
 namespace gfx
 {
@@ -25,7 +24,6 @@ namespace gfx
 
 		virtual void Init() = 0;
 		virtual void ShutDown() = 0;
-		virtual void Flush() = 0;
 
 		virtual utils::Handle<Shader>			Create(const gfx::ShaderDescriptor& desc) = 0;
 		virtual utils::Handle<BindGroup>		Create(const gfx::BindGroupDescriptor& desc) = 0;
@@ -46,9 +44,6 @@ namespace gfx
 		virtual void Remove(utils::Handle<RenderPass> handle) = 0;
         virtual void Remove(utils::Handle<RenderPassLayout> handle) = 0;
         virtual void Remove(utils::Handle<FrameBuffer> handle) = 0;
-
-	protected:
-		utils::WorkQueue m_DeletionQueue;
 	};
 }
 

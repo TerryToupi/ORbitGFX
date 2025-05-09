@@ -54,119 +54,92 @@ namespace gfx
 
 	void DawnResourceManager::Remove(utils::Handle<Shader> handle)
 	{ 
-		m_DeletionQueue.Append([=]()
-		{
-			DawnShader* shader = m_Shaders.Get(handle);
-			if (shader == nullptr)
-				return; 
+		DawnShader* shader = m_Shaders.Get(handle);
+		if (shader == nullptr)
+			return; 
 
-			shader->Destroy();
-			m_Shaders.Remove(handle);
-		});
+		shader->Destroy();
+		m_Shaders.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<BindGroup> handle) 
 	{
-		m_DeletionQueue.Append([=]()
-		{
-			DawnBindGroup* bindGroup = m_BindGroups.Get(handle);
-			if (bindGroup == nullptr)
-				return;
+		DawnBindGroup* bindGroup = m_BindGroups.Get(handle);
+		if (bindGroup == nullptr)
+			return;
 
-			bindGroup->Destroy();
-			m_BindGroups.Remove(handle);
-		});
+		bindGroup->Destroy();
+		m_BindGroups.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<BindGroupLayout> handle) 
 	{ 
-		m_DeletionQueue.Append([=]()
-		{
-			DawnBindGroupLayout* bgl = m_BindGroupLayouts.Get(handle);
-			if (bgl == nullptr)
-				return;
+		DawnBindGroupLayout* bgl = m_BindGroupLayouts.Get(handle);
+		if (bgl == nullptr)
+			return;
 
-			bgl->Destroy();
-			m_BindGroupLayouts.Remove(handle);
-		});
+		bgl->Destroy();
+		m_BindGroupLayouts.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<Texture> handle) 
 	{
-		m_DeletionQueue.Append([=]()
-		{
-			DawnTexture* texture = m_Textures.Get(handle);
-			if (texture == nullptr)
-				return;
+		DawnTexture* texture = m_Textures.Get(handle);
+		if (texture == nullptr)
+			return;
 
-			texture->Destroy();
-			m_Textures.Remove(handle);
-		});
+		texture->Destroy();
+		m_Textures.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<Sampler> handle) 
 	{
-		m_DeletionQueue.Append([=]()
-		{
-			DawnSampler* sampler = m_Samplers.Get(handle);
-			if (sampler == nullptr)
-				return;
+		DawnSampler* sampler = m_Samplers.Get(handle);
+		if (sampler == nullptr)
+			return;
 
-			sampler->Destroy();
-			m_Samplers.Remove(handle);
-		});
+		sampler->Destroy();
+		m_Samplers.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<Buffer> handle) 
 	{
-		m_DeletionQueue.Append([=]()
-		{
-			DawnBuffer* buffer = m_Buffers.Get(handle);
-			if (buffer == nullptr)
-				return;
+		DawnBuffer* buffer = m_Buffers.Get(handle);
+		if (buffer == nullptr)
+			return;
 
-			buffer->Destroy();
-			m_Buffers.Remove(handle);
-		});
+		buffer->Destroy();
+		m_Buffers.Remove(handle);
 	} 
 
 	void DawnResourceManager::Remove(utils::Handle<RenderPass> handle)
 	{
-		m_DeletionQueue.Append([=]()
-		{
-			DawnRenderPass* renderPass = m_RenderPasses.Get(handle);
-			if (renderPass == nullptr)
-				return;
+		DawnRenderPass* renderPass = m_RenderPasses.Get(handle);
+		if (renderPass == nullptr)
+			return;
 
-			renderPass->Destroy();
-			m_RenderPasses.Remove(handle);
-		});
+		renderPass->Destroy();
+		m_RenderPasses.Remove(handle);
 	}
 
     void DawnResourceManager::Remove(utils::Handle<RenderPassLayout> handle)
     {
-        m_DeletionQueue.Append([=]()
-        {
-            DawnRenderPassLayout* renderPassLayout = m_RenderPassLayouts.Get(handle);
-            if (renderPassLayout == nullptr)
-                return;
+		DawnRenderPassLayout* renderPassLayout = m_RenderPassLayouts.Get(handle);
+		if (renderPassLayout == nullptr)
+			return;
 
-            renderPassLayout->Destroy();
-            m_RenderPassLayouts.Remove(handle);
-        });
+		renderPassLayout->Destroy();
+		m_RenderPassLayouts.Remove(handle);
     }
 
     void DawnResourceManager::Remove(utils::Handle<FrameBuffer> handle)
     {
-        m_DeletionQueue.Append([=]()
-        {
-            DawnFrameBuffer* frameBuffer = m_FrameBuffers.Get(handle);
-            if (frameBuffer == nullptr)
-                return;
+		DawnFrameBuffer* frameBuffer = m_FrameBuffers.Get(handle);
+		if (frameBuffer == nullptr)
+			return;
 
-            frameBuffer->Destroy();
-            m_FrameBuffers.Remove(handle);
-        });
+		frameBuffer->Destroy();
+		m_FrameBuffers.Remove(handle);
     }
 
 	utils::Handle<Shader> DawnResourceManager::Add(const DawnShader& shader)
