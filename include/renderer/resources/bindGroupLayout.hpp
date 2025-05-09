@@ -16,7 +16,7 @@ namespace gfx
         {
             uint32_t slot = 0;
             BufferBindingType type = BufferBindingType::UNIFORM;
-            ShaderStage visibility = ShaderStage::VERTEX;
+            ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
         utils::Span<BufferBinding> bufferBindings;
 
@@ -25,7 +25,7 @@ namespace gfx
             uint32_t slot = 0;
             TextureSampleType type = TextureSampleType::FLOAT;
             TextureDimention viewDimention = TextureDimention::D2;
-            ShaderStage visibility = ShaderStage::VERTEX;
+            ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
         utils::Span<TextureBinding> textureBindings;
 
@@ -33,7 +33,7 @@ namespace gfx
         {
             uint32_t slot = 0;
             bool comparison = false;
-            ShaderStage visibility = ShaderStage::VERTEX;
+            ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
         utils::Span<SamplerBinding> samplerBindings;
 	};
