@@ -2,11 +2,6 @@
 
 namespace gfx
 {
-	void DawnResourceManager::Flush()
-	{
-		m_DeletionQueue.Flush();
-	}
-
 	utils::Handle<Shader> DawnResourceManager::Create(const ShaderDescriptor& desc)
 	{
 		return m_Shaders.Insert(DawnShader(desc));
