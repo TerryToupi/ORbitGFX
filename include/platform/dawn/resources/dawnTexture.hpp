@@ -19,7 +19,6 @@ namespace gfx
 
 	public:
 		wgpu::Texture s_Texture;
-		wgpu::TextureView s_TextureView;
 	};
 }
 

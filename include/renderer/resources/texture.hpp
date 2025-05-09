@@ -10,18 +10,6 @@ namespace gfx
 {
 	class Texture; 
 
-	struct TextureViewDescriptor
-	{
-		gfx::TextureFormat format = gfx::TextureFormat::RGBA8_UNORM;
-		gfx::TextureDimention dimention = gfx::TextureDimention::D2;
-		gfx::TextureAspect aspect = gfx::TextureAspect::ALL;
-		gfx::TextureUsage usage = gfx::TextureUsage::TEXTURE_BINDING | gfx::TextureUsage::COPY_DST;
-		uint32_t baseMipLevel = 0;
-		uint32_t mipLevelCount = UINT_MAX;
-		uint32_t baseArrayLayer = 0;
-		uint32_t arrayLayerCount = UINT_MAX;
-	}; 
-
 	struct TextureDescriptor
 	{
 		gfx::TextureFormat format = gfx::TextureFormat::RGBA8_UNORM;
@@ -32,10 +20,8 @@ namespace gfx
 		uint32_t depth = 1;
 		uint32_t mipLevelCount = 1;
 		uint32_t samplerCount = 1;
-
-		TextureViewDescriptor view = {};
 		
-		utils::Span<uint8_t> upload;
+		utils::Span<uint8_t> initialData;
 	};
 }
 

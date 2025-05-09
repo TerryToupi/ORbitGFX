@@ -6,7 +6,7 @@
 namespace gfx
 {
 	DawnTexture::DawnTexture()
-		: s_Texture(nullptr), s_TextureView(nullptr)
+		: s_Texture(nullptr)
 	{
 	}
 
@@ -26,21 +26,8 @@ namespace gfx
 		};
 
 		s_Texture = device.CreateTexture(&textureDesc);
-		
-		wgpu::TextureViewDescriptor textureViewDesc =
-		{
-			.format = gfx::DecodeTextureFormatType(desc.view.format),
-			.dimension = gfx::DecodeTextureDimentionType(desc.view.dimention),
-			.baseMipLevel = desc.view.baseMipLevel,
-			.mipLevelCount = desc.view.mipLevelCount,
-			.baseArrayLayer = desc.view.baseArrayLayer,
-			.arrayLayerCount = desc.view.arrayLayerCount,
-			.aspect = gfx::DecodeTextureAspectType(desc.view.aspect),
-			.usage = gfx::DecodeTextureUsageType(desc.view.usage)
-		};
-		s_TextureView = s_Texture.CreateView(&textureViewDesc);
 
-		if (desc.upload.data())
+		if (desc.initialData.data())
 		{
             DawnDevice* deviceInstance = (DawnDevice*)Device::instance;
             wgpu::Device device = deviceInstance->GetDawnDevice();
@@ -65,8 +52,8 @@ namespace gfx
 
 			device.GetQueue().WriteTexture(
 				&imageCpyTexture, 
-				desc.upload.data(),
-				desc.upload.size(),
+				desc.initialData.data(),
+				desc.initialData.size(),
 				&imageCpyBuffer, 
 				&extent
 			);
@@ -76,8 +63,6 @@ namespace gfx
 	void DawnTexture::Destroy()
 	{
 		s_Texture.Destroy();
-
 		s_Texture = nullptr;
-		s_TextureView = nullptr;
 	}
 }

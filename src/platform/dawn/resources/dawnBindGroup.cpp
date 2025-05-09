@@ -47,7 +47,7 @@ namespace gfx
             if (t)
             {
                 bgEntries[index].binding = texture.slot;
-                bgEntries[index].textureView = t->s_TextureView;
+                bgEntries[index].textureView = t->s_Texture.CreateView();
                 ++index;
             }
         }
