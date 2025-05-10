@@ -2,7 +2,6 @@
 #define __SHADER_HPP__ 
 
 #include <string>
-#include <vector>
 
 #include <span.hpp>
 #include <handle.hpp>

@@ -1,6 +1,8 @@
 #ifndef __DYNAMIC_BUFFER_HPP__
 #define __DYNAMIC_BUFFER_HPP__
 
+#include <enums.hpp>
+
 namespace gfx
 {
 	class DynamicBuffer;
