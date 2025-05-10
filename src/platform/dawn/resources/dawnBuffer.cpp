@@ -14,22 +14,23 @@ namespace gfx
 		wgpu::Device device = deviceInstance->GetDawnDevice();
 
 		wgpu::BufferDescriptor bdesc = {};
-		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage | gfx::BufferUsage::COPY_DST);
+		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage);
 		bdesc.mappedAtCreation = desc.initialData.data() == nullptr ? false : true;
 		bdesc.size = desc.byteSize;
 
 		s_Buffer = device.CreateBuffer(&bdesc); 
 
-		if (desc.initialData.begin() != nullptr)
+		if (desc.initialData.data() != nullptr)
 		{
 			void* data = s_Buffer.GetMappedRange(0, desc.byteSize);
-			memcpy(data, desc.initialData.data(), desc.byteSize);
+			memcpy(data, desc.initialData.data(), desc.initialData.size());
 			s_Buffer.Unmap();
 		}
 	}
 
 	void DawnBuffer::Destroy()
 	{
-		s_Buffer.Destroy();
+		if (s_Buffer != nullptr)
+			s_Buffer.Destroy();
 	}
 }

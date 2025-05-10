@@ -8,6 +8,7 @@
 #include <dawn/resources/dawnBindGroup.hpp>
 #include <dawn/resources/dawnBindGroupLayout.hpp>
 #include <dawn/resources/dawnBuffer.hpp>
+#include <dawn/resources/dawnDynamicBuffer.hpp>
 #include <dawn/resources/dawnRenderPass.hpp>
 #include <dawn/resources/dawnRenderPassLayout.hpp>
 #include <dawn/resources/dawnSampler.hpp>
@@ -29,6 +30,7 @@ namespace gfx
 		virtual utils::Handle<Texture>			Create(const gfx::TextureDescriptor& desc) override;
 		virtual utils::Handle<Sampler>			Create(const gfx::SamplerDescriptor& desc) override;
 		virtual utils::Handle<Buffer>			Create(const gfx::BufferDescriptor& desc) override;
+		virtual utils::Handle<DynamicBuffer>	Create(const gfx::DynamicBufferDescriptor& desc) override;
 		virtual utils::Handle<RenderPass>		Create(const gfx::RenderPassDescriptor& desc) override;
         virtual utils::Handle<RenderPassLayout> Create(const gfx::RenderPassLayoutDescriptor& desc) override;
         virtual utils::Handle<FrameBuffer>      Create(const gfx::FrameBufferDescriptor& desc) override;
@@ -39,6 +41,7 @@ namespace gfx
 		virtual void Remove(utils::Handle<Texture> handle) override;
 		virtual void Remove(utils::Handle<Sampler> handle) override;
 		virtual void Remove(utils::Handle<Buffer> handle) override;
+		virtual void Remove(utils::Handle<DynamicBuffer> handle) override;
 		virtual void Remove(utils::Handle<RenderPass> handle) override;
         virtual void Remove(utils::Handle<RenderPassLayout> handle) override;
         virtual void Remove(utils::Handle<FrameBuffer> handle) override;
@@ -49,6 +52,7 @@ namespace gfx
 		utils::Handle<Texture>			Add(const DawnTexture& texture);
 		utils::Handle<Sampler>			Add(const DawnSampler& sampler);
 		utils::Handle<Buffer>			Add(const DawnBuffer& buffer);
+		utils::Handle<DynamicBuffer>	Add(const DawnDynamicBuffer& buffer);
 		utils::Handle<RenderPass>		Add(const DawnRenderPass& renderPass);
         utils::Handle<RenderPassLayout> Add(const DawnRenderPassLayout& renderPassLayout);
         utils::Handle<FrameBuffer>      Add(const DawnFrameBuffer& frameBuffer);
@@ -59,6 +63,7 @@ namespace gfx
 		DawnTexture*			Get(utils::Handle<Texture> handle);
 		DawnSampler*			Get(utils::Handle<Sampler> handle);
 		DawnBuffer*				Get(utils::Handle<Buffer> handle);
+		DawnDynamicBuffer*		Get(utils::Handle<DynamicBuffer> handle);
 		DawnRenderPass*			Get(utils::Handle<RenderPass> handle);
         DawnRenderPassLayout*   Get(utils::Handle<RenderPassLayout> handle);
         DawnFrameBuffer*        Get(utils::Handle<FrameBuffer> handle);
@@ -70,6 +75,7 @@ namespace gfx
 		utils::Pool<DawnTexture, Texture> m_Textures{ 32u, "Textures" };
 		utils::Pool<DawnSampler, Sampler> m_Samplers{ 32u, "Samplers" };
 		utils::Pool<DawnBuffer, Buffer> m_Buffers{ 32u, "Buffers" };
+		utils::Pool<DawnDynamicBuffer, DynamicBuffer> m_DynamicBuffers{ 32u, "DynamicBuffers" };
 		utils::Pool<DawnRenderPass, RenderPass> m_RenderPasses{ 32u, "RenderPasses" };
         utils::Pool<DawnRenderPassLayout, RenderPassLayout> m_RenderPassLayouts{ 32u, "RenderPassLayouts" };
         utils::Pool<DawnFrameBuffer, FrameBuffer> m_FrameBuffers{ 32u, "FrameBuffers" };

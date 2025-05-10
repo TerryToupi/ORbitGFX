@@ -32,6 +32,11 @@ namespace gfx
 		return m_Buffers.Insert(DawnBuffer(desc));
 	}
 
+	utils::Handle<DynamicBuffer> DawnResourceManager::Create(const gfx::DynamicBufferDescriptor& desc)
+	{
+		return m_DynamicBuffers.Insert(DawnDynamicBuffer(desc));
+	}
+
 	utils::Handle<RenderPass> DawnResourceManager::Create(const gfx::RenderPassDescriptor& desc)
 	{
 		return m_RenderPasses.Insert(DawnRenderPass(desc));
@@ -107,6 +112,16 @@ namespace gfx
 		m_Buffers.Remove(handle);
 	} 
 
+	void DawnResourceManager::Remove(utils::Handle<DynamicBuffer> handle)
+	{
+		DawnDynamicBuffer* buffer = m_DynamicBuffers.Get(handle);
+		if (buffer == nullptr)
+			return;
+
+		buffer->Destroy();
+		m_DynamicBuffers.Remove(handle);
+	}
+
 	void DawnResourceManager::Remove(utils::Handle<RenderPass> handle)
 	{
 		DawnRenderPass* renderPass = m_RenderPasses.Get(handle);
@@ -165,7 +180,12 @@ namespace gfx
 	utils::Handle<Buffer> DawnResourceManager::Add(const DawnBuffer& buffer)
 	{
 		return m_Buffers.Insert(buffer);
-	} 
+	}
+
+	utils::Handle<DynamicBuffer> DawnResourceManager::Add(const DawnDynamicBuffer& buffer)
+	{
+		return m_DynamicBuffers.Insert(buffer);
+	}
 
 	utils::Handle<RenderPass> DawnResourceManager::Add(const DawnRenderPass& renderPass)
 	{
@@ -210,6 +230,11 @@ namespace gfx
 	DawnBuffer* DawnResourceManager::Get(utils::Handle<Buffer> handle) 
 	{
 		return m_Buffers.Get(handle);
+	}
+
+	DawnDynamicBuffer* DawnResourceManager::Get(utils::Handle<DynamicBuffer> handle)
+	{
+		return m_DynamicBuffers.Get(handle);
 	}
 
 	DawnRenderPass* DawnResourceManager::Get(utils::Handle<RenderPass> handle)

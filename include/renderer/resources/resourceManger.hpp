@@ -4,6 +4,7 @@
 #include <resources/bindGroup.hpp>
 #include <resources/bindGroupLayout.hpp>
 #include <resources/buffer.hpp>
+#include <resources/dynamicBuffer.hpp>
 #include <resources/renderPass.hpp>
 #include <resources/sampler.hpp>
 #include <resources/shader.hpp>
@@ -31,6 +32,7 @@ namespace gfx
 		virtual utils::Handle<Texture>			Create(const gfx::TextureDescriptor& desc) = 0;
 		virtual utils::Handle<Sampler>			Create(const gfx::SamplerDescriptor& desc) = 0;
 		virtual utils::Handle<Buffer>			Create(const gfx::BufferDescriptor& desc) = 0;
+		virtual utils::Handle<DynamicBuffer>	Create(const gfx::DynamicBufferDescriptor& desc) = 0;
 		virtual utils::Handle<RenderPass>		Create(const gfx::RenderPassDescriptor& desc) = 0;
         virtual utils::Handle<RenderPassLayout> Create(const gfx::RenderPassLayoutDescriptor& desc) = 0;
         virtual utils::Handle<FrameBuffer>      Create(const gfx::FrameBufferDescriptor& desc) = 0;
@@ -41,6 +43,7 @@ namespace gfx
 		virtual void Remove(utils::Handle<Texture> handle) = 0;
 		virtual void Remove(utils::Handle<Sampler> handle) = 0;
 		virtual void Remove(utils::Handle<Buffer> handle) = 0;
+		virtual void Remove(utils::Handle<DynamicBuffer> handle) = 0;
 		virtual void Remove(utils::Handle<RenderPass> handle) = 0;
         virtual void Remove(utils::Handle<RenderPassLayout> handle) = 0;
         virtual void Remove(utils::Handle<FrameBuffer> handle) = 0;
