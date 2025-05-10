@@ -14,18 +14,18 @@ namespace gfx
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass,
 			utils::Handle<FrameBuffer> frameBuffer,
-			std::vector<Draw>& drawCalls
+			utils::Span<Draw> drawCalls	
 		) override;
 
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass,
-			std::vector<Draw>& drawCalls
+			utils::Span<Draw> drawCalls	
 		) override;
 
 		virtual void BeginComputePass(
 			utils::Span<utils::Handle<Texture>> textureWrite,
 			utils::Span<utils::Handle<Buffer>> bufferWrite,
-			std::vector<Dispatch>& dispatches
+			utils::Span<Dispatch> dispatches
 		) override;
 
 		virtual void Submit() override;

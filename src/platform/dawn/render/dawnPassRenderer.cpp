@@ -5,7 +5,7 @@
 
 namespace gfx
 {
-	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer, std::vector<Draw>& drawCalls)
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer, utils::Span<Draw> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
@@ -72,7 +72,7 @@ namespace gfx
 		pass.End();
 	}
 
-	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, std::vector<Draw>& drawCalls)
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Span<Draw> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
@@ -135,7 +135,7 @@ namespace gfx
 		pass.End();
 	}
 
-	void DawnCommandBuffer::BeginComputePass(utils::Span<utils::Handle<Texture>> textureWrite, utils::Span<utils::Handle<Buffer>> bufferWrite, std::vector<Dispatch>& dispatches)
+	void DawnCommandBuffer::BeginComputePass(utils::Span<utils::Handle<Texture>> textureWrite, utils::Span<utils::Handle<Buffer>> bufferWrite, utils::Span<Dispatch> dispatches)
 	{
 	}
 
