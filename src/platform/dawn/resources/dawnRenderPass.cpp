@@ -6,7 +6,7 @@ namespace gfx
 {
 	DawnRenderPass::DawnRenderPass()
 	{
-		for (int i = 0; i < kMaxColorAttachments; ++i)
+		for (int i = 0; i < 8u; ++i)
 		{
 			s_ColorAttachments[i] = {};
 		}

@@ -128,37 +128,40 @@ namespace gfx
 
 			// VS state
 			{
-				vBindings.resize(desc.graphicsState.vertexBufferBindings.size());
-				wgpuBuffers.resize(desc.graphicsState.vertexBufferBindings.size());
-					
-				int iBuffer = 0;
-				int iShaderLocation = 0;
-				for (const auto& vBuffer : desc.graphicsState.vertexBufferBindings)
+				if (desc.VS.enabled)
 				{
-					vBindings[iBuffer].buffer.arrayStride = vBuffer.byteStride;
-					vBindings[iBuffer].buffer.stepMode = wgpu::VertexStepMode::Vertex;
-					vBindings[iBuffer].buffer.attributeCount = vBuffer.attributes.size();
-					vBindings[iBuffer].attributes.resize(vBuffer.attributes.size());
-
-					int iAttribute = 0;
-					for (const auto& bAttribute : vBuffer.attributes)
+					vBindings.resize(desc.graphicsState.vertexBufferBindings.size());
+					wgpuBuffers.resize(desc.graphicsState.vertexBufferBindings.size());
+						
+					int iBuffer = 0;
+					int iShaderLocation = 0;
+					for (const auto& vBuffer : desc.graphicsState.vertexBufferBindings)
 					{
-						vBindings[iBuffer].attributes[iAttribute].format = gfx::DecodeVertexFormatType(bAttribute.format);
-						vBindings[iBuffer].attributes[iAttribute].offset = bAttribute.byteOffset;
-						vBindings[iBuffer].attributes[iAttribute].shaderLocation = iShaderLocation;
-						++iShaderLocation;
-						++iAttribute;
+						vBindings[iBuffer].buffer.arrayStride = vBuffer.byteStride;
+						vBindings[iBuffer].buffer.stepMode = wgpu::VertexStepMode::Vertex;
+						vBindings[iBuffer].buffer.attributeCount = vBuffer.attributes.size();
+						vBindings[iBuffer].attributes.resize(vBuffer.attributes.size());
+
+						int iAttribute = 0;
+						for (const auto& bAttribute : vBuffer.attributes)
+						{
+							vBindings[iBuffer].attributes[iAttribute].format = gfx::DecodeVertexFormatType(bAttribute.format);
+							vBindings[iBuffer].attributes[iAttribute].offset = bAttribute.byteOffset;
+							vBindings[iBuffer].attributes[iAttribute].shaderLocation = iShaderLocation;
+							++iShaderLocation;
+							++iAttribute;
+						} 
+
+						vBindings[iBuffer].buffer.attributes = vBindings[iBuffer].attributes.data();
+						wgpuBuffers[iBuffer] = std::move(vBindings[iBuffer].buffer); 
+						++iBuffer;
 					} 
 
-					vBindings[iBuffer].buffer.attributes = vBindings[iBuffer].attributes.data();
-					wgpuBuffers[iBuffer] = std::move(vBindings[iBuffer].buffer); 
-					++iBuffer;
-				} 
+					wgpuDesc.vertex.buffers = wgpuBuffers.data();
+					wgpuDesc.vertex.bufferCount = wgpuBuffers.size();
 
-				wgpuDesc.vertex.buffers = wgpuBuffers.data();
-				wgpuDesc.vertex.bufferCount = wgpuBuffers.size();
-
-				wgpuDesc.vertex.module = s_VS;
+					wgpuDesc.vertex.module = s_VS;
+				}
 			}
 
 			// Primitive state
@@ -182,21 +185,29 @@ namespace gfx
 				// Depth state
 				{
 					if (rpl->s_DepthEnabled)
-						wgpuDesc.depthStencil = &rpl->s_DepthTarget;
+					{
+						s_DepthState.format = rpl->s_DepthFormat;
+						s_DepthState.depthCompare = gfx::DecodeCompareType(desc.graphicsState.depthTest);
+
+						wgpuDesc.depthStencil = &s_DepthState;
+					}
 				}
 
 				// Fragment state
 				{
-					m_FragmentState.module = s_PS;
-					for (int i = 0; i < rpl->s_ColorTargetCount; ++i)
+					if (desc.PS.enabled)
 					{
-						rpl->s_ColorTargets[i].blend = &rpl->s_ColorBlends[i];
+						s_FragmentState.module = s_PS;
+						for (int i = 0; i < rpl->s_ColorTargetCount; ++i)
+						{
+							rpl->s_ColorTargets[i].blend = &rpl->s_ColorBlends[i];
+						}
+
+						s_FragmentState.targetCount = rpl->s_ColorTargetCount;
+						s_FragmentState.targets = rpl->s_ColorTargets;
+
+						wgpuDesc.fragment = &s_FragmentState;
 					}
-
-					m_FragmentState.targetCount = rpl->s_ColorTargetCount;
-					m_FragmentState.targets = rpl->s_ColorTargets;
-
-					wgpuDesc.fragment = &m_FragmentState;
 				}
 			}
 

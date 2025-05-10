@@ -22,12 +22,12 @@ namespace gfx
 		wgpu::ShaderModule s_PS;
 		wgpu::ShaderModule s_CP;
 
-		wgpu::RenderPipeline s_Pipeline;
+		// graphics pipeline
+		wgpu::RenderPipeline s_Pipeline; 
+		wgpu::DepthStencilState s_DepthState;
+		wgpu::FragmentState s_FragmentState;
+
 		wgpu::ComputePipeline s_Compute;
-
-	private:
-		wgpu::FragmentState m_FragmentState;
-
 	};
 }
 

@@ -39,6 +39,7 @@ namespace gfx
 
 		struct GraphicsState 
 		{
+            gfx::Compare depthTest = gfx::Compare::UNDEFINED;
 			utils::Span<VertexBufferBinding> vertexBufferBindings;
 			utils::Handle<RenderPassLayout> renderPassLayout;
 		};

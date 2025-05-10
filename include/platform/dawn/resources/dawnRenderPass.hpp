@@ -18,7 +18,7 @@ namespace gfx
 	public:
         bool s_DepthEnabled = false;
 		uint8_t s_ColorAttachmentCount = 0;
-		wgpu::RenderPassColorAttachment s_ColorAttachments[kMaxColorAttachments];
+		wgpu::RenderPassColorAttachment s_ColorAttachments[8u];
 		wgpu::RenderPassDepthStencilAttachment s_DepthAttachment;
 
 	};

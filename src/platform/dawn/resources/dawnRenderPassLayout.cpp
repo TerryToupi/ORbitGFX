@@ -33,8 +33,7 @@ namespace gfx
         s_DepthEnabled = desc.depth.depthTarget;
         if (s_DepthEnabled)
         {
-            s_DepthTarget.format = gfx::DecodeTextureFormatType(desc.depth.depthTargetFormat);
-            s_DepthTarget.depthCompare = gfx::DecodeCompareType(desc.depth.depthTest);
+            s_DepthFormat = gfx::DecodeTextureFormatType(desc.depth.depthTargetFormat);
         }
     }
     
