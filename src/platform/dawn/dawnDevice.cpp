@@ -104,7 +104,7 @@ namespace gfx
         wgpu::RequestAdapterOptions adapterOptions =
         {
             .powerPreference = wgpu::PowerPreference::HighPerformance,
-            .backendType = wgpu::BackendType::Undefined,
+            .backendType = wgpu::BackendType::Undefined
         };
 
         m_Instance.WaitAny(
@@ -125,6 +125,9 @@ namespace gfx
             UINT64_MAX
         );
         GFX_ASSERT(m_Adapter != nullptr, "Adapter Request failed!");
+
+        wgpu::Limits adapterLimits;
+        m_Adapter.GetLimits(&adapterLimits);
 
         wgpu::DeviceDescriptor deviceDesc = {};
         deviceDesc.SetDeviceLostCallback(
@@ -185,7 +188,8 @@ namespace gfx
 
                 GFX_ERROR(out.str());
             }
-        );
+        ); 
+        deviceDesc.requiredLimits = &adapterLimits;
 
         m_Instance.WaitAny(
             m_Adapter.RequestDevice(
@@ -209,8 +213,8 @@ namespace gfx
         wgpu::DawnAdapterPropertiesPowerPreference power_procs = {};
         wgpu::AdapterInfo adapterInfo = {};
         adapterInfo.nextInChain = &power_procs;
-
         m_Adapter.GetInfo(&adapterInfo);
+
         std::stringstream infoStream;
         infoStream << "\n";
         infoStream << "VendorID: " << std::hex << adapterInfo.vendorID << std::dec << "\n";
@@ -231,8 +235,6 @@ namespace gfx
             .driver = std::string(adapterInfo.description)
         }; 
 
-        wgpu::Limits adapterLimits;
-        m_Adapter.GetLimits(&adapterLimits);
         std::stringstream limitsStream;
         limitsStream << "\n";
         limitsStream << "  Adapter Limits\n";
