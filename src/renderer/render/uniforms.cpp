@@ -27,4 +27,9 @@ namespace gfx
 		operator delete(m_BufferData); 
 		ResourceManager::instance->Remove(m_Buffer);
 	}
+
+	utils::Handle<gfx::DynamicBuffer> UniformRingBuffer::Get()
+	{
+		return m_Buffer;
+	}
 }
