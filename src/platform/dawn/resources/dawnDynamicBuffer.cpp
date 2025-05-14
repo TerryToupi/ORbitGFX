@@ -29,6 +29,7 @@ namespace gfx
             gfx::BufferBindingType type = desc.usage == gfx::BufferUsage::UNIFORM ? gfx::BufferBindingType::UNIFORM : gfx::BufferBindingType::STORAGE;
 
             entry.binding = 0;
+            entry.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
             entry.buffer.hasDynamicOffset = true;
             entry.buffer.type = gfx::DecodeBufferBindingType(type);
 
