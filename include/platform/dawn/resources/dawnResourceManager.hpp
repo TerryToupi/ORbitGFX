@@ -46,6 +46,9 @@ namespace gfx
         virtual void Remove(utils::Handle<RenderPassLayout> handle) override;
         virtual void Remove(utils::Handle<FrameBuffer> handle) override;
 
+		virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) override;
+		virtual void SetBufferData(utils::Handle<DynamicBuffer> buffer, uint32_t offset, const void* data, uint32_t size) override;
+
 		utils::Handle<Shader>			Add(const DawnShader& shader);
 		utils::Handle<BindGroup>		Add(const DawnBindGroup& bindGroup);
 		utils::Handle<BindGroupLayout>	Add(const DawnBindGroupLayout& bindGroupLayout);

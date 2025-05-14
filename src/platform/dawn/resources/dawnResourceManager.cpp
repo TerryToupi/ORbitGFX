@@ -1,4 +1,5 @@
-#include <dawn/resources/dawnResourceManager.hpp> 
+#include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/dawnDevice.hpp>
 
 namespace gfx
 {
@@ -151,6 +152,30 @@ namespace gfx
 		frameBuffer->Destroy();
 		m_FrameBuffers.Remove(handle);
     }
+
+	void DawnResourceManager::SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size)
+	{
+		DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
+		wgpu::Device device = deviceImpl->GetDawnDevice();
+
+		DawnBuffer* BufferImpl = this->Get(buffer);
+		if (BufferImpl)
+		{
+			device.GetQueue().WriteBuffer(BufferImpl->s_Buffer, offset, data, size);
+		}
+	}
+
+	void DawnResourceManager::SetBufferData(utils::Handle<DynamicBuffer> buffer, uint32_t offset, const void* data, uint32_t size)
+	{
+		DawnDevice* deviceImpl = (DawnDevice*)Device::instance;
+		wgpu::Device device = deviceImpl->GetDawnDevice();
+
+		DawnDynamicBuffer* BufferImpl = this->Get(buffer);
+		if (BufferImpl)
+		{
+			device.GetQueue().WriteBuffer(BufferImpl->s_Buffer, offset, data, size);
+		}
+	}
 
 	utils::Handle<Shader> DawnResourceManager::Add(const DawnShader& shader)
 	{

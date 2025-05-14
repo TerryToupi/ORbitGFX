@@ -47,6 +47,9 @@ namespace gfx
 		virtual void Remove(utils::Handle<RenderPass> handle) = 0;
         virtual void Remove(utils::Handle<RenderPassLayout> handle) = 0;
         virtual void Remove(utils::Handle<FrameBuffer> handle) = 0;
+
+		virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
+		virtual void SetBufferData(utils::Handle<DynamicBuffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
 	};
 }
 

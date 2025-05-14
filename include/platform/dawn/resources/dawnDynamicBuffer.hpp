@@ -16,6 +16,7 @@ namespace gfx
 
 	public:
 		wgpu::Buffer s_Buffer;
+		wgpu::BindGroup s_BindGroup;
 	};
 }
 

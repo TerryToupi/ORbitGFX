@@ -10,6 +10,8 @@ namespace gfx
 	struct DynamicBufferDescriptor
 	{
 		gfx::BufferUsage usage = gfx::BufferUsage::UNIFORM;
+		uint32_t bufferSize = 0;
+		uint32_t bufferRange = 0;
 	};
 }
 
