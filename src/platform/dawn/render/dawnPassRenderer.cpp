@@ -40,31 +40,37 @@ namespace gfx
 				if (shader)
 					pass.SetPipeline(shader->s_Pipeline);
 
-				uint32_t ibg = 0;
-				for (const auto& hBindGroup : cmd.bindGroups)
-				{
-					DawnBindGroup* bindGroup = rm->Get(hBindGroup);
-					if (bindGroup)
-					{
-						pass.SetBindGroup(ibg, bindGroup->s_BindGroup);
-						++ibg;
-					}
-				}
+				DawnBindGroup* bindGroup0 = rm->Get(cmd.bindGroups[0]);
+				if (bindGroup0)
+					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+
+				DawnBindGroup* bindGroup1 = rm->Get(cmd.bindGroups[1]);
+				if (bindGroup1)
+					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+
+				DawnBindGroup* bindGroup2 = rm->Get(cmd.bindGroups[2]);
+				if (bindGroup2)
+					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
+
+				DawnDynamicBuffer* dynamicBuffer = rm->Get(cmd.dynamicBuffer);
+				if (dynamicBuffer)
+					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &cmd.dynamicBufferOffset);
 
 				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
 				if (indexBuffer)
 					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 
-				uint32_t ib = 0;
-				for (const auto& hBuffer : cmd.vertexBuffers)
-				{
-					DawnBuffer* buffer = rm->Get(hBuffer);
-					if (buffer)
-					{
-						pass.SetVertexBuffer(ib, buffer->s_Buffer);
-						++ib;
-					}
-				}
+				DawnBuffer* vertexBuffer0 = rm->Get(cmd.vertexBuffers[0]);
+				if (vertexBuffer0)
+					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
+
+				DawnBuffer* vertexBuffer1 = rm->Get(cmd.vertexBuffers[1]);
+				if (vertexBuffer1)
+					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
+
+				DawnBuffer* vertexBuffer2 = rm->Get(cmd.vertexBuffers[2]);
+				if (vertexBuffer2)
+					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
 				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
 			}
@@ -103,31 +109,37 @@ namespace gfx
 				if (shader)
 					pass.SetPipeline(shader->s_Pipeline);
 
-				uint32_t ibg = 0;
-				for (const auto& hBindGroup : cmd.bindGroups)
-				{
-					DawnBindGroup* bindGroup = rm->Get(hBindGroup);
-					if (bindGroup)
-					{
-						pass.SetBindGroup(ibg, bindGroup->s_BindGroup);
-						++ibg;
-					}
-				}
+				DawnBindGroup* bindGroup0 = rm->Get(cmd.bindGroups[0]);
+				if (bindGroup0)
+					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+
+				DawnBindGroup* bindGroup1 = rm->Get(cmd.bindGroups[1]);
+				if (bindGroup1)
+					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+
+				DawnBindGroup* bindGroup2 = rm->Get(cmd.bindGroups[2]);
+				if (bindGroup2)
+					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
+
+				DawnDynamicBuffer* dynamicBuffer = rm->Get(cmd.dynamicBuffer);
+				if (dynamicBuffer)
+					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &cmd.dynamicBufferOffset);
 
 				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
 				if (indexBuffer)
 					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 
-				uint32_t ib = 0;
-				for (const auto& hBuffer : cmd.vertexBuffers)
-				{
-					DawnBuffer* buffer = rm->Get(hBuffer);
-					if (buffer)
-					{
-						pass.SetVertexBuffer(ib, buffer->s_Buffer);
-						++ib;
-					}
-				}
+				DawnBuffer* vertexBuffer0 = rm->Get(cmd.vertexBuffers[0]);
+				if (vertexBuffer0)
+					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
+
+				DawnBuffer* vertexBuffer1 = rm->Get(cmd.vertexBuffers[1]);
+				if (vertexBuffer1)
+					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
+
+				DawnBuffer* vertexBuffer2 = rm->Get(cmd.vertexBuffers[2]);
+				if (vertexBuffer2)
+					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
 				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
 			}
