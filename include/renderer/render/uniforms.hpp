@@ -38,7 +38,12 @@ namespace gfx
 
 		void Upload();
 
-		void Destroy();
+		void Destroy(); 
+
+		utils::Handle<gfx::DynamicBuffer> operator=(const UniformRingBuffer& other)
+		{
+			return m_Buffer;
+		}
 
 	private:
 		utils::Handle<gfx::DynamicBuffer> m_Buffer;
