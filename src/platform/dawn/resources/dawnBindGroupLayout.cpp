@@ -26,6 +26,8 @@ namespace gfx
             entries[index].binding = bufferBinding.slot;
             entries[index].visibility = gfx::DecodeShaderType(bufferBinding.visibility);
             entries[index].buffer.type = gfx::DecodeBufferBindingType(bufferBinding.type);
+			if (bufferBinding.hasDynamicOffset)
+				entries[index].buffer.hasDynamicOffset = true;
 			++index;
 		}
 		for (const auto& textureBinding : desc.textureBindings)

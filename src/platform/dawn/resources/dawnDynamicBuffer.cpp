@@ -1,5 +1,7 @@
 #include <dawn/resources/dawnDynamicBuffer.hpp>
+#include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <log.hpp>
 
 namespace gfx
 {
@@ -12,8 +14,7 @@ namespace gfx
     {
         DawnDevice* deviceInstance = (DawnDevice*)Device::instance;
         wgpu::Device device = deviceInstance->GetDawnDevice();
-
-        wgpu::BindGroupLayout bgLayout = nullptr;
+        DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
     
         {
 			wgpu::BufferDescriptor bdesc = {};
@@ -22,41 +23,27 @@ namespace gfx
 			s_Buffer = device.CreateBuffer(&bdesc);
         }
         
-        {
-            wgpu::BindGroupLayoutEntry entry = {};
-            wgpu::BindGroupLayoutDescriptor layoutDesc = {};
-
-            gfx::BufferBindingType type = desc.usage == gfx::BufferUsage::UNIFORM ? gfx::BufferBindingType::UNIFORM : gfx::BufferBindingType::STORAGE;
-
-            entry.binding = 0;
-            entry.visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
-            entry.buffer.hasDynamicOffset = true;
-            entry.buffer.type = gfx::DecodeBufferBindingType(type);
-
-            layoutDesc.entries = &entry;
-            layoutDesc.entryCount = 1;
-
-            bgLayout = device.CreateBindGroupLayout(&layoutDesc);
-        }
-
         { 
-            wgpu::BindGroupEntry entry = {};
-            wgpu::BindGroupDescriptor bgDesc = {};
-            
-            entry.binding = 0;
-            entry.buffer = s_Buffer;
-            entry.offset = 0;
-            entry.size = desc.bufferRange;
+            DawnBindGroupLayout* bgl = rm->Get(desc.bindGroupLayout);
+            if (bgl)
+            {
+                wgpu::BindGroupEntry entry = {};
+                wgpu::BindGroupDescriptor bgDesc = {};
 
-            bgDesc.entries = &entry;
-            bgDesc.entryCount = 1;
-            bgDesc.layout = bgLayout;
+                entry.binding = 0;
+                entry.buffer = s_Buffer;
+                entry.offset = 0;
+                entry.size = desc.bufferRange;
 
-            s_BindGroup = device.CreateBindGroup(&bgDesc);
+                bgDesc.entries = &entry;
+                bgDesc.entryCount = 1;
+                bgDesc.layout = bgl->s_BindGroupLayout;
+
+                s_BindGroup = device.CreateBindGroup(&bgDesc);
+            }
+            else
+                GFX_ERROR("Provided bindgroup layout in the dynamicBuffer creation was null!");
         } 
-
-        // releasing the layout after the creation of the bingGroup
-        bgLayout = nullptr;
     }
 
     void DawnDynamicBuffer::Destroy()

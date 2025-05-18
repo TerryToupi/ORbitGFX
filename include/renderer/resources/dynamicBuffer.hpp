@@ -2,6 +2,8 @@
 #define __DYNAMIC_BUFFER_HPP__
 
 #include <enums.hpp>
+#include <handle.hpp>
+#include <resources/bindGroupLayout.hpp>
 
 namespace gfx
 {
@@ -12,6 +14,7 @@ namespace gfx
 		gfx::BufferUsage usage = gfx::BufferUsage::UNIFORM;
 		uint32_t bufferSize = 0;
 		uint32_t bufferRange = 0;
+		utils::Handle<BindGroupLayout> bindGroupLayout;
 	};
 }
 

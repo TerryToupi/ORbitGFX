@@ -15,6 +15,7 @@ namespace gfx
         struct BufferBinding
         {
             uint32_t slot = 0;
+            bool hasDynamicOffset = false;
             BufferBindingType type = BufferBindingType::UNIFORM;
             ShaderStage visibility = ShaderStage::VERTEX | ShaderStage::FRAGMENT;
         };
