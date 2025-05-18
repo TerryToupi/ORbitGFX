@@ -32,7 +32,7 @@ namespace gfx
 		if (desc.VS.enabled)
 		{
 			shaderc::SpvCompilationResult module = spirvCompiler.CompileGlslToSpv(
-				desc.VS.sourceCode,
+				(char*)desc.VS.sourceCode.data(),
 				shaderc_vertex_shader,
 				std::filesystem::current_path().string().c_str(),
 				spirvOptions
@@ -58,7 +58,7 @@ namespace gfx
 		if (desc.PS.enabled)
 		{
 			shaderc::SpvCompilationResult module = spirvCompiler.CompileGlslToSpv(
-				desc.PS.sourceCode,
+				(char*)desc.PS.sourceCode.data(),
 				shaderc_fragment_shader,
 				std::filesystem::current_path().string().c_str(),
 				spirvOptions
@@ -79,34 +79,6 @@ namespace gfx
 			descriptor.nextInChain = &PSwgsl;
 			s_PS = device.CreateShaderModule(&descriptor);
 		}
-
-		// Pipeline layout creation
-		//std::vector<wgpu::BindGroupLayout> bgls;
-		//wgpu::PipelineLayoutDescriptor pipelineDesc = {};
-		//{
-		//	int index = 0;
-		//	for (const auto& bindLayout : desc.bindLayouts)
-		//	{
-		//		DawnBindGroupLayout* bgl = rm->Get(bindLayout);
-		//		if (bgl)
-		//		{
-		//			bgls.push_back(bgl->s_BindGroupLayout);
-		//			++index;
-		//		}
-		//	}
-
-		//	if (desc.bindLayouts.size() != 0) 
-		//	{
-		//		pipelineDesc.bindGroupLayouts = bgls.data();
-		//		pipelineDesc.bindGroupLayoutCount = index;
-		//	}
-		//	else
-		//	{
-		//		pipelineDesc.bindGroupLayouts = nullptr;
-		//		pipelineDesc.bindGroupLayoutCount = 0;
-		//	}
-		//}
-		//wgpu::PipelineLayout pipelineLayout = device.CreatePipelineLayout(&pipelineDesc);
 		
 		// Pipeline layout creation
 		wgpu::BindGroupLayout bgls[] = { nullptr, nullptr, nullptr, nullptr };

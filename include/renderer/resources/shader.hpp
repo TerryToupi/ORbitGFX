@@ -17,10 +17,8 @@ namespace gfx
 	{
 		struct ShaderStage 
 		{
-			//TODO: change to remove the compilation stage to the loader
-			//std::vector<uint8_t>& byteCode; // Bytecode for the shader stage
 			bool enabled = true;
-			std::string sourceCode;
+			utils::Span<uint8_t> sourceCode;
 			std::string entryFunc;         // Entry function name
 		};
 
