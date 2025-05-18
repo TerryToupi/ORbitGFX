@@ -81,30 +81,52 @@ namespace gfx
 		}
 
 		// Pipeline layout creation
-        std::vector<wgpu::BindGroupLayout> bgls;
+		//std::vector<wgpu::BindGroupLayout> bgls;
+		//wgpu::PipelineLayoutDescriptor pipelineDesc = {};
+		//{
+		//	int index = 0;
+		//	for (const auto& bindLayout : desc.bindLayouts)
+		//	{
+		//		DawnBindGroupLayout* bgl = rm->Get(bindLayout);
+		//		if (bgl)
+		//		{
+		//			bgls.push_back(bgl->s_BindGroupLayout);
+		//			++index;
+		//		}
+		//	}
+
+		//	if (desc.bindLayouts.size() != 0) 
+		//	{
+		//		pipelineDesc.bindGroupLayouts = bgls.data();
+		//		pipelineDesc.bindGroupLayoutCount = index;
+		//	}
+		//	else
+		//	{
+		//		pipelineDesc.bindGroupLayouts = nullptr;
+		//		pipelineDesc.bindGroupLayoutCount = 0;
+		//	}
+		//}
+		//wgpu::PipelineLayout pipelineLayout = device.CreatePipelineLayout(&pipelineDesc);
+		
+		// Pipeline layout creation
+		wgpu::BindGroupLayout bgls[] = { nullptr, nullptr, nullptr, nullptr };
 		wgpu::PipelineLayoutDescriptor pipelineDesc = {};
 		{
-			int index = 0;
-			for (const auto& bindLayout : desc.bindLayouts)
-			{
-				DawnBindGroupLayout* bgl = rm->Get(bindLayout);
-				if (bgl)
-				{
-					bgls.push_back(bgl->s_BindGroupLayout);
-					++index;
-				}
-			}
+			DawnBindGroupLayout* bgl0 = rm->Get(desc.bindLayouts[0]);
+			if (bgl0)
+				bgls[0] = bgl0->s_BindGroupLayout;
+			DawnBindGroupLayout* bgl1 = rm->Get(desc.bindLayouts[1]);
+			if (bgl1)
+				bgls[1] = bgl1->s_BindGroupLayout;
+			DawnBindGroupLayout* bgl2 = rm->Get(desc.bindLayouts[2]);
+			if (bgl2)
+				bgls[2] = bgl2->s_BindGroupLayout;
+			DawnBindGroupLayout* bgl3 = rm->Get(desc.bindLayouts[3]);
+			if (bgl3)
+				bgls[3] = bgl3->s_BindGroupLayout;
 
-			if (desc.bindLayouts.size() != 0) 
-			{
-				pipelineDesc.bindGroupLayouts = bgls.data();
-				pipelineDesc.bindGroupLayoutCount = index;
-			}
-			else
-			{
-				pipelineDesc.bindGroupLayouts = nullptr;
-				pipelineDesc.bindGroupLayoutCount = 0;
-			}
+			pipelineDesc.bindGroupLayouts = bgls;
+			pipelineDesc.bindGroupLayoutCount = 4;
 		}
 		wgpu::PipelineLayout pipelineLayout = device.CreatePipelineLayout(&pipelineDesc);
 
