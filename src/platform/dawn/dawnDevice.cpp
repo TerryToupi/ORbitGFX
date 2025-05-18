@@ -104,7 +104,7 @@ namespace gfx
         wgpu::RequestAdapterOptions adapterOptions =
         {
             .powerPreference = wgpu::PowerPreference::HighPerformance,
-            .backendType = wgpu::BackendType::Vulkan
+            .backendType = wgpu::BackendType::Undefined
         };
 
         m_Instance.WaitAny(
