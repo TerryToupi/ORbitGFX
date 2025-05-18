@@ -32,7 +32,7 @@ namespace gfx
 		if (desc.VS.enabled)
 		{
 			shaderc::SpvCompilationResult module = spirvCompiler.CompileGlslToSpv(
-				(char*)desc.VS.sourceCode.data(),
+				reinterpret_cast<const char*>(desc.VS.sourceCode.data()),
 				shaderc_vertex_shader,
 				std::filesystem::current_path().string().c_str(),
 				spirvOptions
@@ -58,7 +58,7 @@ namespace gfx
 		if (desc.PS.enabled)
 		{
 			shaderc::SpvCompilationResult module = spirvCompiler.CompileGlslToSpv(
-				(char*)desc.PS.sourceCode.data(),
+				reinterpret_cast<const char*>(desc.PS.sourceCode.data()),
 				shaderc_fragment_shader,
 				std::filesystem::current_path().string().c_str(),
 				spirvOptions
