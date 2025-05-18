@@ -31,7 +31,7 @@ namespace gfx
 			if (m_CurrentOffset + GPU_BUFFER_BINDING_RANGE == m_BufferSize)
 				m_CurrentOffset = 0;
 			else
-				m_CurrentOffset = (m_CurrentOffset + alignedStride) % m_BufferSize;
+				m_CurrentOffset += alignedStride;
 
 			return { .ptr = (T*)((char*)m_BufferData + blockIndex), .offset = blockIndex, };
 		}
