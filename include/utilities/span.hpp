@@ -2,7 +2,7 @@
 #define __SPAN_HPP__
 
 #include <initializer_list>
-#include <assert.hpp>
+#include <stdexcept>
 
 namespace utils
 {
@@ -28,8 +28,10 @@ namespace utils
         const T* begin() const { return m_Data; }
         const T* end() const { return m_Data + m_Size; }
 
-        const T& at(size_t idx) const {
-            GFX_ASSERT(idx < m_Size, "Span index out of range!"); 
+        const T& at(size_t idx) const { 
+            if (idx >= m_Size) {
+                throw std::out_of_range("Span out of Range!");
+            }
             return m_Data[idx];
         } 
 
