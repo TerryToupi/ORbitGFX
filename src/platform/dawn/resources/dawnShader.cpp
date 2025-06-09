@@ -180,6 +180,7 @@ namespace gfx
 				{
 					if (rpl->s_DepthEnabled)
 					{
+						s_DepthState.depthWriteEnabled = rpl->s_DepthEnabled;
 						s_DepthState.format = rpl->s_DepthFormat;
 						s_DepthState.depthCompare = gfx::DecodeCompareType(desc.graphicsState.depthTest);
 
