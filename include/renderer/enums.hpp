@@ -43,7 +43,7 @@ namespace gfx
 	};
 
 	enum class VertexFormat : unsigned int
-	{
+	{ 
 		F16 = UINT_BIT_SHIFT(0),
 		F16x2 = UINT_BIT_SHIFT(1),
 		F16x4 = UINT_BIT_SHIFT(2),
@@ -65,7 +65,11 @@ namespace gfx
 		U32 = UINT_BIT_SHIFT(17),
 		U32x2 = UINT_BIT_SHIFT(18),
 		U32x3 = UINT_BIT_SHIFT(19),
-		U32x4 = UINT_BIT_SHIFT(20),
+		U32x4 = UINT_BIT_SHIFT(20), 
+
+		UNORM8 = UINT_BIT_SHIFT(21),
+		UNORM8x2 = UINT_BIT_SHIFT(22),
+		UNORM8x4 = UINT_BIT_SHIFT(23)
 	};
 
 	enum class Filter : unsigned int

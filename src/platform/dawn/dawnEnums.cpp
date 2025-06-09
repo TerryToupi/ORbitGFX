@@ -129,7 +129,11 @@ namespace gfx
 			{ gfx::VertexFormat::U32,	wgpu::VertexFormat::Uint32 },
 			{ gfx::VertexFormat::U32x2, wgpu::VertexFormat::Uint32x2 },
 			{ gfx::VertexFormat::U32x3, wgpu::VertexFormat::Uint32x3 },
-			{ gfx::VertexFormat::U32x4, wgpu::VertexFormat::Uint32x4 },
+			{ gfx::VertexFormat::U32x4, wgpu::VertexFormat::Uint32x4 }, 
+
+			{ gfx::VertexFormat::UNORM8, wgpu::VertexFormat::Unorm8 },
+			{ gfx::VertexFormat::UNORM8x2, wgpu::VertexFormat::Unorm8x2 },
+			{ gfx::VertexFormat::UNORM8x4, wgpu::VertexFormat::Unorm8x4 },
 		};
 
 		unsigned int typeValue = static_cast<unsigned int>(type);
