@@ -230,7 +230,8 @@ namespace gfx
 	enum class StoreOperation : unsigned int
 	{
 		STORE = UINT_BIT_SHIFT(0),
-		DISCARD = UINT_BIT_SHIFT(1),
+		DISCARD = UINT_BIT_SHIFT(1), 
+		DONT_CARE = UINT_BIT_SHIFT(2)
 	};
 
 	enum class LoadOperation : unsigned int
