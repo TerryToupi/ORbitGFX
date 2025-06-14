@@ -72,7 +72,7 @@ namespace gfx
 				if (vertexBuffer2)
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
-				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
+				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount, cmd.indexOffset, cmd.vertexOffset, cmd.instanceOffset);
 			}
 		}
 		pass.End();
@@ -141,7 +141,7 @@ namespace gfx
 				if (vertexBuffer2)
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
-				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount);
+				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount, cmd.indexOffset, cmd.vertexOffset, cmd.instanceOffset);
 			}
 		}
 		pass.End();
