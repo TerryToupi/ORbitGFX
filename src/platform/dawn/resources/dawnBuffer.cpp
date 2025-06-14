@@ -1,7 +1,7 @@
 #include <dawn/dawnDevice.hpp>
 #include <dawn/resources/dawnBuffer.hpp>
 
-#define ALIGN_TO_NEXT_MULTIPLE(n, k) ((n + k) & ~k)
+#define ALIGN_TO_NEXT_MULTIPLE(n, k) (((n) + (k) - 1) / (k) * (k))
 
 namespace gfx
 {

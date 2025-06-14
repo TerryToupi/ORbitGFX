@@ -3,7 +3,7 @@
 #include <dawn/dawnDevice.hpp>
 #include <assert.hpp>
 
-#define ALIGN_TO_NEXT_MULTIPLE(n, k) ((n + k) & ~k)
+#define ALIGN_TO_NEXT_MULTIPLE(n, k) (((n) + (k) - 1) / (k) * (k))
 
 namespace gfx
 {
