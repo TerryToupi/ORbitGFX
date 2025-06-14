@@ -24,7 +24,7 @@ namespace gfx
 
 		if (desc.initialData.data() != nullptr)
 		{
-			void* data = s_Buffer.GetMappedRange(0, desc.byteSize);
+			void* data = s_Buffer.GetMappedRange(0, ALIGN_TO_NEXT_MULTIPLE(desc.byteSize, 16));
 			memcpy(data, desc.initialData.data(), desc.initialData.size());
 			s_Buffer.Unmap(); 
 		}
