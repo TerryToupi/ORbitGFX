@@ -38,7 +38,7 @@ namespace gfx
             {
                 bgEntries[index].binding = buffer.slot;
                 bgEntries[index].buffer = b->s_Buffer;
-                bgEntries[index].size = ALIGN_TO_NEXT_MULTIPLE(buffer.range, 16);
+                bgEntries[index].size = ALIGN_TO_NEXT_MULTIPLE(buffer.range, 4);
                 bgEntries[index].offset = buffer.byteOffset;
                 ++index;
             }
