@@ -1,6 +1,8 @@
 #include <dawn/dawnDevice.hpp>
 #include <dawn/resources/dawnBuffer.hpp>
 
+#define ALIGN_TO_NEXT_MULTIPLE(n, k) ((n + k) & ~k)
+
 namespace gfx
 {
 	DawnBuffer::DawnBuffer()
@@ -14,17 +16,19 @@ namespace gfx
 		wgpu::Device device = deviceInstance->GetDawnDevice();
 
 		wgpu::BufferDescriptor bdesc = {};
-		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage);
-		bdesc.mappedAtCreation = desc.initialData.data() == nullptr ? false : true;
-		bdesc.size = desc.byteSize;
+		bdesc.usage = gfx::DecodeBufferUsageType(desc.usage) | wgpu::BufferUsage::CopyDst;
+		//bdesc.mappedAtCreation = desc.initialData.data() == nullptr ? false : true;
+		bdesc.size = ALIGN_TO_NEXT_MULTIPLE(desc.byteSize, 4);
 
 		s_Buffer = device.CreateBuffer(&bdesc); 
 
 		if (desc.initialData.data() != nullptr)
 		{
-			void* data = s_Buffer.GetMappedRange(0, desc.byteSize);
-			memcpy(data, desc.initialData.data(), desc.initialData.size());
-			s_Buffer.Unmap();
+			//void* data = s_Buffer.GetMappedRange(0, desc.byteSize);
+			//memcpy(data, desc.initialData.data(), desc.initialData.size());
+			//s_Buffer.Unmap(); 
+
+			device.GetQueue().WriteBuffer(s_Buffer, 0, desc.initialData.data(), desc.initialData.size());
 		}
 	}
 

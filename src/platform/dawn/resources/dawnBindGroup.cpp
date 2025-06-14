@@ -3,6 +3,8 @@
 #include <dawn/dawnDevice.hpp>
 #include <assert.hpp>
 
+#define ALIGN_TO_NEXT_MULTIPLE(n, k) ((n + k) & ~k)
+
 namespace gfx
 {
 	DawnBindGroup::DawnBindGroup()
@@ -36,7 +38,7 @@ namespace gfx
             {
                 bgEntries[index].binding = buffer.slot;
                 bgEntries[index].buffer = b->s_Buffer;
-                bgEntries[index].size = buffer.range;
+                bgEntries[index].size = ALIGN_TO_NEXT_MULTIPLE(buffer.range, 16);
                 bgEntries[index].offset = buffer.byteOffset;
                 ++index;
             }
