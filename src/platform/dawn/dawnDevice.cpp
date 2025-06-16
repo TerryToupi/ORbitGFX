@@ -296,7 +296,14 @@ namespace gfx
         wgpu::Limits adapterLimits;
         m_Adapter.GetLimits(&adapterLimits);
 
+        wgpu::FeatureName features[] =
+        {
+            wgpu::FeatureName::CoreFeaturesAndLimits
+        };
+
         wgpu::DeviceDescriptor deviceDesc = {};
+        deviceDesc.requiredFeatureCount = sizeof(features) / sizeof(wgpu::FeatureName);
+        deviceDesc.requiredFeatures = features;
 
         deviceDesc.SetDeviceLostCallback(
             wgpu::CallbackMode::AllowSpontaneous,
