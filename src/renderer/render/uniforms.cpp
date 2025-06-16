@@ -1,11 +1,11 @@
 #include <render/uniforms.hpp>
 #include <resources/resourceManger.hpp>
-#include <device.hpp>
+#include <dawn/dawnCommon.hpp>
 
 namespace gfx
 {
 	UniformRingBuffer::UniformRingBuffer(uint32_t size)
-		:	m_BufferSize(size), m_Alignment(Device::instance->s_AdapterDesc.minUniformBufferOffsetAlignment), m_CurrentOffset(0), m_HeadOffset(0)
+		:	m_BufferSize(size), m_Alignment(minUniformBufferOffsetAlignment), m_CurrentOffset(0), m_HeadOffset(0)
 	{ 
 		m_Layout = ResourceManager::instance->Create(BindGroupLayoutDescriptor{
 			.bufferBindings = {
