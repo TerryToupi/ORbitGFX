@@ -134,7 +134,6 @@ namespace gfx
         {
             wgpu::FeatureName::ChromiumExperimentalImmediateData,
             wgpu::FeatureName::DawnDeviceAllocatorControl,
-            wgpu::FeatureName::BufferMapExtendedUsages,
         };
 
         wgpu::DeviceDescriptor deviceDesc = {};
