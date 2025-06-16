@@ -99,6 +99,8 @@ namespace gfx
 
 			pipelineDesc.bindGroupLayouts = bgls;
 			pipelineDesc.bindGroupLayoutCount = 4;
+
+			pipelineDesc.immediateDataRangeByteSize = kMaxPushConstantByteRange;
 		}
 		wgpu::PipelineLayout pipelineLayout = device.CreatePipelineLayout(&pipelineDesc);
 

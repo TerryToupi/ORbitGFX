@@ -10,5 +10,6 @@ constexpr uint8_t kMaxTextureViews = 8u;
 constexpr uint8_t kMaxColorAttachments = 8u;
 constexpr uint8_t kMaxLayoutBindings = 30u;
 constexpr uint8_t kMaxBindGroupLayouts = 8u;
+constexpr uint8_t kMaxPushConstantByteRange = 128u;
 
 #endif // !__DAWN_COMMON_HPP__
