@@ -6,9 +6,107 @@
 #include <sstream>
 #include <string>
 
-namespace gfx
+#include <dawn/native/DawnNative.h>
+
+namespace AdapterInfo
 {
-    static std::string FormatNumber(uint64_t num) {
+    // Wraps a string to about 75 characters and prints indented. Splits on whitespace instead of
+// between characters in a word.
+    std::string WrapString(const std::string& in, const std::string& indent) {
+        std::stringstream out;
+
+        size_t last_space = 0;
+        size_t start_pos = 0;
+        for (size_t i = 0; i < in.size(); ++i) {
+            if (in[i] == ' ') {
+                last_space = i;
+            }
+            else if (in[i] == '\n') {
+                last_space = i;
+            }
+
+            if ((i - start_pos) != 0 && ((i - start_pos) % 75) == 0) {
+                out << indent << in.substr(start_pos, last_space - start_pos) << "\n";
+                start_pos = last_space + 1;
+                last_space = start_pos;
+            }
+        }
+        out << indent << in.substr(start_pos, in.size() - start_pos);
+
+        return out.str();
+    }
+
+    std::string AdapterTypeToString(wgpu::AdapterType type) {
+        switch (type) {
+        case wgpu::AdapterType::DiscreteGPU:
+            return "discrete GPU";
+        case wgpu::AdapterType::IntegratedGPU:
+            return "integrated GPU";
+        case wgpu::AdapterType::CPU:
+            return "CPU";
+        case wgpu::AdapterType::Unknown:
+            break;
+        }
+        return "unknown";
+    }
+
+    std::string BackendTypeToString(wgpu::BackendType type) {
+        switch (type) {
+        case wgpu::BackendType::Null:
+            return "Null";
+        case wgpu::BackendType::WebGPU:
+            return "WebGPU";
+        case wgpu::BackendType::D3D11:
+            return "D3D11";
+        case wgpu::BackendType::D3D12:
+            return "D3D12";
+        case wgpu::BackendType::Metal:
+            return "Metal";
+        case wgpu::BackendType::Vulkan:
+            return "Vulkan";
+        case wgpu::BackendType::OpenGL:
+            return "OpenGL";
+        case wgpu::BackendType::OpenGLES:
+            return "OpenGLES";
+        case wgpu::BackendType::Undefined:
+            return "Undefined";
+        }
+        return "unknown";
+    }
+
+    std::string PowerPreferenceToString(const wgpu::DawnAdapterPropertiesPowerPreference& prop) {
+        switch (prop.powerPreference) {
+        case wgpu::PowerPreference::LowPower:
+            return "low power";
+        case wgpu::PowerPreference::HighPerformance:
+            return "high performance";
+        case wgpu::PowerPreference::Undefined:
+            return "<undefined>";
+        }
+        return "<unknown>";
+    }
+
+    std::string AsHex(uint32_t val) {
+        std::stringstream hex;
+        hex << "0x" << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << val;
+        return hex.str();
+    }
+
+    std::string AdapterInfoToString(const wgpu::AdapterInfo& info) {
+        std::stringstream out;
+        out << "VendorID: " << AsHex(info.vendorID) << "\n";
+        out << "Vendor: " << info.vendor << "\n";
+        out << "Architecture: " << info.architecture << "\n";
+        out << "DeviceID: " << AsHex(info.deviceID) << "\n";
+        out << "Name: " << info.device << "\n";
+        out << "Driver description: " << info.description << "\n";
+        out << "Adapter Type: " << AdapterTypeToString(info.adapterType) << "\n";
+        out << "Backend Type: " << BackendTypeToString(info.backendType) << "\n";
+
+        return out.str();
+    }
+
+    std::string FormatNumber(uint64_t num) {
         auto s = std::to_string(num);
         std::stringstream ret;
 
@@ -23,7 +121,7 @@ namespace gfx
         return ret.str();
     }
 
-    static std::string LimitsToString(const wgpu::Limits& limits, const std::string& indent) {
+    std::string LimitsToString(const wgpu::Limits& limits, const std::string& indent) {
         std::stringstream out;
 
         out << indent << "maxTextureDimension1D: " << FormatNumber(limits.maxTextureDimension1D)
@@ -92,7 +190,76 @@ namespace gfx
 
         return out.str();
     }
+    
+    std::string DumpAdapterInfo(const wgpu::Adapter& adapter) {
+        wgpu::AdapterPropertiesSubgroups subgroup_props{};
 
+        wgpu::DawnAdapterPropertiesPowerPreference power_props{};
+        power_props.nextInChain = &subgroup_props;
+
+        wgpu::AdapterInfo info{};
+        info.nextInChain = &power_props;
+
+        std::stringstream out;
+        adapter.GetInfo(&info);
+        out << AdapterInfoToString(info);
+        out << "Subgroup min size: " << subgroup_props.subgroupMinSize << "\n";
+        out << "Subgroup max size: " << subgroup_props.subgroupMaxSize << "\n";
+        out << "Power: " << PowerPreferenceToString(power_props) << "\n";
+        out << "\n";
+
+        return out.str();
+    }
+
+    std::string DumpAdapterFeatures(const wgpu::Adapter& adapter) {
+        wgpu::SupportedFeatures supportedFeatures;
+
+        std::stringstream out;
+        adapter.GetFeatures(&supportedFeatures);
+        out << "  Features\n";
+        out << "  ========\n";
+        for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+            wgpu::FeatureName f = supportedFeatures.features[i];
+            auto info = dawn::native::GetFeatureInfo(f);
+            out << "   * " << info->name << "\n";
+            out << WrapString(info->description, "      ") << "\n";
+            out << "      " << info->url << "\n";
+        }
+
+        return out.str();
+    }
+
+    std::string DumpAdapterLimits(const wgpu::Adapter& adapter) {
+        wgpu::Limits adapterLimits;
+
+        std::stringstream out;
+        if (adapter.GetLimits(&adapterLimits)) {
+            out << "\n";
+            out << "  Adapter Limits\n";
+            out << "  ==============\n";
+            out << LimitsToString(adapterLimits, "    ") << "\n";
+        }
+
+        return out.str();
+    }
+
+    std::string DumpAdapter(const wgpu::Adapter& adapter) {
+        std::stringstream out;
+
+        out << "Adapter\n";
+        out << "=======\n";
+
+        out << DumpAdapterInfo(adapter);
+        out << DumpAdapterFeatures(adapter);
+        out << DumpAdapterLimits(adapter);
+
+        return out.str();
+    }
+}
+
+
+namespace gfx
+{
     void DawnDevice::Init()
     {
         wgpu::InstanceDescriptor idesc = {};
@@ -132,7 +299,6 @@ namespace gfx
 
         wgpu::FeatureName features[] =
         {
-            wgpu::FeatureName::ChromiumExperimentalImmediateData,
             wgpu::FeatureName::DawnDeviceAllocatorControl,
         };
 
@@ -224,16 +390,6 @@ namespace gfx
         wgpu::AdapterInfo adapterInfo = {};
         adapterInfo.nextInChain = &power_procs;
         m_Adapter.GetInfo(&adapterInfo);
-
-        std::stringstream infoStream;
-        infoStream << "\n";
-        infoStream << "VendorID: " << std::hex << adapterInfo.vendorID << std::dec << "\n";
-        infoStream << "Vendor: " << std::string_view(adapterInfo.vendor) << "\n";
-        infoStream << "Architecture: " << std::string_view(adapterInfo.architecture) << "\n";
-        infoStream << "DeviceID: " << std::hex << adapterInfo.deviceID << std::dec << "\n";
-        infoStream << "Name: " << std::string_view(adapterInfo.device) << "\n";
-        infoStream << "Driver description: " << std::string_view(adapterInfo.description) << "\n";
-        GFX_TRACE(infoStream.str());
         
         s_DeviceDesc =
         {
@@ -245,47 +401,7 @@ namespace gfx
             .driver = std::string(adapterInfo.description)
         }; 
 
-        std::stringstream limitsStream;
-        limitsStream << "\n";
-        limitsStream << "  Adapter Limits\n";
-        limitsStream << "  ==============\n";
-        limitsStream << LimitsToString(adapterLimits, "    ") << "\n";
-        GFX_TRACE(limitsStream.str());
-        
-        s_AdapterDesc =
-        {
-			.maxTextureDimension1D = adapterLimits.maxTextureDimension1D,
-			.maxTextureDimension2D = adapterLimits.maxTextureDimension2D,
-			.maxTextureDimension3D = adapterLimits.maxTextureDimension3D,
-			.maxTextureArrayLayers = adapterLimits.maxTextureArrayLayers,
-			.maxBindGroups = adapterLimits.maxBindGroups,
-			.maxBindGroupsPlusVertexBuffers = adapterLimits.maxBindGroupsPlusVertexBuffers,
-			.maxBindingsPerBindGroup = adapterLimits.maxBindingsPerBindGroup,
-			.maxDynamicUniformBuffersPerPipelineLayout = adapterLimits.maxDynamicUniformBuffersPerPipelineLayout,
-			.maxDynamicStorageBuffersPerPipelineLayout = adapterLimits.maxDynamicUniformBuffersPerPipelineLayout,
-			.maxSampledTexturesPerShaderStage = adapterLimits.maxSampledTexturesPerShaderStage,
-			.maxSamplersPerShaderStage = adapterLimits.maxSamplersPerShaderStage,
-			.maxStorageBuffersPerShaderStage = adapterLimits.maxStorageBuffersPerShaderStage,
-			.maxStorageTexturesPerShaderStage = adapterLimits.maxStorageTexturesPerShaderStage,
-			.maxUniformBuffersPerShaderStage = adapterLimits.maxUniformBuffersPerShaderStage,
-			.maxUniformBufferBindingSize = adapterLimits.maxUniformBufferBindingSize,
-			.maxStorageBufferBindingSize = adapterLimits.maxStorageBufferBindingSize,
-			.minUniformBufferOffsetAlignment = adapterLimits.minUniformBufferOffsetAlignment,
-			.minStorageBufferOffsetAlignment = adapterLimits.minStorageBufferOffsetAlignment,
-			.maxVertexBuffers = adapterLimits.maxVertexBuffers,
-			.maxBufferSize = adapterLimits.maxBufferSize,
-			.maxVertexAttributes = adapterLimits.maxVertexAttributes,
-			.maxVertexBufferArrayStride = adapterLimits.maxVertexBufferArrayStride,
-			.maxInterStageShaderVariables = adapterLimits.maxInterStageShaderVariables,
-			.maxColorAttachments = adapterLimits.maxColorAttachments,
-			.maxColorAttachmentBytesPerSample = adapterLimits.maxColorAttachmentBytesPerSample,
-			.maxComputeWorkgroupStorageSize = adapterLimits.maxComputeWorkgroupStorageSize,
-			.maxComputeInvocationsPerWorkgroup = adapterLimits.maxComputeInvocationsPerWorkgroup,
-			.maxComputeWorkgroupSizeX = adapterLimits.maxComputeWorkgroupSizeX,
-			.maxComputeWorkgroupSizeY = adapterLimits.maxComputeWorkgroupSizeY,
-			.maxComputeWorkgroupSizeZ = adapterLimits.maxComputeWorkgroupSizeZ,
-			.maxComputeWorkgroupsPerDimension = adapterLimits.maxComputeWorkgroupsPerDimension,
-        };
+        GFX_TRACE(AdapterInfo::DumpAdapter(m_Adapter));
 
         return;
     }
