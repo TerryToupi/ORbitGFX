@@ -129,7 +129,18 @@ namespace gfx
         wgpu::Limits adapterLimits;
         m_Adapter.GetLimits(&adapterLimits);
 
+
+        wgpu::FeatureName features[] =
+        {
+            wgpu::FeatureName::ChromiumExperimentalImmediateData,
+            wgpu::FeatureName::DawnDeviceAllocatorControl,
+            wgpu::FeatureName::BufferMapExtendedUsages,
+        };
+
         wgpu::DeviceDescriptor deviceDesc = {};
+        deviceDesc.requiredFeatureCount = sizeof(features) / sizeof(wgpu::FeatureName);
+        deviceDesc.requiredFeatures = features;
+
         deviceDesc.SetDeviceLostCallback(
             wgpu::CallbackMode::AllowSpontaneous,
             [](const wgpu::Device&, wgpu::DeviceLostReason reason, wgpu::StringView message)
