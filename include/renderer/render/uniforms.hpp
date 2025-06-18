@@ -5,7 +5,7 @@
 #include <resources/buffer.hpp>
 #include <resources/dynamicBuffer.hpp>
 
-#define GPU_BUFFER_BINDING_RANGE 4 * 1024 // bytes
+#define GPU_BUFFER_BINDING_RANGE 256// bytes
 
 namespace gfx
 {
