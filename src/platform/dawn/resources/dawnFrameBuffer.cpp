@@ -21,13 +21,9 @@ namespace gfx
         DawnDevice* deviceInsance = (DawnDevice*)Device::instance;
         wgpu::Device device = deviceInsance->GetDawnDevice();
       
-        const DawnRenderPass* renderPass = rm->Get(desc.renderPass);
-        GFX_ASSERT(renderPass, "Provided Render Pass in Dawn Frame Buffer creation was NULL!");
-
-        
         s_DepthAttachment = nullptr;
         const DawnTexture* depth = rm->Get(desc.depthTarget);
-        if (depth && renderPass->s_DepthEnabled)
+        if (depth)
         {
             s_DepthAttachment = depth->s_Texture.CreateView();
         }

@@ -14,8 +14,6 @@ namespace gfx
     
     struct FrameBufferDescriptor
     {
-        utils::Handle<RenderPass> renderPass;
-       
         utils::Handle<Texture> depthTarget;
         utils::Span<utils::Handle<Texture>> colorTargets;
     };
