@@ -177,6 +177,15 @@ namespace gfx
 		}
 	}
 
+	void DawnResourceManager::ResizeDynamicBuffer(utils::Handle<DynamicBuffer> buffer)
+	{
+		DawnDynamicBuffer* BufferImpl = this->Get(buffer);
+		if (BufferImpl)
+		{
+			BufferImpl->Resize();
+		}
+	}
+
 	utils::Handle<Shader> DawnResourceManager::Add(const DawnShader& shader)
 	{
 		return m_Shaders.Insert(shader);

@@ -12,9 +12,12 @@ namespace gfx
 	public:
 		DawnDynamicBuffer();
 		DawnDynamicBuffer(const DynamicBufferDescriptor& desc);
+		void Resize();
 		void Destroy();
 
 	public:
+		DynamicBufferDescriptor s_Desc;
+
 		wgpu::Buffer s_Buffer;
 		wgpu::BindGroup s_BindGroup;
 	};

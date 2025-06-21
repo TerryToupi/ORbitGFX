@@ -25,23 +25,45 @@ namespace gfx
 
 	void UniformRingBuffer::Upload()
 	{
-		if (m_HeadOffset > m_CurrentOffset)
-		{
-			uint32_t remainingSize = m_BufferSize - m_HeadOffset;
-			uint32_t rappedSize = m_CurrentOffset;
+		//if (m_HeadOffset > m_CurrentOffset)
+		//{
+		//	uint32_t remainingSize = m_BufferSize - m_HeadOffset;
+		//	uint32_t rappedSize = m_CurrentOffset;
 
-			ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), remainingSize);
-			ResourceManager::instance->SetBufferData(m_Buffer, 0, (void*)((char*)m_BufferData), rappedSize);
+		//	ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), remainingSize);
+		//	ResourceManager::instance->SetBufferData(m_Buffer, 0, (void*)((char*)m_BufferData), rappedSize);
+		//}
+		//else
+		//{
+		//	uint32_t size = m_CurrentOffset - m_HeadOffset;
+
+		//	ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), size);
+		//}
+		//
+		////ResourceManager::instance->SetBufferData(m_Buffer, 0, m_BufferData, m_BufferSize);
+		//m_HeadOffset = m_CurrentOffset;
+
+		if (m_HasWrapped)
+		{
+			// doubling the cappacity of the dynamic buffer
+			ResourceManager::instance->ResizeDynamicBuffer(m_Buffer);
+			// flushing the existing data
+			ResourceManager::instance->SetBufferData(m_Buffer, 0, m_BufferData, m_BufferSize);
+		
+			m_BufferSize *= 2;
+
+			// resize cpu buffer
+			operator delete(m_BufferData);
+			m_BufferData = nullptr;
+			m_BufferData = operator new(m_BufferSize);
+
+			//reset wrapped
+			m_HasWrapped = false;
 		}
 		else
-		{
-			uint32_t size = m_CurrentOffset - m_HeadOffset;
+			ResourceManager::instance->SetBufferData(m_Buffer, 0, m_BufferData, m_CurrentOffset);
 
-			ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), size);
-		}
-		
-		//ResourceManager::instance->SetBufferData(m_Buffer, 0, m_BufferData, m_BufferSize);
-		m_HeadOffset = m_CurrentOffset;
+		m_CurrentOffset = 0;
 	}
 
 	void UniformRingBuffer::Destroy()

@@ -1,5 +1,6 @@
 #include <dawn/dawnDevice.hpp>
 #include <dawn/resources/dawnBuffer.hpp>
+#include <assert.hpp>
 
 #define ALIGN_TO_NEXT_MULTIPLE(n, k) (((n) + (k) - 1) / (k) * (k))
 
@@ -28,6 +29,12 @@ namespace gfx
 			memcpy(data, desc.initialData.data(), desc.byteSize);
 			s_Buffer.Unmap(); 
 		}
+	}
+
+	void DawnBuffer::Resize(size_t size)
+	{
+		GFX_ASSERT(s_Buffer != nullptr);
+		s_Buffer.Destroy();
 	}
 
 	void DawnBuffer::Destroy()

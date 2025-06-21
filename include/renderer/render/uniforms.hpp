@@ -29,7 +29,10 @@ namespace gfx
 			uint32_t blockIndex = m_CurrentOffset;
 		
 			if (m_CurrentOffset + GPU_BUFFER_BINDING_RANGE == m_BufferSize)
+			{
+				m_HasWrapped = true;
 				m_CurrentOffset = 0;
+			}
 			else
 				m_CurrentOffset += alignedStride;
 
@@ -46,9 +49,10 @@ namespace gfx
 	private:
 		utils::Handle<gfx::DynamicBuffer> m_Buffer; 
 		utils::Handle<gfx::BindGroupLayout> m_Layout;
+
 		void* m_BufferData; 
 
-		uint32_t m_HeadOffset;
+		bool m_HasWrapped = false;
 		uint32_t m_BufferSize;
 		uint32_t m_CurrentOffset;
 		uint32_t m_Alignment;

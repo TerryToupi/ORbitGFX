@@ -50,6 +50,8 @@ namespace gfx
 
 		virtual void SetBufferData(utils::Handle<Buffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
 		virtual void SetBufferData(utils::Handle<DynamicBuffer> buffer, uint32_t offset, const void* data, uint32_t size) = 0;
+
+		virtual void ResizeDynamicBuffer(utils::Handle<DynamicBuffer> buffer) = 0;
 	};
 }
 
