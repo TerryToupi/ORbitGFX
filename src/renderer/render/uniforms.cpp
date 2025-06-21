@@ -5,7 +5,7 @@
 namespace gfx
 {
 	UniformRingBuffer::UniformRingBuffer(uint32_t size)
-		:	m_BufferSize(size), m_Alignment(minUniformBufferOffsetAlignment), m_CurrentOffset(0), m_HeadOffset(0)
+		:	m_BufferSize(size), m_Alignment(minUniformBufferOffsetAlignment), m_CurrentOffset(0)
 	{ 
 		m_Layout = ResourceManager::instance->Create(BindGroupLayoutDescriptor{
 			.bufferBindings = {
@@ -25,24 +25,6 @@ namespace gfx
 
 	void UniformRingBuffer::Upload()
 	{
-		//if (m_HeadOffset > m_CurrentOffset)
-		//{
-		//	uint32_t remainingSize = m_BufferSize - m_HeadOffset;
-		//	uint32_t rappedSize = m_CurrentOffset;
-
-		//	ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), remainingSize);
-		//	ResourceManager::instance->SetBufferData(m_Buffer, 0, (void*)((char*)m_BufferData), rappedSize);
-		//}
-		//else
-		//{
-		//	uint32_t size = m_CurrentOffset - m_HeadOffset;
-
-		//	ResourceManager::instance->SetBufferData(m_Buffer, m_HeadOffset, (void*)((char*)m_BufferData + m_HeadOffset), size);
-		//}
-		//
-		////ResourceManager::instance->SetBufferData(m_Buffer, 0, m_BufferData, m_BufferSize);
-		//m_HeadOffset = m_CurrentOffset;
-
 		if (m_HasWrapped)
 		{
 			// doubling the cappacity of the dynamic buffer
