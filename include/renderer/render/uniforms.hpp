@@ -19,6 +19,7 @@ namespace gfx
 	class UniformRingBuffer
 	{
 	public:
+		UniformRingBuffer();
 		UniformRingBuffer(uint32_t size);
 
 		template<typename T>
@@ -52,7 +53,7 @@ namespace gfx
 
 		void* m_BufferData; 
 
-		bool m_HasWrapped = false;
+		bool m_HasWrapped;
 		uint32_t m_BufferSize;
 		uint32_t m_CurrentOffset;
 		uint32_t m_Alignment;

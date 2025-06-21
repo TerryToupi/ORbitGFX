@@ -4,8 +4,15 @@
 
 namespace gfx
 {
+	UniformRingBuffer::UniformRingBuffer()
+		:	m_BufferSize(0), m_Alignment(0), m_CurrentOffset(0), m_HasWrapped(false), 
+			m_Layout(utils::Handle<gfx::BindGroupLayout>()), m_Buffer(utils::Handle<gfx::DynamicBuffer>()),
+			m_BufferData(nullptr)
+	{
+	} 
+
 	UniformRingBuffer::UniformRingBuffer(uint32_t size)
-		:	m_BufferSize(size), m_Alignment(minUniformBufferOffsetAlignment), m_CurrentOffset(0)
+		:	m_BufferSize(size), m_Alignment(minUniformBufferOffsetAlignment), m_CurrentOffset(0), m_HasWrapped(false)
 	{ 
 		m_Layout = ResourceManager::instance->Create(BindGroupLayoutDescriptor{
 			.bufferBindings = {
