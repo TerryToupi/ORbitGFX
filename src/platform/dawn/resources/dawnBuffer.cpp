@@ -31,12 +31,6 @@ namespace gfx
 		}
 	}
 
-	void DawnBuffer::Resize(size_t size)
-	{
-		GFX_ASSERT(s_Buffer != nullptr);
-		s_Buffer.Destroy();
-	}
-
 	void DawnBuffer::Destroy()
 	{
 		if (s_Buffer != nullptr)
