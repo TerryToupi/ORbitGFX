@@ -66,6 +66,11 @@ namespace gfx
         return false;
     }
 
+    void DawnWindow::GetMousePos(double* x, double* y)
+    { 
+        glfwGetCursorPos(m_Window, x, y);
+    }
+
     const wgpu::Surface& DawnWindow::GetDawnSurface()
     { 
         return m_Surface;

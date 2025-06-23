@@ -19,6 +19,7 @@ namespace gfx
         virtual gfx::TextureFormat GetSurfaceFormat() override;
 
         virtual bool GetKey(Key key) override;
+        virtual void GetMousePos(double* x, double* y) override;
        
         const wgpu::Surface& GetDawnSurface(); 
         const wgpu::SurfaceCapabilities& GetDawnSurfaceCapabilities();
