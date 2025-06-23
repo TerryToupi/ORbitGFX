@@ -17,6 +17,8 @@ namespace gfx
         virtual void Run(const GameLoop& func) override;
 
         virtual gfx::TextureFormat GetSurfaceFormat() override;
+
+        virtual bool GetKey(Key key) override;
        
         const wgpu::Surface& GetDawnSurface(); 
         const wgpu::SurfaceCapabilities& GetDawnSurfaceCapabilities();

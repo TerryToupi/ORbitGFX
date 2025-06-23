@@ -58,6 +58,14 @@ namespace gfx
         return m_SurfaceFormat;
     }
 
+    bool DawnWindow::GetKey(Key key)
+    {
+        if (glfwGetKey(m_Window, static_cast<int>(key)) == GLFW_PRESS)
+            return true;
+
+        return false;
+    }
+
     const wgpu::Surface& DawnWindow::GetDawnSurface()
     { 
         return m_Surface;
