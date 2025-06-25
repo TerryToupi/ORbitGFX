@@ -81,6 +81,8 @@ namespace gfx
 
         virtual gfx::TextureFormat GetSurfaceFormat() = 0;
 
+		virtual void GetWindowSize(int* width, int* heigh) = 0;
+
 		virtual bool GetKey(Key key) = 0;
 		virtual void GetMousePos(double* x, double* y) = 0;
 

@@ -18,6 +18,8 @@ namespace gfx
 
         virtual gfx::TextureFormat GetSurfaceFormat() override;
 
+        virtual void  GetWindowSize(int* width, int* heigh) override;
+
         virtual bool GetKey(Key key) override;
         virtual void GetMousePos(double* x, double* y) override;
        

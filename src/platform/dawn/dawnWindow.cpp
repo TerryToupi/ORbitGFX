@@ -58,6 +58,11 @@ namespace gfx
         return m_SurfaceFormat;
     }
 
+    void DawnWindow::GetWindowSize(int* width, int* heigh)
+    { 
+        glfwGetWindowSize(m_Window, width, heigh);
+    }
+
     bool DawnWindow::GetKey(Key key)
     {
         if (glfwGetKey(m_Window, static_cast<int>(key)) == GLFW_PRESS)
