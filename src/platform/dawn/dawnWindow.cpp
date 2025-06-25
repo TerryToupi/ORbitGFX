@@ -71,7 +71,7 @@ namespace gfx
         return false;
     }
 
-    bool DawnWindow::GetMouseButton(int button)
+    bool DawnWindow::GetMouseButton(Button button)
     {
         if (glfwGetMouseButton(m_Window, static_cast<int>(button)) == GLFW_PRESS)
             return true;

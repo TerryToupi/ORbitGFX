@@ -100,7 +100,7 @@ namespace gfx
 		virtual void GetWindowSize(int* width, int* heigh) = 0;
 
 		virtual bool GetKey(Key key) = 0;
-		virtual bool GetMouseButton(int button) = 0;
+		virtual bool GetMouseButton(Button button) = 0;
 		virtual void GetMousePos(double* x, double* y) = 0;
 
     protected:
