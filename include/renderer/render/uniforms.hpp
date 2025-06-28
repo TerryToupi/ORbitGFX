@@ -5,8 +5,6 @@
 #include <resources/buffer.hpp>
 #include <resources/dynamicBuffer.hpp>
 
-#define GPU_BUFFER_BINDING_RANGE 256// bytes
-
 namespace gfx
 {
 	template<typename T>
@@ -29,7 +27,7 @@ namespace gfx
 			uint32_t alignedStride = m_Alignment * divide_and_ceil;
 			uint32_t blockIndex = m_CurrentOffset;
 		
-			if (m_CurrentOffset + GPU_BUFFER_BINDING_RANGE == m_BufferSize)
+			if (m_CurrentOffset + m_Alignment == m_BufferSize)
 			{
 				m_HasWrapped = true;
 				m_CurrentOffset = 0;

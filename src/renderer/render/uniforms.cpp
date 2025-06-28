@@ -23,7 +23,7 @@ namespace gfx
 		m_Buffer = ResourceManager::instance->Create(DynamicBufferDescriptor{
 			.usage = gfx::BufferUsage::UNIFORM,
 			.bufferSize = size,
-			.bufferRange = GPU_BUFFER_BINDING_RANGE,
+			.bufferRange = m_Alignment,
 			.bindGroupLayout = m_Layout
 			});
 
