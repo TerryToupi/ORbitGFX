@@ -38,7 +38,7 @@ namespace gfx
 			uint32_t offset = 0;
 			DrawStreamDecoder decoder;
 
-			while ((offset = decoder.Decode(index, drawCalls)) != UINT32_MAX)
+			while (offset = decoder.Decode(index, drawCalls))
 			{
 				index += offset;
 
@@ -79,6 +79,9 @@ namespace gfx
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
+
+				if (index == drawCalls.size())
+					break;
 			}
 		}
 		pass.End();
@@ -113,7 +116,7 @@ namespace gfx
 			uint32_t offset = 0;
 			DrawStreamDecoder decoder;
 
-			while ((offset = decoder.Decode(index, drawCalls)) != UINT32_MAX)
+			while (offset = decoder.Decode(index, drawCalls))
 			{
 				index += offset;
 
@@ -154,6 +157,9 @@ namespace gfx
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
+
+				if (index == drawCalls.size())
+					break;
 			}
 		}
 		pass.End();
