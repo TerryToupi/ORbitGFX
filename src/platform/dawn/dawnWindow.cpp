@@ -20,20 +20,42 @@ namespace gfx
         m_Window = glfwCreateWindow(m_WindowConfig.width, m_WindowConfig.height, m_WindowConfig.name.c_str(), nullptr, nullptr);
         GFX_ASSERT(m_Window != nullptr, "Unable to fetch GLFW window!");
         
-        m_Surface = wgpu::glfw::CreateSurfaceForWindow(device->GetDawnInstance(), m_Window);
+        m_Data.surface = wgpu::glfw::CreateSurfaceForWindow(device->GetDawnInstance(), m_Window);
 
-        m_Surface.GetCapabilities(device->GetDawnAdapter(), &m_SurfaceCapabilities);
+        m_Data.surface.GetCapabilities(device->GetDawnAdapter(), &m_Data.surfaceCapabilities);
         wgpu::SurfaceConfiguration config = {};
 
         config.device = device->GetDawnDevice();
-        config.format = m_SurfaceCapabilities.formats[0];
+        config.format = m_Data.surfaceCapabilities.formats[0];
         config.width = m_WindowConfig.width;
         config.height = m_WindowConfig.height; 
         config.presentMode = wgpu::PresentMode::Immediate;
 
-        m_SurfaceFormat = EncodeTextureFormatType(m_SurfaceCapabilities.formats[0]);
+        m_SurfaceFormat = EncodeTextureFormatType(m_Data.surfaceCapabilities.formats[0]);
 
-        m_Surface.Configure(&config);
+        m_Data.surface.Configure(&config);
+
+        glfwSetWindowUserPointer(m_Window, &m_Data);
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int Width, int Height) {
+            DawnDevice* device = (DawnDevice*)Device::instance;
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+            data.surface.Unconfigure();
+
+			data.surface.GetCapabilities(device->GetDawnAdapter(), &data.surfaceCapabilities);
+			wgpu::SurfaceConfiguration config = {};
+
+			config.device = device->GetDawnDevice();
+			config.format = data.surfaceCapabilities.formats[0];
+			config.width = Width;
+			config.height = Height; 
+			config.presentMode = wgpu::PresentMode::Immediate;
+
+			data.surface.Configure(&config);
+
+            data.width = Width;
+            data.height = Height;
+            });
     } 
 
     void DawnWindow::ShutDown()
@@ -47,9 +69,9 @@ namespace gfx
         //// main loop
         while (!glfwWindowShouldClose(m_Window))
         { 
-            func();
-            m_Surface.Present();
             glfwPollEvents();
+            func();
+            m_Data.surface.Present();
         }
     }
 
@@ -86,11 +108,11 @@ namespace gfx
 
     const wgpu::Surface& DawnWindow::GetDawnSurface()
     { 
-        return m_Surface;
+        return m_Data.surface;
     } 
 
     const wgpu::SurfaceCapabilities& DawnWindow::GetDawnSurfaceCapabilities()
     { 
-        return m_SurfaceCapabilities;
+        return m_Data.surfaceCapabilities;
     }
 }

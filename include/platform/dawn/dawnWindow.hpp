@@ -29,8 +29,13 @@ namespace gfx
 
     private:
         GLFWwindow* m_Window;
-        wgpu::Surface m_Surface; 
-        wgpu::SurfaceCapabilities m_SurfaceCapabilities;
+
+        struct WindowData {
+            int width;
+            int height;
+			wgpu::Surface surface; 
+			wgpu::SurfaceCapabilities surfaceCapabilities;
+        } m_Data;
     };
 }
 
