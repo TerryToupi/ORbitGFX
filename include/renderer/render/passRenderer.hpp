@@ -17,12 +17,12 @@ namespace gfx
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass, 
 			utils::Handle<FrameBuffer> frameBuffer, 
-			utils::Span<Draw> drawCalls
+			utils::Span<uint32_t> drawCalls
 		) = 0;
 
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass, 
-			utils::Span<Draw> drawCalls
+			utils::Span<uint32_t> drawCalls
 		) = 0;
 
 		virtual void BeginComputePass(
