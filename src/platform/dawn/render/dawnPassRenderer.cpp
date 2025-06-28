@@ -41,42 +41,69 @@ namespace gfx
 			while (offset = decoder.Decode(index, drawCalls))
 			{
 				index += offset;
+	
+				if (IS_BIT_SET(decoder.currDirty, 0))
+				{
+					DawnShader* shader = rm->Get(decoder.currState.shader);
+					if (shader)
+						pass.SetPipeline(shader->s_Pipeline);
+				}
 
-				DawnShader* shader = rm->Get(decoder.currState.shader);
-				if (shader)
-					pass.SetPipeline(shader->s_Pipeline);
+				if (IS_BIT_SET(decoder.currDirty, 1))
+				{
+					DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
+					if (bindGroup0)
+						pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+				}
 
-				DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
-				if (bindGroup0)
-					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+				if (IS_BIT_SET(decoder.currDirty, 2))
+				{
+					DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
+					if (bindGroup1)
+						pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 3))
+				{
+					DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
+					if (bindGroup2)
+						pass.SetBindGroup(2, bindGroup2->s_BindGroup);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 4) || IS_BIT_SET(decoder.currDirty, 13))
+				{
+					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
+					if (dynamicBuffer)
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
+				}
 
-				DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
-				if (bindGroup1)
-					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+				if (IS_BIT_SET(decoder.currDirty, 5))
+				{
+					DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
+					if (indexBuffer)
+						pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 6))
+				{
+					DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
+					if (vertexBuffer0)
+						pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 7))
+				{
+					DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
+					if (vertexBuffer1)
+						pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
+				}
 
-				DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
-				if (bindGroup2)
-					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
-
-				DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
-				if (dynamicBuffer)
-					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
-
-				DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
-				if (indexBuffer)
-					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
-
-				DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
-				if (vertexBuffer0)
-					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
-
-				DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
-				if (vertexBuffer1)
-					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
-
-				DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
-				if (vertexBuffer2)
-					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
+				if (IS_BIT_SET(decoder.currDirty, 8))
+				{
+					DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
+					if (vertexBuffer2)
+						pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
+				}
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 
@@ -119,42 +146,69 @@ namespace gfx
 			while (offset = decoder.Decode(index, drawCalls))
 			{
 				index += offset;
+	
+				if (IS_BIT_SET(decoder.currDirty, 0))
+				{
+					DawnShader* shader = rm->Get(decoder.currState.shader);
+					if (shader)
+						pass.SetPipeline(shader->s_Pipeline);
+				}
 
-				DawnShader* shader = rm->Get(decoder.currState.shader);
-				if (shader)
-					pass.SetPipeline(shader->s_Pipeline);
+				if (IS_BIT_SET(decoder.currDirty, 1))
+				{
+					DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
+					if (bindGroup0)
+						pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+				}
 
-				DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
-				if (bindGroup0)
-					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
+				if (IS_BIT_SET(decoder.currDirty, 2))
+				{
+					DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
+					if (bindGroup1)
+						pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 3))
+				{
+					DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
+					if (bindGroup2)
+						pass.SetBindGroup(2, bindGroup2->s_BindGroup);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 4) || IS_BIT_SET(decoder.currDirty, 13))
+				{
+					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
+					if (dynamicBuffer)
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
+				}
 
-				DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
-				if (bindGroup1)
-					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
+				if (IS_BIT_SET(decoder.currDirty, 5))
+				{
+					DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
+					if (indexBuffer)
+						pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 6))
+				{
+					DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
+					if (vertexBuffer0)
+						pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
+				}
+				
+				if (IS_BIT_SET(decoder.currDirty, 7))
+				{
+					DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
+					if (vertexBuffer1)
+						pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
+				}
 
-				DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
-				if (bindGroup2)
-					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
-
-				DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
-				if (dynamicBuffer)
-					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
-
-				DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
-				if (indexBuffer)
-					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
-
-				DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
-				if (vertexBuffer0)
-					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
-
-				DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
-				if (vertexBuffer1)
-					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
-
-				DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
-				if (vertexBuffer2)
-					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
+				if (IS_BIT_SET(decoder.currDirty, 8))
+				{
+					DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
+					if (vertexBuffer2)
+						pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
+				}
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 
