@@ -14,12 +14,12 @@ namespace gfx
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass,
 			utils::Handle<FrameBuffer> frameBuffer,
-			utils::Span<Draw> drawCalls	
+			utils::Span<uint32_t> drawCalls	
 		) override;
 
 		virtual void BeginRenderPass(
 			utils::Handle<RenderPass> renderPass,
-			utils::Span<Draw> drawCalls	
+			utils::Span<uint32_t> drawCalls	
 		) override;
 
 		virtual void BeginComputePass(

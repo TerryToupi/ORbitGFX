@@ -5,7 +5,7 @@
 
 namespace gfx
 {
-	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer, utils::Span<Draw> drawCalls)
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer, utils::Span<uint32_t> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
@@ -34,51 +34,57 @@ namespace gfx
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
 		{
-			for (const auto& cmd : drawCalls)
+			uint32_t index = 0;
+			uint32_t offset = 0;
+			DrawStreamDecoder decoder;
+
+			while ((offset = decoder.Decode(index, drawCalls)) != UINT32_MAX)
 			{
-				DawnShader* shader = rm->Get(cmd.shader);
+				index += offset;
+
+				DawnShader* shader = rm->Get(decoder.currState.shader);
 				if (shader)
 					pass.SetPipeline(shader->s_Pipeline);
 
-				DawnBindGroup* bindGroup0 = rm->Get(cmd.bindGroups[0]);
+				DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
 				if (bindGroup0)
 					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
 
-				DawnBindGroup* bindGroup1 = rm->Get(cmd.bindGroups[1]);
+				DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
 				if (bindGroup1)
 					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
 
-				DawnBindGroup* bindGroup2 = rm->Get(cmd.bindGroups[2]);
+				DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
 				if (bindGroup2)
 					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
 
-				DawnDynamicBuffer* dynamicBuffer = rm->Get(cmd.dynamicBuffer);
+				DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 				if (dynamicBuffer)
-					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &cmd.dynamicBufferOffset);
+					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
 
-				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
+				DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
 				if (indexBuffer)
 					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 
-				DawnBuffer* vertexBuffer0 = rm->Get(cmd.vertexBuffers[0]);
+				DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
 				if (vertexBuffer0)
 					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
 
-				DawnBuffer* vertexBuffer1 = rm->Get(cmd.vertexBuffers[1]);
+				DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
 				if (vertexBuffer1)
 					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
 
-				DawnBuffer* vertexBuffer2 = rm->Get(cmd.vertexBuffers[2]);
+				DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
 				if (vertexBuffer2)
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
-				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount, cmd.indexOffset, cmd.vertexOffset, cmd.instanceOffset);
+				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 			}
 		}
 		pass.End();
 	}
 
-	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Span<Draw> drawCalls)
+	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Span<uint32_t> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
@@ -103,45 +109,51 @@ namespace gfx
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
 		{
-			for (const auto& cmd : drawCalls)
+			uint32_t index = 0;
+			uint32_t offset = 0;
+			DrawStreamDecoder decoder;
+
+			while ((offset = decoder.Decode(index, drawCalls)) != UINT32_MAX)
 			{
-				DawnShader* shader = rm->Get(cmd.shader);
+				index += offset;
+
+				DawnShader* shader = rm->Get(decoder.currState.shader);
 				if (shader)
 					pass.SetPipeline(shader->s_Pipeline);
 
-				DawnBindGroup* bindGroup0 = rm->Get(cmd.bindGroups[0]);
+				DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
 				if (bindGroup0)
 					pass.SetBindGroup(0, bindGroup0->s_BindGroup);
 
-				DawnBindGroup* bindGroup1 = rm->Get(cmd.bindGroups[1]);
+				DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
 				if (bindGroup1)
 					pass.SetBindGroup(1, bindGroup1->s_BindGroup);
 
-				DawnBindGroup* bindGroup2 = rm->Get(cmd.bindGroups[2]);
+				DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
 				if (bindGroup2)
 					pass.SetBindGroup(2, bindGroup2->s_BindGroup);
 
-				DawnDynamicBuffer* dynamicBuffer = rm->Get(cmd.dynamicBuffer);
+				DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 				if (dynamicBuffer)
-					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &cmd.dynamicBufferOffset);
+					pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
 
-				DawnBuffer* indexBuffer = rm->Get(cmd.indexBuffer);
+				DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
 				if (indexBuffer)
 					pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 
-				DawnBuffer* vertexBuffer0 = rm->Get(cmd.vertexBuffers[0]);
+				DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
 				if (vertexBuffer0)
 					pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
 
-				DawnBuffer* vertexBuffer1 = rm->Get(cmd.vertexBuffers[1]);
+				DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
 				if (vertexBuffer1)
 					pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
 
-				DawnBuffer* vertexBuffer2 = rm->Get(cmd.vertexBuffers[2]);
+				DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
 				if (vertexBuffer2)
 					pass.SetVertexBuffer(2, vertexBuffer2->s_Buffer);
 
-				pass.DrawIndexed(cmd.triangleCount * 3, cmd.instanceCount, cmd.indexOffset, cmd.vertexOffset, cmd.instanceOffset);
+				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 			}
 		}
 		pass.End();
