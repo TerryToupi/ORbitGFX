@@ -233,9 +233,6 @@ namespace gfx
 			currState.triangleCount = stream[index++];
 		}
 
-		if (index >= stream.size())
-			return UINT32_MAX;
-
 		return index - currIndex;
 	}
 }
