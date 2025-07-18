@@ -12,7 +12,7 @@
 namespace gfx
 {
 	DawnShader::DawnShader()
-		:	s_VS(nullptr), s_PS(nullptr), s_CP(nullptr), s_Pipeline(nullptr), s_Compute(nullptr), s_PipelineType(gfx::ShaderPipelineType::GRAPHICS)
+		:	s_VS(nullptr), s_PS(nullptr), s_CP(nullptr), s_Graphics(nullptr), s_Compute(nullptr), s_PipelineType(gfx::ShaderPipelineType::GRAPHICS)
 	{
 	}
 
@@ -108,53 +108,44 @@ namespace gfx
 		if (s_PipelineType == gfx::ShaderPipelineType::GRAPHICS)
 		{
 			wgpu::RenderPipelineDescriptor wgpuDesc = {};
-
 			wgpuDesc.layout = pipelineLayout;
 
-			struct VertexBinding
-			{
-				std::vector<wgpu::VertexAttribute> attributes;
-				wgpu::VertexBufferLayout buffer;
-			};
-
-			std::vector<VertexBinding> vBindings;
-			std::vector<wgpu::VertexBufferLayout> wgpuBuffers;
-
+			wgpu::VertexBufferLayout vertexBuffers[kMaxVertexBuffers];
+			wgpu::VertexAttribute vertexAttributes[kMaxVertexBuffers][kMaxVertexAttributes];
 			// VS state
 			{
 				if (desc.VS.enabled)
 				{
-					vBindings.resize(desc.graphicsState.vertexBufferBindings.size());
-					wgpuBuffers.resize(desc.graphicsState.vertexBufferBindings.size());
-						
-					int iBuffer = 0;
-					int iShaderLocation = 0;
+					GFX_ASSERT(desc.graphicsState.vertexBufferBindings.size() <= kMaxVertexBuffers, "Vertex buffer bindings must not be more that 3!");
+
+					unsigned iBuffer = 0, iShaderLocation = 0;
 					for (const auto& vBuffer : desc.graphicsState.vertexBufferBindings)
 					{
-						vBindings[iBuffer].buffer.arrayStride = vBuffer.byteStride;
-						vBindings[iBuffer].buffer.stepMode = wgpu::VertexStepMode::Vertex;
-						vBindings[iBuffer].buffer.attributeCount = vBuffer.attributes.size();
-						vBindings[iBuffer].attributes.resize(vBuffer.attributes.size());
+						vertexBuffers[iBuffer].arrayStride = vBuffer.byteStride;
+						vertexBuffers[iBuffer].stepMode = wgpu::VertexStepMode::Vertex;
+
+						GFX_ASSERT(vBuffer.attributes.size() <= kMaxVertexAttributes, "No more than 30 attributes per vertex binding!");
 
 						int iAttribute = 0;
 						for (const auto& bAttribute : vBuffer.attributes)
 						{
-							vBindings[iBuffer].attributes[iAttribute].format = gfx::DecodeVertexFormatType(bAttribute.format);
-							vBindings[iBuffer].attributes[iAttribute].offset = bAttribute.byteOffset;
-							vBindings[iBuffer].attributes[iAttribute].shaderLocation = iShaderLocation;
+							vertexAttributes[iBuffer][iAttribute].format = gfx::DecodeVertexFormatType(bAttribute.format);
+							vertexAttributes[iBuffer][iAttribute].offset = bAttribute.byteOffset;
+							vertexAttributes[iBuffer][iAttribute].shaderLocation = iShaderLocation;
 							++iShaderLocation;
 							++iAttribute;
 						} 
 
-						vBindings[iBuffer].buffer.attributes = vBindings[iBuffer].attributes.data();
-						wgpuBuffers[iBuffer] = std::move(vBindings[iBuffer].buffer); 
+						vertexBuffers[iBuffer].attributeCount = vBuffer.attributes.size();
+						vertexBuffers[iBuffer].attributes = vertexAttributes[iBuffer];
 						++iBuffer;
 					} 
 
-					wgpuDesc.vertex.buffers = wgpuBuffers.data();
-					wgpuDesc.vertex.bufferCount = wgpuBuffers.size();
+					s_VertexState.buffers = vertexBuffers;
+					s_VertexState.bufferCount = desc.graphicsState.vertexBufferBindings.size();
+					s_VertexState.module = s_VS;
 
-					wgpuDesc.vertex.module = s_VS;
+					wgpuDesc.vertex = s_VertexState;
 				}
 			}
 
@@ -206,7 +197,7 @@ namespace gfx
 				}
 			}
 
-			s_Pipeline = device.CreateRenderPipeline(&wgpuDesc);
+			s_Graphics = device.CreateRenderPipeline(&wgpuDesc);
 		}
 	}
 
@@ -215,7 +206,7 @@ namespace gfx
 		s_PS = nullptr;
 		s_CP = nullptr;
 		s_VS = nullptr;
-		s_Pipeline = nullptr;
+		s_Graphics = nullptr;
 		s_Compute = nullptr;
 	}
 }

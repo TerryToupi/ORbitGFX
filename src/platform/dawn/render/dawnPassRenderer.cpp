@@ -46,7 +46,7 @@ namespace gfx
 				{
 					DawnShader* shader = rm->Get(decoder.currState.shader);
 					if (shader)
-						pass.SetPipeline(shader->s_Pipeline);
+						pass.SetPipeline(shader->s_Graphics);
 				}
 
 				if (IS_BIT_SET(decoder.currDirty, 1))
@@ -139,19 +139,16 @@ namespace gfx
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
 		{
-			uint32_t index = 0;
 			uint32_t offset = 0;
 			DrawStreamDecoder decoder;
 
-			while (offset = decoder.Decode(index, drawCalls))
+			while (offset += decoder.Decode(offset, drawCalls))
 			{
-				index += offset;
-	
 				if (IS_BIT_SET(decoder.currDirty, 0))
 				{
 					DawnShader* shader = rm->Get(decoder.currState.shader);
 					if (shader)
-						pass.SetPipeline(shader->s_Pipeline);
+						pass.SetPipeline(shader->s_Graphics);
 				}
 
 				if (IS_BIT_SET(decoder.currDirty, 1))
@@ -212,7 +209,7 @@ namespace gfx
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 
-				if (index == drawCalls.size())
+				if (offset == drawCalls.size())
 					break;
 			}
 		}

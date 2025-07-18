@@ -12,5 +12,7 @@ constexpr uint8_t kMaxLayoutBindings = 30u;
 constexpr uint8_t kMaxBindGroupLayouts = 8u;
 constexpr uint8_t kMaxPushConstantByteRange = 128u;
 constexpr uint16_t minUniformBufferOffsetAlignment = 256u;
+constexpr uint8_t kMaxVertexBuffers = 3u;
+constexpr uint8_t kMaxVertexAttributes = 30u;
 
 #endif // !__DAWN_COMMON_HPP__
