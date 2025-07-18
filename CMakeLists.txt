@@ -10,7 +10,7 @@ set(INCLUDE ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 set(EXTERNAL ${CMAKE_CURRENT_SOURCE_DIR}/external/)
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "${SRC}/**.cpp")
-file(GLOB_RECURSE INCLUDE_FILES CONFIGURE_DEPENDS "${INCLUDE}/**.hpp")
+file(GLOB_RECURSE INCLUDE_FILES CONFIGURE_DEPENDS "${INCLUDE}/**.hpp" "${INCLUDE}/**.h")
 
 # DAWN 
 set(TINT_BUILD_SPV_READER ON) 
@@ -33,6 +33,11 @@ add_subdirectory(${EXTERNAL}/spdlog)
 
 add_library(ORbitGFX STATIC)
 add_library(gfx::ORbit ALIAS ORbitGFX)
+
+target_compile_definitions(ORbitGFX 
+    PUBLIC 
+    IMGUI_IMPL_WEBGPU_BACKEND_DAWN
+)
 
 target_sources(ORbitGFX
     PRIVATE

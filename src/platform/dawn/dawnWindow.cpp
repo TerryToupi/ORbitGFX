@@ -106,6 +106,11 @@ namespace gfx
         glfwGetCursorPos(m_Window, x, y);
     }
 
+    GLFWwindow* DawnWindow::GetNativeWindow()
+    {
+        return m_Window;
+    }
+
     const wgpu::Surface& DawnWindow::GetDawnSurface()
     { 
         return m_Data.surface;

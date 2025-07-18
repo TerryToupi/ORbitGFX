@@ -23,6 +23,8 @@ namespace gfx
         virtual bool GetKey(Key key) override;
         virtual bool GetMouseButton(Button button) override;
         virtual void GetMousePos(double* x, double* y) override;
+
+        GLFWwindow* GetNativeWindow();
        
         const wgpu::Surface& GetDawnSurface(); 
         const wgpu::SurfaceCapabilities& GetDawnSurfaceCapabilities();
