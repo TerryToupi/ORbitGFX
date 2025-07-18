@@ -44,6 +44,7 @@ target_include_directories(ORbitGFX
     PUBLIC
     ${INCLUDE}/renderer
     ${INCLUDE}/utilities
+    ${INCLUDE}/frameworks/imgui
     PRIVATE
     ${INCLUDE}/platform
     ${INCLUDE}/common
