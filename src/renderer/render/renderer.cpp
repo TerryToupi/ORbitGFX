@@ -5,6 +5,8 @@
 #include <dawn/resources/dawnResourceManager.hpp>
 #include <dawn/render/dawnRenderer.hpp>
 
+#include <dawn/frameworks/imgui/dawnImguiRenderer.hpp>
+
 #include <log.hpp>
 
 namespace gfx
@@ -17,6 +19,7 @@ namespace gfx
         gfx::ResourceManager::instance = new gfx::DawnResourceManager();
         gfx::Window::instance = new gfx::DawnWindow();
         gfx::Renderer::instance = new gfx::DawnRenderer();
+        gfx::ImguiRenderer::instance = new gfx::DawnImguiRenderer();
 
         gfx::Device::instance->Init();
         gfx::ResourceManager::instance->Init();
@@ -26,6 +29,7 @@ namespace gfx
             .height = 720
             });
         gfx::Renderer::instance->Init();
+        gfx::ImguiRenderer::instance->Init();
 
         GFX_TRACE("Renderer status: initialized");
     }
