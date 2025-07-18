@@ -20,7 +20,7 @@ namespace gfx
 			utils::Span<uint32_t> drawCalls
 		) = 0;
 
-		virtual void BeginRenderPass(
+		virtual void BeginSurfacePass(
 			utils::Handle<RenderPass> renderPass, 
 			utils::Span<uint32_t> drawCalls
 		) = 0;

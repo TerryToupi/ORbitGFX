@@ -34,14 +34,11 @@ namespace gfx
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
 		{
-			uint32_t index = 0;
 			uint32_t offset = 0;
 			DrawStreamDecoder decoder;
 
-			while (offset = decoder.Decode(index, drawCalls))
+			while (offset += decoder.Decode(offset, drawCalls))
 			{
-				index += offset;
-	
 				if (IS_BIT_SET(decoder.currDirty, 0))
 				{
 					DawnShader* shader = rm->Get(decoder.currState.shader);
@@ -107,14 +104,14 @@ namespace gfx
 
 				pass.DrawIndexed(decoder.currState.triangleCount * 3, decoder.currState.instanceCount, decoder.currState.indexOffset, decoder.currState.vertexOffset, decoder.currState.instanceOffset);
 
-				if (index == drawCalls.size())
+				if (offset == drawCalls.size())
 					break;
 			}
 		}
 		pass.End();
 	}
 
-	void DawnCommandBuffer::BeginRenderPass(utils::Handle<RenderPass> renderPass, utils::Span<uint32_t> drawCalls)
+	void DawnCommandBuffer::BeginSurfacePass(utils::Handle<RenderPass> renderPass, utils::Span<uint32_t> drawCalls)
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;

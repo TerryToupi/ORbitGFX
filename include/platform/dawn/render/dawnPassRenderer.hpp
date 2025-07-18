@@ -17,7 +17,7 @@ namespace gfx
 			utils::Span<uint32_t> drawCalls	
 		) override;
 
-		virtual void BeginRenderPass(
+		virtual void BeginSurfacePass(
 			utils::Handle<RenderPass> renderPass,
 			utils::Span<uint32_t> drawCalls	
 		) override;
