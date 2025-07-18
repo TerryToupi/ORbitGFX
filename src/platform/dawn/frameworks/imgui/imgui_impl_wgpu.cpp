@@ -60,7 +60,8 @@
 #endif
 
 #ifndef IMGUI_DISABLE
-#include "imgui_impl_wgpu.h"
+//#include "imgui_impl_wgpu.h"
+#include <dawn/frameworks/imgui/imgui_impl_wgpu.h>
 #include <limits.h>
 #include <webgpu/webgpu.h>
 

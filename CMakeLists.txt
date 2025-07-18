@@ -37,6 +37,11 @@ add_subdirectory(${EXTERNAL}/imgui)
 add_library(ORbitGFX STATIC)
 add_library(gfx::ORbit ALIAS ORbitGFX)
 
+add_compile_definitions(ORbitGFX
+    PUBLIC
+    IMGUI_IMPL_WEBGPU_BACKEND_DAWN
+)
+
 target_sources(ORbitGFX
     PRIVATE
     ${INCLUDE_FILES}
