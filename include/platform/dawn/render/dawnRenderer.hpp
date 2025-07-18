@@ -19,6 +19,8 @@ namespace gfx
     private:
 		DawnCommandBuffer m_OffScreenCB;
 		DawnCommandBuffer m_MainCB;
+		DawnCommandBuffer m_PostEffectCB;
+		DawnCommandBuffer m_UiCB;
 	};
 }
 

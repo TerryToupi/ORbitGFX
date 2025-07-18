@@ -251,7 +251,9 @@ namespace gfx
 	enum class CommandBufferType : unsigned int
 	{
 		OFFSCREEN = UINT_BIT_SHIFT(0),
-		MAIN = UINT_BIT_SHIFT(1)
+		MAIN = UINT_BIT_SHIFT(1),
+		POST = UINT_BIT_SHIFT(2),
+		UI = UINT_BIT_SHIFT(3)
 	};
 
 	inline gfx::ShaderStage operator|(gfx::ShaderStage lhs, gfx::ShaderStage rhs)

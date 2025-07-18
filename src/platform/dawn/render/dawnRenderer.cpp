@@ -20,6 +20,16 @@ namespace gfx
 			m_MainCB.m_CommandEncoder = device.CreateCommandEncoder();
 			return static_cast<CommandBuffer*>(&m_MainCB);
 			break;
+
+		case gfx::CommandBufferType::POST:
+			m_PostEffectCB.m_CommandEncoder = device.CreateCommandEncoder();
+			return static_cast<CommandBuffer*>(&m_PostEffectCB);
+			break;
+			
+		case gfx::CommandBufferType::UI:
+			m_UiCB.m_CommandEncoder = device.CreateCommandEncoder();
+			return static_cast<CommandBuffer*>(&m_UiCB);
+			break;
 		}
 
 		return nullptr;
