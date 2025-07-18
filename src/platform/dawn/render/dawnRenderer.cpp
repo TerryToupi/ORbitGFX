@@ -1,6 +1,5 @@
 #include <dawn/render/dawnRenderer.hpp>
 #include <dawn/dawnDevice.hpp>
-#include <dawn/frameworks/imgui/imgui_setup.h>
 #include <assert.hpp>
 
 namespace gfx
@@ -38,7 +37,6 @@ namespace gfx
 
 	void DawnRenderer::Init()
 	{
-		UI::IMGUI::SetupIMGUI();
 	}
 
 	void DawnRenderer::ShutDown()

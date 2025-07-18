@@ -31,13 +31,11 @@ set(SPDLOG_BUILD_TESTS OFF)
 set(SPDLOG_BUILD_SHARED OFF)
 add_subdirectory(${EXTERNAL}/spdlog)
 
+# imgui
+add_subdirectory(${EXTERNAL}/imgui)
+
 add_library(ORbitGFX STATIC)
 add_library(gfx::ORbit ALIAS ORbitGFX)
-
-target_compile_definitions(ORbitGFX 
-    PUBLIC 
-    IMGUI_IMPL_WEBGPU_BACKEND_DAWN
-)
 
 target_sources(ORbitGFX
     PRIVATE
@@ -49,7 +47,6 @@ target_include_directories(ORbitGFX
     PUBLIC
     ${INCLUDE}/renderer
     ${INCLUDE}/utilities
-    ${INCLUDE}/frameworks/imgui
     PRIVATE
     ${INCLUDE}/platform
     ${INCLUDE}/common
@@ -63,6 +60,7 @@ target_link_libraries(ORbitGFX
     shaderc
     libtint
     spdlog::spdlog
+    ORbitImgui
 )
 
 # POST BUILD ACTIONS 
