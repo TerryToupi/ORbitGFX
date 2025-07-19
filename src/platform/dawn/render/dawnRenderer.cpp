@@ -2,6 +2,8 @@
 #include <dawn/dawnDevice.hpp>
 #include <assert.hpp>
 
+#include <dawn/frameworks/imgui/dawnImguiRenderer.hpp>
+
 namespace gfx
 {
 	CommandBuffer* DawnRenderer::BeginCommandRecording(gfx::CommandBufferType type)
@@ -37,9 +39,14 @@ namespace gfx
 
 	void DawnRenderer::Init()
 	{
+		//initializing frameworks
+		gfx::ImguiRenderer::instance = new gfx::DawnImguiRenderer();
+
+		ImguiRenderer::instance->Init();
 	}
 
 	void DawnRenderer::ShutDown()
 	{
+		gfx::ImguiRenderer::instance->ShutDown();
 	}
 }
