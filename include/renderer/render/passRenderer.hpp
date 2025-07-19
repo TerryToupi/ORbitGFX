@@ -31,6 +31,11 @@ namespace gfx
 			utils::Span<Dispatch> dispatches
 		) = 0;
 
+		virtual void BeginImGuiPass(
+			utils::Handle<RenderPass> renderPass,
+			utils::Handle<FrameBuffer> frameBuffer
+		) = 0;
+
 		virtual void Submit() = 0;
 	};
 }

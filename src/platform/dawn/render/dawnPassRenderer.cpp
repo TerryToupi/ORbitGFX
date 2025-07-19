@@ -1,5 +1,6 @@
 #include <dawn/render/dawnPassRenderer.hpp>
 #include <dawn/resources/dawnResourceManager.hpp>
+#include <dawn/frameworks/imgui/dawnImguiRenderer.hpp>
 #include <dawn/dawnDevice.hpp>
 #include <dawn/dawnWindow.hpp>
 
@@ -215,6 +216,40 @@ namespace gfx
 
 	void DawnCommandBuffer::BeginComputePass(utils::Span<utils::Handle<Texture>> textureWrite, utils::Span<utils::Handle<Buffer>> bufferWrite, utils::Span<Dispatch> dispatches)
 	{
+	}
+
+	void DawnCommandBuffer::BeginImGuiPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer)
+	{
+		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
+		DawnDevice* dInstance = (DawnDevice*)Device::instance;
+
+		wgpu::Device device = dInstance->GetDawnDevice();
+
+		wgpu::RenderPassDescriptor dawnDesc = {};
+
+		DawnRenderPass* rp = rm->Get(renderPass);
+		DawnFrameBuffer* fb = rm->Get(frameBuffer);
+		if (rp != nullptr && fb != nullptr)
+		{
+			for (int i = 0; i < rp->s_ColorAttachmentCount; ++i)
+			{
+				rp->s_ColorAttachments[i].view = fb->s_ColorAttachments[i];
+			}
+
+			if (rp->s_DepthEnabled)
+				rp->s_DepthAttachment.view = fb->s_DepthAttachment;
+
+			dawnDesc.colorAttachmentCount = rp->s_ColorAttachmentCount;
+			dawnDesc.colorAttachments = rp->s_ColorAttachments;
+			if (rp->s_DepthEnabled)
+				dawnDesc.depthStencilAttachment = &rp->s_DepthAttachment;
+		}
+
+		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
+		{
+			ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), pass.MoveToCHandle());
+		}
+		pass.End();
 	}
 
 	void DawnCommandBuffer::Submit()
