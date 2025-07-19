@@ -28,10 +28,7 @@ namespace gfx
 			utils::Span<Dispatch> dispatches
 		) override;
 
-		virtual void BeginImGuiPass(
-			utils::Handle<RenderPass> renderPass,
-			utils::Handle<FrameBuffer> frameBuffer
-		) override;
+		virtual void BeginImGuiPass() override;
 
 		virtual void Submit() override;
 

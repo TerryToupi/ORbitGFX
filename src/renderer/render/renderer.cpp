@@ -34,10 +34,10 @@ namespace gfx
     {
         GFX_TRACE("Renderer stattus: shutting down");
 
+        gfx::Renderer::instance->ShutDown();
         gfx::ResourceManager::instance->ShutDown();
         gfx::Window::instance->ShutDown();
         gfx::Device::instance->ShutDown();
-        gfx::Renderer::instance->ShutDown();
         
         diag::Logger::ShutDown();
     }

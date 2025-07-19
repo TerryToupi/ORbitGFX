@@ -2,6 +2,9 @@
 #define __IMGUI_RENDERER_HPP__
 
 #include <imgui.h>
+#include <handle.hpp>
+#include <resources/renderPass.hpp>
+#include <resources/renderPassLayout.hpp>
 
 namespace gfx
 {
@@ -14,6 +17,10 @@ namespace gfx
 		virtual void Begin() = 0;
 		virtual void End() = 0;
 		virtual void ShutDown() = 0;
+
+	public:
+		utils::Handle<RenderPass> s_RenderPass;
+		utils::Handle<RenderPassLayout> s_RenderPassLayout;
 	};
 }
 

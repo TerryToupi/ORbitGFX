@@ -218,8 +218,8 @@ namespace gfx
 	{
 	}
 
-	void DawnCommandBuffer::BeginImGuiPass(utils::Handle<RenderPass> renderPass, utils::Handle<FrameBuffer> frameBuffer)
-	{
+	void DawnCommandBuffer::BeginImGuiPass()
+	{ 
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
 		DawnWindow* windowInstance = (DawnWindow*)Window::instance;
@@ -231,15 +231,9 @@ namespace gfx
 		wgpu::SurfaceTexture surface;
 		windowInstance->GetDawnSurface().GetCurrentTexture(&surface);
 
-		DawnRenderPass* rp = rm->Get(renderPass);
-		DawnFrameBuffer* fb = rm->Get(frameBuffer);
-		if (rp != nullptr && fb != nullptr)
+		DawnRenderPass* rp = rm->Get(ImguiRenderer::instance->s_RenderPass);
+		if (rp != nullptr)
 		{
-			//for (int i = 0; i < rp->s_ColorAttachmentCount; ++i)
-			//{
-			//	rp->s_ColorAttachments[i].view = fb->s_ColorAttachments[i];
-			//}
-
 			rp->s_ColorAttachments[0].view = surface.texture.CreateView();
 
 			dawnDesc.colorAttachmentCount = rp->s_ColorAttachmentCount;

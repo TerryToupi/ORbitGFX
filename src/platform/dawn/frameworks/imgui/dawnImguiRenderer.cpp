@@ -1,6 +1,7 @@
 #include <dawn/frameworks/imgui/dawnImguiRenderer.hpp>
 #include <dawn/dawnWindow.hpp>
 #include <dawn/dawnDevice.hpp>
+#include <resources/resourceManger.hpp>
 
 namespace gfx
 {
@@ -28,7 +29,19 @@ namespace gfx
 		init_info.NumFramesInFlight = 3;
 		init_info.RenderTargetFormat = static_cast<WGPUTextureFormat>(wImpl->GetDawnSurfaceCapabilities().formats[0]);
 		init_info.DepthStencilFormat = WGPUTextureFormat_Undefined;
-		ImGui_ImplWGPU_Init(&init_info);
+		ImGui_ImplWGPU_Init(&init_info); 
+
+		ImguiRenderer::instance->s_RenderPassLayout = gfx::ResourceManager::instance->Create(gfx::RenderPassLayoutDescriptor{
+			.colorTargets = {
+				{.enabled = true, .format = wImpl->GetSurfaceFormat()}
+				}
+			});
+		ImguiRenderer::instance->s_RenderPass = gfx::ResourceManager::instance->Create(gfx::RenderPassDescriptor{
+			.colorTargets = {
+				{.loadOp = gfx::LoadOperation::LOAD, .storeOp = gfx::StoreOperation::STORE}
+			},
+			.layout = ImguiRenderer::instance->s_RenderPassLayout,
+			});
 	}
 
 	void DawnImguiRenderer::Begin()
@@ -56,6 +69,9 @@ namespace gfx
 	{
 		ImGui_ImplWGPU_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
+		ImGui::DestroyContext();  
+
+		gfx::ResourceManager::instance->Remove(ImguiRenderer::instance->s_RenderPassLayout);
+		gfx::ResourceManager::instance->Remove(ImguiRenderer::instance->s_RenderPass);
 	}
 }
