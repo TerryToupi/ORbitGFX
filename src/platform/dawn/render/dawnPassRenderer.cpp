@@ -242,13 +242,8 @@ namespace gfx
 
 			rp->s_ColorAttachments[0].view = surface.texture.CreateView();
 
-			if (rp->s_DepthEnabled)
-				rp->s_DepthAttachment.view = fb->s_DepthAttachment;
-
 			dawnDesc.colorAttachmentCount = rp->s_ColorAttachmentCount;
 			dawnDesc.colorAttachments = rp->s_ColorAttachments;
-			if (rp->s_DepthEnabled)
-				dawnDesc.depthStencilAttachment = &rp->s_DepthAttachment;
 		}
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);

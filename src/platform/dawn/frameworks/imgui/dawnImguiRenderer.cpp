@@ -26,8 +26,8 @@ namespace gfx
 		ImGui_ImplWGPU_InitInfo init_info;
 		init_info.Device = device.MoveToCHandle();
 		init_info.NumFramesInFlight = 3;
-		init_info.RenderTargetFormat = WGPUTextureFormat_RGBA8Unorm;
-		init_info.DepthStencilFormat = WGPUTextureFormat_Depth32Float;
+		init_info.RenderTargetFormat = static_cast<WGPUTextureFormat>(wImpl->GetDawnSurfaceCapabilities().formats[0]);
+		init_info.DepthStencilFormat = WGPUTextureFormat_Undefined;
 		ImGui_ImplWGPU_Init(&init_info);
 	}
 
