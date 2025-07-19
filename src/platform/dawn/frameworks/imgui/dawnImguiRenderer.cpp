@@ -85,7 +85,24 @@ namespace gfx
         colors[ImGuiCol_NavHighlight] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
         colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
         colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
-        colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+        colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f); 
+
+        for (int i = 0; i <= ImGuiCol_COUNT; i++)
+        {
+            ImVec4& col = style.Colors[i];
+            float H, S, V;
+            ImGui::ColorConvertRGBtoHSV(col.x, col.y, col.z, H, S, V);
+
+            if (S < 0.1f)
+            {
+                V = 1.0f - V;
+            }
+            ImGui::ColorConvertHSVtoRGB(H, S, V, col.x, col.y, col.z);
+            if (col.w < 1.00f)
+            {
+                col.w *= 0.7f;
+            }
+        }
 
 		ImGui_ImplGlfw_InitForOther(wImpl->GetNativeWindow(), true);
 
