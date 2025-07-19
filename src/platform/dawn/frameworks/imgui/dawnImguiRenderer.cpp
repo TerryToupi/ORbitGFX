@@ -43,7 +43,7 @@ namespace gfx
 		style.ItemSpacing = ImVec2(4.300000190734863f, 5.5f);
 		style.ItemInnerSpacing = ImVec2(7.099999904632568f, 1.799999952316284f);
 		style.CellPadding = ImVec2(12.10000038146973f, 9.199999809265137f);
-		style.IndentSpacing = 0.0f;
+		//style.IndentSpacing = 0.0f;
 		style.ColumnsMinSpacing = 4.900000095367432f;
 		style.ScrollbarSize = 11.60000038146973f;
 		style.ScrollbarRounding = 15.89999961853027f;
