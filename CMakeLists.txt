@@ -65,6 +65,8 @@ target_link_libraries(ORbitGFX
     shaderc
     libtint
     spdlog::spdlog
+
+    PUBLIC
     ORbitImgui
 )
 
