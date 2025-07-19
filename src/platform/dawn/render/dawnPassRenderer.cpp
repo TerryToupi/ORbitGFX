@@ -222,19 +222,25 @@ namespace gfx
 	{
 		DawnResourceManager* rm = (DawnResourceManager*)ResourceManager::instance;
 		DawnDevice* dInstance = (DawnDevice*)Device::instance;
+		DawnWindow* windowInstance = (DawnWindow*)Window::instance;
 
 		wgpu::Device device = dInstance->GetDawnDevice();
 
 		wgpu::RenderPassDescriptor dawnDesc = {};
 
+		wgpu::SurfaceTexture surface;
+		windowInstance->GetDawnSurface().GetCurrentTexture(&surface);
+
 		DawnRenderPass* rp = rm->Get(renderPass);
 		DawnFrameBuffer* fb = rm->Get(frameBuffer);
 		if (rp != nullptr && fb != nullptr)
 		{
-			for (int i = 0; i < rp->s_ColorAttachmentCount; ++i)
-			{
-				rp->s_ColorAttachments[i].view = fb->s_ColorAttachments[i];
-			}
+			//for (int i = 0; i < rp->s_ColorAttachmentCount; ++i)
+			//{
+			//	rp->s_ColorAttachments[i].view = fb->s_ColorAttachments[i];
+			//}
+
+			rp->s_ColorAttachments[0].view = surface.texture.CreateView();
 
 			if (rp->s_DepthEnabled)
 				rp->s_DepthAttachment.view = fb->s_DepthAttachment;
