@@ -1,6 +1,8 @@
 #ifndef __IMGUI_RENDERER_HPP__
 #define __IMGUI_RENDERER_HPP__
 
+#include <imgui.h>
+
 namespace gfx
 {
 	class ImguiRenderer
