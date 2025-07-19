@@ -11,8 +11,8 @@ namespace gfx
 	{
 	public:
 		virtual void Init() override;
-		virtual void BeginFrame() override;
-		virtual void EndFrame() override;
+		virtual void Begin() override;
+		virtual void End() override;
 	};
 }
 

@@ -9,8 +9,8 @@ namespace gfx
 		static inline ImguiRenderer* instance = nullptr;
 
 		virtual void Init() = 0;
-		virtual void BeginFrame() = 0;
-		virtual void EndFrame() = 0;
+		virtual void Begin() = 0;
+		virtual void End() = 0;
 	};
 }
 
