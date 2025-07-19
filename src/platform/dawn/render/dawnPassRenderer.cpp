@@ -246,7 +246,7 @@ namespace gfx
 		}
 
 		wgpu::RenderPassEncoder pass = m_CommandEncoder.BeginRenderPass(&dawnDesc);
-		ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), pass.MoveToCHandle());
+		ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), pass.Get());
 		pass.End();
 	}
 
