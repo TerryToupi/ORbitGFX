@@ -51,7 +51,7 @@ namespace gfx
 		uint32_t vertexOffset = 0;
 		uint32_t instanceOffset = 0;
 		uint32_t instanceCount = 1;
-		uint32_t dynamicBufferOffset[2] = {0, 0};
+		uint32_t dynamicBufferOffset[2];
 		uint32_t triangleCount = 0;
 	};
 
@@ -60,7 +60,7 @@ namespace gfx
 		Handle<Shader> shader;
 		Handle<BindGroup> bindGroups[3];
 		Handle<DynamicBuffer> dynamicBuffer;
-		uint32_t dynamicBufferOffset[2] = {0, 0};
+		uint32_t dynamicBufferOffset[2];
 		Vector3I threadGroupCount;
 	};
 
