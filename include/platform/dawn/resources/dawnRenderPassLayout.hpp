@@ -17,8 +17,8 @@ namespace gfx
         
     public:
         uint32_t s_ColorTargetCount = 0;
-        wgpu::ColorTargetState s_ColorTargets[8u];
-        wgpu::BlendState s_ColorBlends[8u];
+        wgpu::ColorTargetState s_ColorTargets[kMaxColorAttachments];
+        wgpu::BlendState s_ColorBlends[kMaxColorAttachments];
         
         bool s_DepthEnabled = false;
         wgpu::TextureFormat s_DepthFormat;

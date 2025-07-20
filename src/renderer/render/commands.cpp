@@ -17,7 +17,8 @@ namespace gfx
 		m_CurrState.vertexOffset = 0;
 		m_CurrState.instanceOffset = 0;
 		m_CurrState.instanceCount = 1;
-		m_CurrState.dynamicBufferOffset = 0;
+		m_CurrState.dynamicBufferOffset[0] = 0;
+		m_CurrState.dynamicBufferOffset[1] = 0;
 		m_CurrState.triangleCount = 0;
 
 		m_Stream.reserve(256);
@@ -29,113 +30,120 @@ namespace gfx
 
 		if (draw.shader != m_CurrState.shader)
 		{
-			SET_BIT(currDirty, 0);
+			SET_BIT(currDirty, SHADER_DBIT);
 			m_CurrState.shader = draw.shader;
 		}
 		if (draw.bindGroups[0] != m_CurrState.bindGroups[0])
 		{
-			SET_BIT(currDirty, 1);
+			SET_BIT(currDirty, BINDGROUP0_DBIT);
 			m_CurrState.bindGroups[0] = draw.bindGroups[0];
 		}
 		if (draw.bindGroups[1] != m_CurrState.bindGroups[1])
 		{
-			SET_BIT(currDirty, 2);
+			SET_BIT(currDirty, BINDGROUP1_DBIT);
 			m_CurrState.bindGroups[1] = draw.bindGroups[1];
 		}
 		if (draw.bindGroups[2] != m_CurrState.bindGroups[2])
 		{
-			SET_BIT(currDirty, 3);
+			SET_BIT(currDirty, BINDGROUP2_DBIT);
 			m_CurrState.bindGroups[2] = draw.bindGroups[2];
 		}
 		if (draw.dynamicBuffer != m_CurrState.dynamicBuffer)
 		{
-			SET_BIT(currDirty, 4);
+			SET_BIT(currDirty, DYNAMICBUFFER_DBIT);
 			m_CurrState.dynamicBuffer = draw.dynamicBuffer;
 		}
 		if (draw.indexBuffer != m_CurrState.indexBuffer)
 		{
-			SET_BIT(currDirty, 5);
+			SET_BIT(currDirty, INDEXBUFFER_DBIT);
 			m_CurrState.indexBuffer = draw.indexBuffer;
 		}
 		if (draw.vertexBuffers[0] != m_CurrState.vertexBuffers[0])
 		{
-			SET_BIT(currDirty, 6);
+			SET_BIT(currDirty, VERTEXBUFFER0_DBIT);
 			m_CurrState.vertexBuffers[0] = draw.vertexBuffers[0];
 		}
 		if (draw.vertexBuffers[1] != m_CurrState.vertexBuffers[1])
 		{
-			SET_BIT(currDirty, 7);
+			SET_BIT(currDirty, VERTEXBUFFER1_DBIT);
 			m_CurrState.vertexBuffers[1] = draw.vertexBuffers[1];
 		}
 		if (draw.vertexBuffers[2] != m_CurrState.vertexBuffers[2])
 		{
-			SET_BIT(currDirty, 8);
+			SET_BIT(currDirty, VERTEXBUFFER2_DBIT);
 			m_CurrState.vertexBuffers[2] = draw.vertexBuffers[2];
 		}
 		if (draw.indexOffset != m_CurrState.indexOffset)
 		{
-			SET_BIT(currDirty, 9);
+			SET_BIT(currDirty, INDEXOFFSET_DBIT);
 			m_CurrState.indexOffset = draw.indexOffset;
 		}
 		if (draw.vertexOffset != m_CurrState.vertexOffset)
 		{
-			SET_BIT(currDirty, 10);
+			SET_BIT(currDirty, VERTEXOFFSET_DBIT);
 			m_CurrState.vertexOffset = draw.vertexOffset;
 		}
 		if (draw.instanceOffset != m_CurrState.instanceOffset)
 		{
-			SET_BIT(currDirty, 11);
+			SET_BIT(currDirty, INSTANCEOFFSET_DBIT);
 			m_CurrState.instanceOffset = draw.instanceOffset;
 		}
 		if (draw.instanceCount != m_CurrState.instanceCount)
 		{
-			SET_BIT(currDirty, 12);
+			SET_BIT(currDirty, INSTANCECOUNT_DBIT);
 			m_CurrState.instanceCount = draw.instanceCount;
 		}
-		if (draw.dynamicBufferOffset != m_CurrState.dynamicBufferOffset)
+		if (draw.dynamicBufferOffset[0] != m_CurrState.dynamicBufferOffset[0])
 		{
-			SET_BIT(currDirty, 13);
-			m_CurrState.dynamicBufferOffset = draw.dynamicBufferOffset;
+			SET_BIT(currDirty, DYNAMICBUFFEROFFSET0_DBIT);
+			m_CurrState.dynamicBufferOffset[0] = draw.dynamicBufferOffset[0];
+		}
+		if (draw.dynamicBufferOffset[1] != m_CurrState.dynamicBufferOffset[1])
+		{
+			SET_BIT(currDirty, DYNAMICBUFFEROFFSET1_DBIT);
+			m_CurrState.dynamicBufferOffset[1] = draw.dynamicBufferOffset[1];
 		}
 		if (draw.triangleCount != m_CurrState.triangleCount)
 		{
-			SET_BIT(currDirty, 14);
+			SET_BIT(currDirty, TRIANGLECOUNT_DBIT);
 			m_CurrState.triangleCount = draw.triangleCount;
 		} 
 
 		m_Stream.emplace_back(currDirty);
 
-		for (uint32_t i = 0; i < 15; ++i)
+		for (uint32_t i = 0; i < 16; ++i)
 		{
-			if (IS_BIT_SET(currDirty, i) && i == 0)
+			if (IS_BIT_SET(currDirty, i) && i == SHADER_DBIT)
 				m_Stream.emplace_back(m_CurrState.shader.pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 1)
+			else if (IS_BIT_SET(currDirty, i) && i == BINDGROUP0_DBIT)
 				m_Stream.emplace_back(m_CurrState.bindGroups[0].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 2)
+			else if (IS_BIT_SET(currDirty, i) && i == BINDGROUP1_DBIT)
 				m_Stream.emplace_back(m_CurrState.bindGroups[1].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 3)
+			else if (IS_BIT_SET(currDirty, i) && i == BINDGROUP2_DBIT)
 				m_Stream.emplace_back(m_CurrState.bindGroups[2].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 4)
+			else if (IS_BIT_SET(currDirty, i) && i == DYNAMICBUFFER_DBIT)
 				m_Stream.emplace_back(m_CurrState.dynamicBuffer.pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 5)
+			else if (IS_BIT_SET(currDirty, i) && i == INDEXBUFFER_DBIT)
 				m_Stream.emplace_back(m_CurrState.indexBuffer.pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 6)
+			else if (IS_BIT_SET(currDirty, i) && i == VERTEXBUFFER0_DBIT)
 				m_Stream.emplace_back(m_CurrState.vertexBuffers[0].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 7)
+			else if (IS_BIT_SET(currDirty, i) && i == VERTEXBUFFER1_DBIT)
 				m_Stream.emplace_back(m_CurrState.vertexBuffers[1].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 8)
+			else if (IS_BIT_SET(currDirty, i) && i == VERTEXBUFFER2_DBIT)
 				m_Stream.emplace_back(m_CurrState.vertexBuffers[2].pack());
-			else if (IS_BIT_SET(currDirty, i) && i == 9)
+			else if (IS_BIT_SET(currDirty, i) && i == INDEXOFFSET_DBIT)
 				m_Stream.emplace_back(m_CurrState.indexOffset);
-			else if (IS_BIT_SET(currDirty, i) && i == 10)
+			else if (IS_BIT_SET(currDirty, i) && i == VERTEXOFFSET_DBIT)
 				m_Stream.emplace_back(m_CurrState.vertexOffset);
-			else if (IS_BIT_SET(currDirty, i) && i == 11)
+			else if (IS_BIT_SET(currDirty, i) && i == INSTANCEOFFSET_DBIT)
 				m_Stream.emplace_back(m_CurrState.instanceOffset);
-			else if (IS_BIT_SET(currDirty, i) && i == 12)
+			else if (IS_BIT_SET(currDirty, i) && i == INSTANCECOUNT_DBIT)
 				m_Stream.emplace_back(m_CurrState.instanceCount);
-			else if (IS_BIT_SET(currDirty, i) && i == 13)
-				m_Stream.emplace_back(m_CurrState.dynamicBufferOffset);
-			else if (IS_BIT_SET(currDirty, i) && i == 14)
+			else if (IS_BIT_SET(currDirty, i) && i == DYNAMICBUFFEROFFSET0_DBIT)
+				m_Stream.emplace_back(m_CurrState.dynamicBufferOffset[0]);
+			else if (IS_BIT_SET(currDirty, i) && i == DYNAMICBUFFEROFFSET1_DBIT)
+				m_Stream.emplace_back(m_CurrState.dynamicBufferOffset[1]);
+			else if (IS_BIT_SET(currDirty, i) && i == TRIANGLECOUNT_DBIT)
 				m_Stream.emplace_back(m_CurrState.triangleCount);
 		}
 	}
@@ -162,7 +170,8 @@ namespace gfx
 		currState.vertexOffset = 0;
 		currState.instanceOffset = 0;
 		currState.instanceCount = 1;
-		currState.dynamicBufferOffset = 0;
+		currState.dynamicBufferOffset[0] = 0;
+		currState.dynamicBufferOffset[1] = 0;
 		currState.triangleCount = 0;
 	}
 

@@ -40,63 +40,65 @@ namespace gfx
 
 			while (offset += decoder.Decode(offset, drawCalls))
 			{
-				if (IS_BIT_SET(decoder.currDirty, 0))
+				if (IS_BIT_SET(decoder.currDirty, SHADER_DBIT))
 				{
 					DawnShader* shader = rm->Get(decoder.currState.shader);
 					if (shader)
 						pass.SetPipeline(shader->s_Graphics);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 1))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP0_DBIT))
 				{
 					DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
 					if (bindGroup0)
 						pass.SetBindGroup(0, bindGroup0->s_BindGroup);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 2))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP1_DBIT))
 				{
 					DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
 					if (bindGroup1)
 						pass.SetBindGroup(1, bindGroup1->s_BindGroup);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 3))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP2_DBIT))
 				{
 					DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
 					if (bindGroup2)
 						pass.SetBindGroup(2, bindGroup2->s_BindGroup);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 4) || IS_BIT_SET(decoder.currDirty, 13))
+				if (IS_BIT_SET(decoder.currDirty, DYNAMICBUFFER_DBIT) || 
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT) ||
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET1_DBIT))
 				{
 					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 					if (dynamicBuffer)
-						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 2, decoder.currState.dynamicBufferOffset);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 5))
+				if (IS_BIT_SET(decoder.currDirty, INDEXBUFFER_DBIT))
 				{
 					DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
 					if (indexBuffer)
 						pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 6))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER0_DBIT))
 				{
 					DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
 					if (vertexBuffer0)
 						pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 7))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER1_DBIT))
 				{
 					DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
 					if (vertexBuffer1)
 						pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 8))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER2_DBIT))
 				{
 					DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
 					if (vertexBuffer2)
@@ -142,63 +144,65 @@ namespace gfx
 
 			while (offset += decoder.Decode(offset, drawCalls))
 			{
-				if (IS_BIT_SET(decoder.currDirty, 0))
+				if (IS_BIT_SET(decoder.currDirty, SHADER_DBIT))
 				{
 					DawnShader* shader = rm->Get(decoder.currState.shader);
 					if (shader)
 						pass.SetPipeline(shader->s_Graphics);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 1))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP0_DBIT))
 				{
 					DawnBindGroup* bindGroup0 = rm->Get(decoder.currState.bindGroups[0]);
 					if (bindGroup0)
 						pass.SetBindGroup(0, bindGroup0->s_BindGroup);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 2))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP1_DBIT))
 				{
 					DawnBindGroup* bindGroup1 = rm->Get(decoder.currState.bindGroups[1]);
 					if (bindGroup1)
 						pass.SetBindGroup(1, bindGroup1->s_BindGroup);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 3))
+				if (IS_BIT_SET(decoder.currDirty, BINDGROUP2_DBIT))
 				{
 					DawnBindGroup* bindGroup2 = rm->Get(decoder.currState.bindGroups[2]);
 					if (bindGroup2)
 						pass.SetBindGroup(2, bindGroup2->s_BindGroup);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 4) || IS_BIT_SET(decoder.currDirty, 13))
+				if (IS_BIT_SET(decoder.currDirty, DYNAMICBUFFER_DBIT) || 
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT) ||
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET1_DBIT))
 				{
 					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 					if (dynamicBuffer)
-						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset);
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 2, decoder.currState.dynamicBufferOffset);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 5))
+				if (IS_BIT_SET(decoder.currDirty, INDEXBUFFER_DBIT))
 				{
 					DawnBuffer* indexBuffer = rm->Get(decoder.currState.indexBuffer);
 					if (indexBuffer)
 						pass.SetIndexBuffer(indexBuffer->s_Buffer, wgpu::IndexFormat::Uint32);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 6))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER0_DBIT))
 				{
 					DawnBuffer* vertexBuffer0 = rm->Get(decoder.currState.vertexBuffers[0]);
 					if (vertexBuffer0)
 						pass.SetVertexBuffer(0, vertexBuffer0->s_Buffer);
 				}
 				
-				if (IS_BIT_SET(decoder.currDirty, 7))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER1_DBIT))
 				{
 					DawnBuffer* vertexBuffer1 = rm->Get(decoder.currState.vertexBuffers[1]);
 					if (vertexBuffer1)
 						pass.SetVertexBuffer(1, vertexBuffer1->s_Buffer);
 				}
 
-				if (IS_BIT_SET(decoder.currDirty, 8))
+				if (IS_BIT_SET(decoder.currDirty, VERTEXBUFFER2_DBIT))
 				{
 					DawnBuffer* vertexBuffer2 = rm->Get(decoder.currState.vertexBuffers[2]);
 					if (vertexBuffer2)

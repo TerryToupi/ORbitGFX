@@ -37,8 +37,16 @@ namespace gfx
 		return nullptr;
 	}
 
+	UniformRingBuffer* DawnRenderer::RequestUniformRingBuffer()
+	{
+		return &m_PerDrawRingBuffer;
+	}
+
 	void DawnRenderer::Init()
 	{
+		//inirializing uniform ring buffer
+		m_PerDrawRingBuffer = UniformRingBuffer(64 * 1024 * 1024);
+
 		//initializing frameworks
 		gfx::ImguiRenderer::instance = new gfx::DawnImguiRenderer();
 
@@ -48,5 +56,7 @@ namespace gfx
 	void DawnRenderer::ShutDown()
 	{
 		gfx::ImguiRenderer::instance->ShutDown();
+
+		m_PerDrawRingBuffer.Destroy();
 	}
 }
