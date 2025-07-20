@@ -69,12 +69,11 @@ namespace gfx
 				}
 				
 				if (IS_BIT_SET(decoder.currDirty, DYNAMICBUFFER_DBIT) || 
-					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT) ||
-					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET1_DBIT))
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT))
 				{
 					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 					if (dynamicBuffer)
-						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 2, decoder.currState.dynamicBufferOffset);
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset[0]);
 				}
 
 				if (IS_BIT_SET(decoder.currDirty, INDEXBUFFER_DBIT))
@@ -173,12 +172,11 @@ namespace gfx
 				}
 				
 				if (IS_BIT_SET(decoder.currDirty, DYNAMICBUFFER_DBIT) || 
-					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT) ||
-					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET1_DBIT))
+					IS_BIT_SET(decoder.currDirty, DYNAMICBUFFEROFFSET0_DBIT))
 				{
 					DawnDynamicBuffer* dynamicBuffer = rm->Get(decoder.currState.dynamicBuffer);
 					if (dynamicBuffer)
-						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 2, decoder.currState.dynamicBufferOffset);
+						pass.SetBindGroup(3, dynamicBuffer->s_BindGroup, 1, &decoder.currState.dynamicBufferOffset[0]);
 				}
 
 				if (IS_BIT_SET(decoder.currDirty, INDEXBUFFER_DBIT))
