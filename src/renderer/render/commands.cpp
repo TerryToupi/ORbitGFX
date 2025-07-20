@@ -181,63 +181,67 @@ namespace gfx
 		
 		currDirty = stream[index++];
 
-		if (IS_BIT_SET(currDirty, 0))
+		if (IS_BIT_SET(currDirty, SHADER_DBIT))
 		{
 			currState.shader.unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 1))
+		if (IS_BIT_SET(currDirty, BINDGROUP0_DBIT))
 		{
 			currState.bindGroups[0].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 2))
+		if (IS_BIT_SET(currDirty, BINDGROUP1_DBIT))
 		{
 			currState.bindGroups[1].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 3))
+		if (IS_BIT_SET(currDirty, BINDGROUP2_DBIT))
 		{
 			currState.bindGroups[2].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 4))
+		if (IS_BIT_SET(currDirty, DYNAMICBUFFER_DBIT))
 		{
 			currState.dynamicBuffer.unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 5))
+		if (IS_BIT_SET(currDirty, INDEXBUFFER_DBIT))
 		{
 			currState.indexBuffer.unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 6))
+		if (IS_BIT_SET(currDirty, VERTEXBUFFER0_DBIT))
 		{
 			currState.vertexBuffers[0].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 7))
+		if (IS_BIT_SET(currDirty, VERTEXBUFFER1_DBIT))
 		{
 			currState.vertexBuffers[1].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 8))
+		if (IS_BIT_SET(currDirty, VERTEXBUFFER2_DBIT))
 		{
 			currState.vertexBuffers[2].unpack(stream[index++]);
 		}
-		if (IS_BIT_SET(currDirty, 9))
+		if (IS_BIT_SET(currDirty, INDEXOFFSET_DBIT))
 		{
 			currState.indexOffset = stream[index++];
 		}
-		if (IS_BIT_SET(currDirty, 10))
+		if (IS_BIT_SET(currDirty, VERTEXOFFSET_DBIT))
 		{
 			currState.vertexOffset = stream[index++];
 		}
-		if (IS_BIT_SET(currDirty, 11))
+		if (IS_BIT_SET(currDirty, INSTANCEOFFSET_DBIT))
 		{
 			currState.instanceOffset = stream[index++];
 		}
-		if (IS_BIT_SET(currDirty, 12))
+		if (IS_BIT_SET(currDirty, INSTANCECOUNT_DBIT))
 		{
 			currState.instanceCount = stream[index++];
 		}
-		if (IS_BIT_SET(currDirty, 13))
+		if (IS_BIT_SET(currDirty, DYNAMICBUFFEROFFSET0_DBIT))
 		{
-			currState.dynamicBufferOffset = stream[index++];
+			currState.dynamicBufferOffset[0] = stream[index++];
 		}
-		if (IS_BIT_SET(currDirty, 14))
+		if (IS_BIT_SET(currDirty, DYNAMICBUFFEROFFSET1_DBIT))
+		{
+			currState.dynamicBufferOffset[1] = stream[index++];
+		}
+		if (IS_BIT_SET(currDirty, TRIANGLECOUNT_DBIT))
 		{
 			currState.triangleCount = stream[index++];
 		}
